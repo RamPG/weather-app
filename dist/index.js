@@ -34120,26 +34120,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var useClock = function useClock() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getHoursFormat"])()),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getHoursFormat()),
       _useState2 = _slicedToArray(_useState, 2),
       hours = _useState2[0],
       setHours = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getMinutesFormat"])()),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getMinutesFormat()),
       _useState4 = _slicedToArray(_useState3, 2),
       minutes = _useState4[0],
       setMinutes = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getSecondsFormat"])()),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_14__["useState"])(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getSecondsFormat()),
       _useState6 = _slicedToArray(_useState5, 2),
       seconds = _useState6[0],
       setSeconds = _useState6[1];
 
   Object(react__WEBPACK_IMPORTED_MODULE_14__["useEffect"])(function () {
     setInterval(function () {
-      setHours(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getHoursFormat"])());
-      setMinutes(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getMinutesFormat"])());
-      setSeconds(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["getSecondsFormat"])());
+      setHours(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getHoursFormat());
+      setMinutes(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getMinutesFormat());
+      setSeconds(_services_time_library__WEBPACK_IMPORTED_MODULE_15__["default"].getSecondsFormat());
     }, 1000);
   }, [hours, minutes, seconds]);
   return {
@@ -34213,7 +34213,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TodayDate = function TodayDate() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Today is ".concat(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getMonthDayNow"])(), " ").concat(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getNameMonth"])(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getMonthNow"])()), " ").concat(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getYearNow"])(), " ").concat(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getNameDay"])(Object(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["getWeekDayNow"])())));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Today is \n    ".concat(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getMonthDayNow(), " \n    ").concat(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getNameMonth(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getMonthNow()), " \n    ").concat(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getYearNow(), " \n    ").concat(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getNameDay(_services_time_library__WEBPACK_IMPORTED_MODULE_3__["default"].getWeekDayNow())));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (TodayDate);
@@ -34285,11 +34285,11 @@ var WeatherCard = function WeatherCard() {
     className: "main-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "main-card__table"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thdead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
-  }, "Weather in Moscow"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+  }, "Weather in Moscow")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
@@ -34531,34 +34531,14 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 /*!********************************************!*\
   !*** ./src/services/time-library/index.js ***!
   \********************************************/
-/*! exports provided: getCalendar, getNameMonth, getMonthNow, getYearNow, getNameDay, getMonthDayNow, getWeekDayNow, getHoursFormat, getMinutesFormat, getSecondsFormat */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _time_library__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./time-library */ "./src/services/time-library/time-library.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getCalendar", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getCalendar"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getNameMonth", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getNameMonth"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMonthNow", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getMonthNow"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getYearNow", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getYearNow"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getNameDay", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getNameDay"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMonthDayNow", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getMonthDayNow"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getWeekDayNow", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getWeekDayNow"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getHoursFormat", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getHoursFormat"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMinutesFormat", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getMinutesFormat"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getSecondsFormat", function() { return _time_library__WEBPACK_IMPORTED_MODULE_0__["getSecondsFormat"]; });
-
-
-
+/* harmony default export */ __webpack_exports__["default"] = (_time_library__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -34566,148 +34546,170 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./src/services/time-library/time-library.js ***!
   \***************************************************/
-/*! exports provided: getCalendar, getNameMonth, getMonthNow, getYearNow, getWeekDayNow, getMonthDayNow, getHoursFormat, getMinutesFormat, getSecondsFormat, getNameDay */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCalendar", function() { return getCalendar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNameMonth", function() { return getNameMonth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthNow", function() { return getMonthNow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getYearNow", function() { return getYearNow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getWeekDayNow", function() { return getWeekDayNow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMonthDayNow", function() { return getMonthDayNow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getHoursFormat", function() { return getHoursFormat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMinutesFormat", function() { return getMinutesFormat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSecondsFormat", function() { return getSecondsFormat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNameDay", function() { return getNameDay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TimeLibrary; });
 /* harmony import */ var core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.date.to-string */ "./node_modules/core-js/modules/es.date.to-string.js");
 /* harmony import */ var core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1__);
 
 
-function getWeekDayNow() {
-  return new Date().getDay();
-}
 
-function getMonthNow() {
-  return new Date().getMonth();
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function getYearNow() {
-  return new Date().getFullYear();
-}
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function getMonthDayNow() {
-  return new Date().getDate();
-}
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function getHoursFormat() {
-  var hours = new Date().getHours();
-  return hours < 10 ? "0".concat(hours) : "".concat(hours);
-}
-
-function getMinutesFormat() {
-  var minutes = new Date().getMinutes();
-  return minutes < 10 ? "0".concat(minutes) : "".concat(minutes);
-}
-
-function getSecondsFormat() {
-  var seconds = new Date().getSeconds();
-  return seconds < 10 ? "0".concat(seconds) : "".concat(seconds);
-}
-
-function getDaysInMonth(current) {
-  var year = current.year,
-      month = current.month;
-  var currentDate = new Date(year, month, 1).getTime();
-  var nextDate = new Date(year, month + 1, 1).getTime();
-  return Math.round((nextDate - currentDate) / 1000 / 3600 / 24);
-}
-
-function getSundayDate(current, daysInMonth) {
-  var currentDay = new Date(current.year, current.month, 1).getDay();
-
-  if (currentDay === 0) {
-    return 1;
+var TimeLibrary = /*#__PURE__*/function () {
+  function TimeLibrary() {
+    _classCallCheck(this, TimeLibrary);
   }
 
-  return daysInMonth - currentDay + 1;
-}
-
-function getCalendar(current) {
-  var year = current.year,
-      month = current.month;
-  var currentDaysInMonth = getDaysInMonth({
-    year: year,
-    month: month
-  });
-  var prevDaysInMonth = getDaysInMonth({
-    year: year,
-    month: month - 1
-  });
-  var currentDay = getSundayDate({
-    year: year,
-    month: month
-  }, prevDaysInMonth);
-  var flagDayInMonth = false;
-  var className = 'btn btn-warning btn-block';
-
-  if (currentDay === 1) {
-    prevDaysInMonth = currentDaysInMonth;
-    flagDayInMonth = true;
-    className = 'btn btn-success btn-block';
-  }
-
-  var calendar = [];
-
-  for (var i = 0; i < 6; i++) {
-    var newWeek = [];
-
-    for (var j = 0; j < 7; j++) {
-      newWeek.push({
-        day: currentDay,
-        classButton: className
+  _createClass(TimeLibrary, [{
+    key: "getCalendar",
+    value: function getCalendar(current) {
+      var year = current.year,
+          month = current.month;
+      var currentDaysInMonth = TimeLibrary.getDaysInMonth({
+        year: year,
+        month: month
       });
-      currentDay += 1;
+      var prevDaysInMonth = TimeLibrary.getDaysInMonth({
+        year: year,
+        month: month - 1
+      });
+      var currentDay = TimeLibrary.getSundayDate({
+        year: year,
+        month: month
+      }, prevDaysInMonth);
+      var flagDayInMonth = false;
+      var className = 'btn btn-warning btn-block';
 
-      if (currentDay > prevDaysInMonth) {
-        flagDayInMonth = !flagDayInMonth;
-        className = flagDayInMonth ? 'btn btn-success btn-block' : 'btn btn-warning btn-block';
-        currentDay = 1;
+      if (currentDay === 1) {
         prevDaysInMonth = currentDaysInMonth;
+        flagDayInMonth = true;
+        className = 'btn btn-success btn-block';
       }
-    }
 
-    calendar.push(newWeek);
-  }
+      var calendar = [];
 
-  if (year === getYearNow() && month === getMonthNow()) {
-    var startPosJ = new Date(year, month, 1).getDay();
+      for (var i = 0; i < 6; i++) {
+        var newWeek = [];
 
-    for (var _i = 0; _i < 5; _i++) {
-      for (var _j = startPosJ; _j < 7; _j++) {
-        if (calendar[_i][_j].day === getMonthDayNow()) {
-          calendar[_i][_j].classButton = 'btn btn-danger btn-block';
-          break;
+        for (var j = 0; j < 7; j++) {
+          newWeek.push({
+            day: currentDay,
+            classButton: className
+          });
+          currentDay += 1;
+
+          if (currentDay > prevDaysInMonth) {
+            flagDayInMonth = !flagDayInMonth;
+            className = flagDayInMonth ? 'btn btn-success btn-block' : 'btn btn-warning btn-block';
+            currentDay = 1;
+            prevDaysInMonth = currentDaysInMonth;
+          }
         }
 
-        startPosJ = 0;
+        calendar.push(newWeek);
       }
+
+      if (year === TimeLibrary.getYearNow() && month === TimeLibrary.getMonthNow()) {
+        var startPosJ = new Date(year, month, 1).getDay();
+
+        for (var _i = 0; _i < 5; _i++) {
+          for (var _j = startPosJ; _j < 7; _j++) {
+            if (calendar[_i][_j].day === TimeLibrary.getMonthDayNow()) {
+              calendar[_i][_j].classButton = 'btn btn-danger btn-block';
+              break;
+            }
+
+            startPosJ = 0;
+          }
+        }
+      }
+
+      return calendar;
     }
-  }
+  }], [{
+    key: "getWeekDayNow",
+    value: function getWeekDayNow() {
+      return new Date().getDay();
+    }
+  }, {
+    key: "getMonthNow",
+    value: function getMonthNow() {
+      return new Date().getMonth();
+    }
+  }, {
+    key: "getYearNow",
+    value: function getYearNow() {
+      return new Date().getFullYear();
+    }
+  }, {
+    key: "getMonthDayNow",
+    value: function getMonthDayNow() {
+      return new Date().getDate();
+    }
+  }, {
+    key: "getHoursFormat",
+    value: function getHoursFormat() {
+      var hours = new Date().getHours();
+      return hours < 10 ? "0".concat(hours) : "".concat(hours);
+    }
+  }, {
+    key: "getMinutesFormat",
+    value: function getMinutesFormat() {
+      var minutes = new Date().getMinutes();
+      return minutes < 10 ? "0".concat(minutes) : "".concat(minutes);
+    }
+  }, {
+    key: "getSecondsFormat",
+    value: function getSecondsFormat() {
+      var seconds = new Date().getSeconds();
+      return seconds < 10 ? "0".concat(seconds) : "".concat(seconds);
+    }
+  }, {
+    key: "getDaysInMonth",
+    value: function getDaysInMonth(current) {
+      var year = current.year,
+          month = current.month;
+      var currentDate = new Date(year, month, 1).getTime();
+      var nextDate = new Date(year, month + 1, 1).getTime();
+      return Math.round((nextDate - currentDate) / 1000 / 3600 / 24);
+    }
+  }, {
+    key: "getSundayDate",
+    value: function getSundayDate(current, daysInMonth) {
+      var currentDay = new Date(current.year, current.month, 1).getDay();
 
-  return calendar;
-}
+      if (currentDay === 0) {
+        return 1;
+      }
 
-function getNameMonth(month) {
-  var monthsNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return monthsNames[month];
-}
+      return daysInMonth - currentDay + 1;
+    }
+  }, {
+    key: "getNameMonth",
+    value: function getNameMonth(month) {
+      var monthsNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      return monthsNames[month];
+    }
+  }, {
+    key: "getNameDay",
+    value: function getNameDay(day) {
+      var daysNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      return daysNames[day];
+    }
+  }]);
 
-function getNameDay(day) {
-  var daysNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  return daysNames[day];
-}
+  return TimeLibrary;
+}();
 
 
 
@@ -34791,6 +34793,16 @@ var WeatherAPI = /*#__PURE__*/function () {
   }
 
   _createClass(WeatherAPI, [{
+    key: "getApiKey",
+    value: function getApiKey() {
+      return this._apiKey;
+    }
+  }, {
+    key: "getCityDate",
+    value: function getCityDate(id) {
+      return this.cityData[id];
+    }
+  }, {
     key: "_transformKelvinToCelsius",
     value: function _transformKelvinToCelsius(temperature) {
       return Math.floor(temperature - 273.15);
@@ -34837,7 +34849,7 @@ var WeatherAPI = /*#__PURE__*/function () {
             switch (_context.prev = _context.next) {
               case 0:
                 latitude = _ref.latitude, altitude = _ref.altitude, interval = _ref.interval;
-                url = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(latitude, "&lon=").concat(altitude, "&exclude=").concat(interval, "&appid=").concat(this._apiKey);
+                url = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(latitude, "&lon=").concat(altitude, "&exclude=").concat(interval, "&appid=").concat(this.getApiKey());
                 _context.next = 4;
                 return fetch(url);
 
@@ -34872,13 +34884,13 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getWeatherDataToday",
     value: function () {
       var _getWeatherDataToday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(cityId) {
-        var _this$cityData$cityId, latitude, altitude, cityWeatherToday;
+        var _this$getCityDate, latitude, altitude, cityWeatherToday;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this$cityData$cityId = this.cityData[cityId], latitude = _this$cityData$cityId.latitude, altitude = _this$cityData$cityId.altitude;
+                _this$getCityDate = this.getCityDate([cityId]), latitude = _this$getCityDate.latitude, altitude = _this$getCityDate.altitude;
                 _context2.next = 3;
                 return this.getResource({
                   latitude: latitude,
@@ -34908,13 +34920,13 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getWeatherSevenDays",
     value: function () {
       var _getWeatherSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(cityId) {
-        var _this$cityData$cityId2, latitude, altitude, cityWeatherSevenDays;
+        var _this$getCityDate2, latitude, altitude, cityWeatherSevenDays;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this$cityData$cityId2 = this.cityData[cityId], latitude = _this$cityData$cityId2.latitude, altitude = _this$cityData$cityId2.altitude;
+                _this$getCityDate2 = this.getCityDate([cityId]), latitude = _this$getCityDate2.latitude, altitude = _this$getCityDate2.altitude;
                 _context3.next = 3;
                 return this.getResource({
                   latitude: latitude,

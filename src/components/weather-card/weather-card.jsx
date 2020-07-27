@@ -5,12 +5,10 @@ import './weather-card.scss';
 const WeatherCard = () => (
   <section className="main-card">
     <table className="main-card__table">
-      <thdead>
+      <tbody>
         <tr className="main-card__table-row">
           <th className="main-card__parameter">Weather in Moscow</th>
         </tr>
-      </thdead>
-      <tbody>
         <tr className="main-card__table-row">
           <th className="main-card__parameter">Temperature</th>
           <td className="main-card__value">20°C</td>
