@@ -16,9 +16,12 @@ module.exports = {
   },
   plugins: [
     'react',
+    'react-hooks',
     'import',
   ],
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
     'react/state-in-constructor': [2, 'never'],
     'import/no-unresolved': 'off',
     'react/prefer-stateless-function': 'off',
