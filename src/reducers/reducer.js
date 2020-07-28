@@ -1,22 +1,32 @@
-import WeatherAPI from '../services/weather-api';
-import { CHANGE_CITY } from '../actions/actions-constant';
+import { CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE } from '../actions/actions-constant';
 
-const weatherAPI = new WeatherAPI();
 const initialState = {
+  loading: true,
+  error: null,
   cityId: 0,
-  cityName: weatherAPI.getCityDate(0).cityName,
-  current: weatherAPI.getWeatherDataToday(0),
-  daily: weatherAPI.getWeatherSevenDays(0),
+  current: {},
+  daily: [],
 };
 const reducer = (state = initialState, action) => {
-  const id = action.payload;
   switch (action.type) {
-    case CHANGE_CITY:
+    case CITY_WEATHER_TODAY_REQUEST:
       return {
-        cityId: id,
-        cityName: weatherAPI.getCityDate(id),
-        current: weatherAPI.getWeatherDataToday(id),
-        daily: weatherAPI.getWeatherSevenDays(id),
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case CITY_WEATHER_TODAY_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CITY_WEATHER_TODAY_SUCCESS:
+      return {
+        ...state,
+        current: action.payload,
+        loading: false,
+        error: null,
       };
     default:
       return state;

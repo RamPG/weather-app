@@ -20,7 +20,7 @@ export default class WeatherAPI {
     getApiKey() {
       return this._apiKey;
     }
-    getCityDate(id) {
+    getCityData(id) {
      return this.cityData[id]
     }
 
@@ -65,14 +65,20 @@ export default class WeatherAPI {
   }
 
    async getWeatherDataToday(cityId) {
-     const { latitude, altitude } = this.getCityDate([cityId]);
+     const { latitude, altitude } = this.getCityData(cityId);
      const cityWeatherToday = await this.getResource({ latitude, altitude, interval: 'hourly,daily' });
-     return this._transformTodayData(cityWeatherToday);
+     return {
+       cityName: this.getCityData(cityId).cityName,
+       ...this._transformTodayData(cityWeatherToday)
+     };
   }
 
   async getWeatherSevenDays(cityId) {
-     const { latitude, altitude } = this.getCityDate([cityId]);
+     const { latitude, altitude } = this.getCityData(cityId);
      const cityWeatherSevenDays = await this.getResource({ latitude, altitude, interval: 'current,hourly'});
-     return this._transformSevenDaysData(cityWeatherSevenDays);
+    return {
+      cityName: this.getCityData(cityId).cityName,
+      ...this._transformSevenDaysData(cityWeatherSevenDays)
+    };
   }
 }

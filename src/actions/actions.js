@@ -1,5 +1,26 @@
-import { CHANGE_CITY } from './actions-constant';
+import {
+  CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
+} from './actions-constant';
 
-export const changeCity = () => ({
-  type: CHANGE_CITY,
+const cityWeatherTodayRequest = () => ({
+  type: CITY_WEATHER_TODAY_REQUEST,
 });
+
+const cityWeatherTodayFailure = (error) => ({
+  type: CITY_WEATHER_TODAY_FAILURE,
+  payload: error,
+});
+
+const cityWeatherTodaySuccess = (cityWeatherTodayData) => ({
+  type: CITY_WEATHER_TODAY_SUCCESS,
+  payload: cityWeatherTodayData,
+});
+
+export const cityWeatherFetch = (weatherApi) => () => (dispatch, getState) => {
+  dispatch(cityWeatherTodayRequest());
+  weatherApi.getWeatherDataToday(getState().cityId)
+    .then((data) => {
+      dispatch(cityWeatherTodaySuccess(data));
+    })
+    .catch((error) => dispatch(cityWeatherTodayFailure(error)));
+};
