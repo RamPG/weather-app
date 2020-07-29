@@ -16,7 +16,7 @@ const cityWeatherTodaySuccess = (cityWeatherTodayData) => ({
   payload: cityWeatherTodayData,
 });
 
-export const cityWeatherFetch = (weatherApi) => () => (dispatch, getState) => {
+export const cityWeatherTodayFetch = (weatherApi) => (dispatch, getState) => {
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherDataToday(getState().cityId)
     .then((data) => {

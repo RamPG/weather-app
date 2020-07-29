@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import './weather-card.scss';
-import { bindActionCreators } from 'redux';
-import { cityWeatherFetch } from '../../actions/actions';
+
+import { cityWeatherTodayFetch } from '../../actions/actions';
 import withWeatherApi from '../../hoc-helpers';
 
 const WeatherCard = ({
-  cityWeatherFetch, current: {
+  cityWeatherTodayFetch, current: {
     feelsLike, humidity, temp, weather, windSpeed, cityName,
   },
 }) => {
   useEffect(() => {
-    cityWeatherFetch();
+    cityWeatherTodayFetch();
   }, []);
-  console.log(cityWeatherFetch, feelsLike, humidity, temp, weather, cityName, windSpeed);
   return (
     <section className="main-card">
       <table className="main-card__table">
@@ -65,13 +65,9 @@ const WeatherCard = ({
     </section>
   );
 };
-const mapStateToProps = (state) => {
-  console.log(state);
-  const { cityName, current } = state;
-  console.log(cityName, current);
-  return { cityName, current };
-};
-const mapDispatchToProps = (dispatch, { weatherApi }) => bindActionCreators({
-  cityWeatherFetch: cityWeatherFetch(weatherApi),
-}, dispatch);
+const mapStateToProps = ({ cityName, current }) => ({ cityName, current });
+
+const mapDispatchToProps = (dispatch, { weatherApi }) => ({
+  cityWeatherTodayFetch: () => dispatch(cityWeatherTodayFetch(weatherApi)),
+});
 export default withWeatherApi(connect(mapStateToProps, mapDispatchToProps)(WeatherCard));

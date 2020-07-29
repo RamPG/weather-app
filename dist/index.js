@@ -37803,12 +37803,12 @@ var CITY_WEATHER_TODAY_FAILURE = 'FETCH_CITY_WEATHER_TODAY_FAILURE';
 /*!********************************!*\
   !*** ./src/actions/actions.js ***!
   \********************************/
-/*! exports provided: cityWeatherFetch */
+/*! exports provided: cityWeatherTodayFetch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherFetch", function() { return cityWeatherFetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherTodayFetch", function() { return cityWeatherTodayFetch; });
 /* harmony import */ var _actions_constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions-constant */ "./src/actions/actions-constant.js");
 
 
@@ -37832,17 +37832,14 @@ var cityWeatherTodaySuccess = function cityWeatherTodaySuccess(cityWeatherTodayD
   };
 };
 
-var cityWeatherFetch = function cityWeatherFetch(weatherApi) {
-  return function () {
-    return function (dispatch, getState) {
-      console.log(getState());
-      dispatch(cityWeatherTodayRequest());
-      weatherApi.getWeatherDataToday(0).then(function (data) {
-        return dispatch(cityWeatherTodaySuccess(data));
-      })["catch"](function (error) {
-        return dispatch(cityWeatherTodayFailure(error));
-      });
-    };
+var cityWeatherTodayFetch = function cityWeatherTodayFetch(weatherApi) {
+  return function (dispatch, getState) {
+    dispatch(cityWeatherTodayRequest());
+    weatherApi.getWeatherDataToday(getState().cityId).then(function (data) {
+      dispatch(cityWeatherTodaySuccess(data));
+    })["catch"](function (error) {
+      return dispatch(cityWeatherTodayFailure(error));
+    });
   };
 };
 
@@ -37886,14 +37883,7 @@ var App = function App() {
     store: _store__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_3__["WeatherApiProvider"], {
     value: weatherApi
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_today_date__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_clock__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_card__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    cityName: "Moscow",
-    temp: "10",
-    feelsLike: "20",
-    humidity: "15",
-    weather: "Clouds",
-    windSpeed: "3.94"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_list__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_today_date__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_clock__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_card__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_list__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -38203,10 +38193,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./weather-card.scss */ "./src/components/weather-card/weather-card.scss");
-/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_weather_card_scss__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
-/* harmony import */ var _hoc_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hoc-helpers */ "./src/hoc-helpers/index.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./weather-card.scss */ "./src/components/weather-card/weather-card.scss");
+/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_weather_card_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
+/* harmony import */ var _hoc_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../hoc-helpers */ "./src/hoc-helpers/index.js");
+
 
 
 
@@ -38214,14 +38206,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var WeatherCard = function WeatherCard(_ref) {
-  var cityName = _ref.cityName,
-      temp = _ref.temp,
-      feelsLike = _ref.feelsLike,
-      humidity = _ref.humidity,
-      weather = _ref.weather,
-      windSpeed = _ref.windSpeed,
-      cityWeatherFetch = _ref.cityWeatherFetch;
-  cityWeatherFetch();
+  var cityWeatherTodayFetch = _ref.cityWeatherTodayFetch,
+      _ref$current = _ref.current,
+      feelsLike = _ref$current.feelsLike,
+      humidity = _ref$current.humidity,
+      temp = _ref$current.temp,
+      weather = _ref$current.weather,
+      windSpeed = _ref$current.windSpeed,
+      cityName = _ref$current.cityName;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    cityWeatherTodayFetch();
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "main-card"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
@@ -38230,7 +38225,7 @@ var WeatherCard = function WeatherCard(_ref) {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
-  }, "Weather in", cityName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+  }, "Weather in", ' ', cityName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
@@ -38263,12 +38258,29 @@ var WeatherCard = function WeatherCard(_ref) {
   }, windSpeed, ' ', "m/s")))));
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
-  var weatherApi = _ref2.weatherApi;
-  Object(_actions_actions__WEBPACK_IMPORTED_MODULE_3__["cityWeatherFetch"])(weatherApi);
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var cityName = _ref2.cityName,
+      current = _ref2.current;
+  return {
+    cityName: cityName,
+    current: current
+  };
+};
+/* const mapDispatchToProps = (dispatch, { weatherApi }) => bindActionCreators({
+  cityWeatherTodayFetch: cityWeatherTodayFetch(weatherApi),
+}, dispatch); */
+
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref3) {
+  var weatherApi = _ref3.weatherApi;
+  return {
+    cityWeatherTodayFetch: function cityWeatherTodayFetch() {
+      return dispatch(Object(_actions_actions__WEBPACK_IMPORTED_MODULE_4__["cityWeatherTodayFetch"])(weatherApi));
+    }
+  };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers__WEBPACK_IMPORTED_MODULE_4__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapDispatchToProps)(WeatherCard)));
+/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers__WEBPACK_IMPORTED_MODULE_5__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(WeatherCard)));
 
 /***/ }),
 
@@ -38521,15 +38533,13 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 
-var withWeatherApi = function withWeatherApi() {
-  return function (Wrapped) {
-    return function (props) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_2__["WeatherApiConsumer"], null, function (weatherApi) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Wrapped, _extends({}, props, {
-          weatherApi: weatherApi
-        }));
-      });
-    };
+var withWeatherApi = function withWeatherApi(Wrapped) {
+  return function (props) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_2__["WeatherApiConsumer"], null, function (weatherApi) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Wrapped, _extends({}, props, {
+        weatherApi: weatherApi
+      }));
+    });
   };
 };
 
@@ -38622,7 +38632,6 @@ var initialState = {
   loading: true,
   error: null,
   cityId: 0,
-  cityName: '',
   current: {},
   daily: []
 };
@@ -38873,24 +38882,52 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WeatherAPI; });
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.map */ "./node_modules/core-js/modules/es.array.map.js");
-/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
-/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.symbol */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.filter */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.map */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.object.define-properties */ "./node_modules/core-js/modules/es.object.define-properties.js");
+/* harmony import */ var core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptor */ "./node_modules/core-js/modules/es.object.get-own-property-descriptor.js");
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptors */ "./node_modules/core-js/modules/es.object.get-own-property-descriptors.js");
+/* harmony import */ var core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.object.keys */ "./node_modules/core-js/modules/es.object.keys.js");
+/* harmony import */ var core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13__);
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -39017,13 +39054,13 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getWeatherDataToday",
     value: function () {
       var _getWeatherDataToday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(cityId) {
-        var _this$getCityDate, latitude, altitude, cityWeatherToday;
+        var _this$getCityData, latitude, altitude, cityWeatherToday;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this$getCityDate = this.getCityDate([cityId]), latitude = _this$getCityDate.latitude, altitude = _this$getCityDate.altitude;
+                _this$getCityData = this.getCityData(cityId), latitude = _this$getCityData.latitude, altitude = _this$getCityData.altitude;
                 _context2.next = 3;
                 return this.getResource({
                   latitude: latitude,
@@ -39033,7 +39070,9 @@ var WeatherAPI = /*#__PURE__*/function () {
 
               case 3:
                 cityWeatherToday = _context2.sent;
-                return _context2.abrupt("return", this._transformTodayData(cityWeatherToday));
+                return _context2.abrupt("return", _objectSpread({
+                  cityName: this.getCityData(cityId).cityName
+                }, this._transformTodayData(cityWeatherToday)));
 
               case 5:
               case "end":
@@ -39053,13 +39092,13 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getWeatherSevenDays",
     value: function () {
       var _getWeatherSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(cityId) {
-        var _this$getCityDate2, latitude, altitude, cityWeatherSevenDays;
+        var _this$getCityData2, latitude, altitude, cityWeatherSevenDays;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this$getCityDate2 = this.getCityDate([cityId]), latitude = _this$getCityDate2.latitude, altitude = _this$getCityDate2.altitude;
+                _this$getCityData2 = this.getCityData(cityId), latitude = _this$getCityData2.latitude, altitude = _this$getCityData2.altitude;
                 _context3.next = 3;
                 return this.getResource({
                   latitude: latitude,
@@ -39069,7 +39108,9 @@ var WeatherAPI = /*#__PURE__*/function () {
 
               case 3:
                 cityWeatherSevenDays = _context3.sent;
-                return _context3.abrupt("return", this._transformSevenDaysData(cityWeatherSevenDays));
+                return _context3.abrupt("return", _objectSpread({
+                  cityName: this.getCityData(cityId).cityName
+                }, this._transformSevenDaysData(cityWeatherSevenDays)));
 
               case 5:
               case "end":
