@@ -38262,18 +38262,33 @@ __webpack_require__.r(__webpack_exports__);
 var WeatherCard = function WeatherCard(_ref) {
   var cityWeatherTodayFetch = _ref.cityWeatherTodayFetch,
       cityName = _ref.cityName,
+      loading = _ref.loading,
+      error = _ref.error,
       _ref$data = _ref.data,
       feelsLike = _ref$data.feelsLike,
       humidity = _ref$data.humidity,
       temp = _ref$data.temp,
       weather = _ref$data.weather,
-      windSpeed = _ref$data.windSpeed;
+      windSpeed = _ref$data.windSpeed,
+      imgLink = _ref$data.imgLink;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     cityWeatherTodayFetch();
   }, []);
+
+  if (loading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
+  }
+
+  if (error) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Error!");
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
     className: "main-card"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "main-card__img",
+    src: imgLink
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "main-card__table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     className: "main-card__table-row"
@@ -38314,10 +38329,15 @@ var WeatherCard = function WeatherCard(_ref) {
 
 var mapStateToProps = function mapStateToProps(_ref2) {
   var cityName = _ref2.cityName,
-      data = _ref2.current.data;
+      _ref2$current = _ref2.current,
+      data = _ref2$current.data,
+      loading = _ref2$current.loading,
+      error = _ref2$current.error;
   return {
     cityName: cityName,
-    data: data
+    data: data,
+    loading: loading,
+    error: error
   };
 };
 
@@ -38402,7 +38422,8 @@ var WeatherListItem = function WeatherListItem(_ref) {
       feelsLike = _ref.feelsLike,
       humidity = _ref.humidity,
       weather = _ref.weather,
-      windSpeed = _ref.windSpeed;
+      windSpeed = _ref.windSpeed,
+      imgLink = _ref.imgLink;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     className: "weather-list__item-content"
   }, weekDayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
@@ -38411,7 +38432,7 @@ var WeatherListItem = function WeatherListItem(_ref) {
     className: "weather-list__item-content"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     className: "weather-list__weather-img",
-    src: "http://openweathermap.org/img/wn/01d@2x.png",
+    src: imgLink,
     width: "100",
     height: "100",
     alt: "weather"
@@ -38509,13 +38530,25 @@ __webpack_require__.r(__webpack_exports__);
 
 var WeatherList = function WeatherList(_ref) {
   var cityWeatherSevenDaysFetch = _ref.cityWeatherSevenDaysFetch,
-      daily = _ref.daily;
+      _ref$daily = _ref.daily,
+      data = _ref$daily.data,
+      loading = _ref$daily.loading,
+      error = _ref$daily.error;
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     cityWeatherSevenDaysFetch();
   }, []);
+
+  if (loading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Loading...");
+  }
+
+  if (error) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Error!");
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
     className: "weather-list"
-  }, daily.data.map(function (element) {
+  }, data.map(function (element) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
       key: element.id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_weather_list_item__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -38526,7 +38559,8 @@ var WeatherList = function WeatherList(_ref) {
       feelsLike: element.feelsLike,
       humidity: element.humidity,
       weather: element.weather,
-      windSpeed: element.windSpeed
+      windSpeed: element.windSpeed,
+      imgLink: element.imgLink
     }));
   }));
 };
@@ -39061,6 +39095,24 @@ var WeatherAPI = /*#__PURE__*/function () {
       latitude: '48.204418',
       altitude: '16.381353'
     }]);
+
+    _defineProperty(this, "weatherImg", {
+      Thunderstorm: 'http://openweathermap.org/img/wn/11d@2x.png',
+      Drizzle: 'http://openweathermap.org/img/wn/09d@2x.png',
+      Rain: 'http://openweathermap.org/img/wn/10d@2x.png',
+      Snow: 'http://openweathermap.org/img/wn/13d@2x.png',
+      Mist: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Smoke: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Haze: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Fog: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Sand: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Dust: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Ash: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Squall: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Tornado: 'http://openweathermap.org/img/wn/50d@2x.png',
+      Clear: 'http://openweathermap.org/img/wn/01d@2x.png',
+      Clouds: 'http://openweathermap.org/img/wn/02d@2x.png'
+    });
   }
 
   _createClass(WeatherAPI, [{
@@ -39080,23 +39132,27 @@ var WeatherAPI = /*#__PURE__*/function () {
     }
   }, {
     key: "_transformTodayData",
-    value: function _transformTodayData(data) {
+    value: function _transformTodayData(_ref) {
+      var current = _ref.current;
       return {
-        temp: this._transformKelvinToCelsius(data.current.temp),
-        feelsLike: this._transformKelvinToCelsius(data.current.feels_like),
-        humidity: data.current.humidity,
-        weather: data.current.weather[0].main,
-        windSpeed: data.current.wind_speed
+        imgLink: this.weatherImg[current.weather[0].main],
+        temp: this._transformKelvinToCelsius(current.temp),
+        feelsLike: this._transformKelvinToCelsius(current.feels_like),
+        humidity: current.humidity,
+        weather: current.weather[0].main,
+        windSpeed: current.wind_speed
       };
     }
   }, {
     key: "_transformSevenDaysData",
-    value: function _transformSevenDaysData(data) {
+    value: function _transformSevenDaysData(_ref2) {
       var _this = this;
 
-      return data.daily.map(function (element, index) {
+      var daily = _ref2.daily;
+      return daily.map(function (element, index) {
         return {
           id: index,
+          imgLink: _this.weatherImg[element.weather[0].main],
           weekDayName: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].getNameDay(_time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addWeekDay(index)),
           monthDay: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addMonthDay(index),
           monthDayName: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].getNameMonth(_time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addMonth(index)),
@@ -39117,13 +39173,13 @@ var WeatherAPI = /*#__PURE__*/function () {
   }, {
     key: "getResource",
     value: function () {
-      var _getResource = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
+      var _getResource = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref3) {
         var latitude, altitude, interval, url, res;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                latitude = _ref.latitude, altitude = _ref.altitude, interval = _ref.interval;
+                latitude = _ref3.latitude, altitude = _ref3.altitude, interval = _ref3.interval;
                 url = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(latitude, "&lon=").concat(altitude, "&exclude=").concat(interval, "&appid=").concat(this.getApiKey());
                 _context.next = 4;
                 return fetch(url);

@@ -3,7 +3,7 @@ import React from 'react';
 import './weather-list-item.scss';
 
 const WeatherListItem = ({
-  weekDayName, monthDay, monthDayName, temp, feelsLike, humidity, weather, windSpeed,
+  weekDayName, monthDay, monthDayName, temp, feelsLike, humidity, weather, windSpeed, imgLink
 }) => (
   <>
     <p className="weather-list__item-content">
@@ -17,7 +17,7 @@ const WeatherListItem = ({
     <p className="weather-list__item-content">
       <img
         className="weather-list__weather-img"
-        src="http://openweathermap.org/img/wn/01d@2x.png"
+        src={imgLink}
         width="100"
         height="100"
         alt="weather"

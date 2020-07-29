@@ -7,14 +7,20 @@ import { cityWeatherSevenDaysFetch } from '../../actions/actions';
 import withWeatherApi from '../../hoc-helpers';
 import WeatherListItem from '../weather-list-item';
 
-const WeatherList = ({ cityWeatherSevenDaysFetch, daily }) => {
+const WeatherList = ({ cityWeatherSevenDaysFetch, daily: { data, loading, error } }) => {
   useEffect(() => {
     cityWeatherSevenDaysFetch();
   }, []);
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+  if (error) {
+    return <h1>Error!</h1>;
+  }
   return (
     <ul className="weather-list">
       {
-        daily.data.map((element) => (
+        data.map((element) => (
           <li key={element.id}>
             <WeatherListItem
               weekDayName={element.weekDayName}
@@ -25,6 +31,7 @@ const WeatherList = ({ cityWeatherSevenDaysFetch, daily }) => {
               humidity={element.humidity}
               weather={element.weather}
               windSpeed={element.windSpeed}
+              imgLink={element.imgLink}
             />
           </li>
         ))

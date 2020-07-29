@@ -7,15 +7,22 @@ import { cityWeatherTodayFetch } from '../../actions/actions';
 import withWeatherApi from '../../hoc-helpers';
 
 const WeatherCard = ({
-  cityWeatherTodayFetch, cityName, data: {
-    feelsLike, humidity, temp, weather, windSpeed,
+  cityWeatherTodayFetch, cityName, loading, error, data: {
+    feelsLike, humidity, temp, weather, windSpeed, imgLink,
   },
 }) => {
   useEffect(() => {
     cityWeatherTodayFetch();
   }, []);
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
+  if (error) {
+    return <h1>Error!</h1>;
+  }
   return (
     <section className="main-card">
+      <img className="main-card__img" src={imgLink} />
       <table className="main-card__table">
         <tbody>
           <tr className="main-card__table-row">
@@ -60,10 +67,13 @@ const WeatherCard = ({
           </tr>
         </tbody>
       </table>
+
     </section>
   );
 };
-const mapStateToProps = ({ cityName, current: { data } }) => ({ cityName, data });
+const mapStateToProps = ({ cityName, current: { data, loading, error } }) => ({
+  cityName, data, loading, error,
+});
 
 const mapDispatchToProps = (dispatch, { weatherApi }) => ({
   cityWeatherTodayFetch: () => dispatch(cityWeatherTodayFetch(weatherApi)),
