@@ -1,3 +1,5 @@
+import TimeLibrary from '../time-library';
+
 export default class WeatherAPI {
    _apiKey = 'c0e4dd09360b7cc7634d299c1d2e9790';
    cityData = [
@@ -38,11 +40,15 @@ export default class WeatherAPI {
      }
   }
   _transformSevenDaysData(data) {
-     return data.daily.map((element) => {
+     return data.daily.map((element, index) => {
        return {
+         id: index,
+         weekDayName: TimeLibrary.getNameDay(TimeLibrary.addWeekDay(index)),
+         monthDay: TimeLibrary.addMonthDay(index),
+         monthDayName: TimeLibrary.getNameMonth(TimeLibrary.addMonth(index)),
           temp: {
             day: this._transformKelvinToCelsius(element.temp.day),
-            night: this._transformKelvinToCelsius(element.temp.night)
+            night: this._transformKelvinToCelsius(element.temp.night),
           },
          feelsLike: {
            day: this._transformKelvinToCelsius(element.feels_like.day),
@@ -67,18 +73,14 @@ export default class WeatherAPI {
    async getWeatherDataToday(cityId) {
      const { latitude, altitude } = this.getCityData(cityId);
      const cityWeatherToday = await this.getResource({ latitude, altitude, interval: 'hourly,daily' });
-     return {
-       cityName: this.getCityData(cityId).cityName,
-       ...this._transformTodayData(cityWeatherToday)
-     };
+     return this._transformTodayData(cityWeatherToday);
+
   }
 
-  async getWeatherSevenDays(cityId) {
+  async getWeatherDataSevenDays(cityId) {
      const { latitude, altitude } = this.getCityData(cityId);
      const cityWeatherSevenDays = await this.getResource({ latitude, altitude, interval: 'current,hourly'});
-    return {
-      cityName: this.getCityData(cityId).cityName,
-      ...this._transformSevenDaysData(cityWeatherSevenDays)
-    };
+    return this._transformSevenDaysData(cityWeatherSevenDays);
+
   }
 }

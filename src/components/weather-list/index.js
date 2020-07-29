@@ -1,3 +1,3 @@
-import WeatherList from './weather-table';
+import WeatherList from './weather-list';
 
 export default WeatherList;

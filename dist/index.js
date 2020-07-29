@@ -4654,6 +4654,24 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/weather-list-item/weather-list-item.scss":
+/*!**********************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/weather-list-item/weather-list-item.scss ***!
+  \**********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/weather-list/weather-list.scss":
 /*!************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/weather-list/weather-list.scss ***!
@@ -37783,7 +37801,7 @@ module.exports = function(originalModule) {
 /*!*****************************************!*\
   !*** ./src/actions/actions-constant.js ***!
   \*****************************************/
-/*! exports provided: CITY_CHANGE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE */
+/*! exports provided: CITY_CHANGE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE, CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37792,10 +37810,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_REQUEST", function() { return CITY_WEATHER_TODAY_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_SUCCESS", function() { return CITY_WEATHER_TODAY_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_FAILURE", function() { return CITY_WEATHER_TODAY_FAILURE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_REQUEST", function() { return CITY_WEATHER_SEVEN_DAYS_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_SUCCESS", function() { return CITY_WEATHER_SEVEN_DAYS_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_FAILURE", function() { return CITY_WEATHER_SEVEN_DAYS_FAILURE; });
 var CITY_CHANGE = 'CITY_CHANGE';
 var CITY_WEATHER_TODAY_REQUEST = 'FETCH_CITY_WEATHER_TODAY_REQUEST';
 var CITY_WEATHER_TODAY_SUCCESS = 'FETCH_CITY_WEATHER_TODAY_SUCCESS';
 var CITY_WEATHER_TODAY_FAILURE = 'FETCH_CITY_WEATHER_TODAY_FAILURE';
+var CITY_WEATHER_SEVEN_DAYS_REQUEST = 'FETCH_CITY_WEATHER_SEVEN_DAYS_REQUEST';
+var CITY_WEATHER_SEVEN_DAYS_SUCCESS = 'FETCH_CITY_WEATHER_SEVEN_DAYS_SUCCESS';
+var CITY_WEATHER_SEVEN_DAYS_FAILURE = 'FETCH_CITY_WEATHER_SEVEN_DAYS_FAILURE';
 
 /***/ }),
 
@@ -37803,12 +37827,13 @@ var CITY_WEATHER_TODAY_FAILURE = 'FETCH_CITY_WEATHER_TODAY_FAILURE';
 /*!********************************!*\
   !*** ./src/actions/actions.js ***!
   \********************************/
-/*! exports provided: cityWeatherTodayFetch */
+/*! exports provided: cityWeatherTodayFetch, cityWeatherSevenDaysFetch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherTodayFetch", function() { return cityWeatherTodayFetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherSevenDaysFetch", function() { return cityWeatherSevenDaysFetch; });
 /* harmony import */ var _actions_constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions-constant */ "./src/actions/actions-constant.js");
 
 
@@ -37839,6 +37864,37 @@ var cityWeatherTodayFetch = function cityWeatherTodayFetch(weatherApi) {
       dispatch(cityWeatherTodaySuccess(data));
     })["catch"](function (error) {
       return dispatch(cityWeatherTodayFailure(error));
+    });
+  };
+};
+
+var cityWeatherSevenDaysRequest = function cityWeatherSevenDaysRequest() {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_WEATHER_SEVEN_DAYS_REQUEST"]
+  };
+};
+
+var cityWeatherSevenDaysFailure = function cityWeatherSevenDaysFailure(error) {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_WEATHER_SEVEN_DAYS_FAILURE"],
+    payload: error
+  };
+};
+
+var cityWeatherSevenDaysSuccess = function cityWeatherSevenDaysSuccess(cityWeatherTodayData) {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_WEATHER_SEVEN_DAYS_SUCCESS"],
+    payload: cityWeatherTodayData
+  };
+};
+
+var cityWeatherSevenDaysFetch = function cityWeatherSevenDaysFetch(weatherApi) {
+  return function (dispatch, getState) {
+    dispatch(cityWeatherSevenDaysRequest());
+    weatherApi.getWeatherDataSevenDays(getState().cityId).then(function (data) {
+      dispatch(cityWeatherSevenDaysSuccess(data));
+    })["catch"](function (error) {
+      return dispatch(cityWeatherSevenDaysFailure(error));
     });
   };
 };
@@ -38193,12 +38249,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./weather-card.scss */ "./src/components/weather-card/weather-card.scss");
-/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_weather_card_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
-/* harmony import */ var _hoc_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../hoc-helpers */ "./src/hoc-helpers/index.js");
-
+/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./weather-card.scss */ "./src/components/weather-card/weather-card.scss");
+/* harmony import */ var _weather_card_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_weather_card_scss__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
+/* harmony import */ var _hoc_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../hoc-helpers */ "./src/hoc-helpers/index.js");
 
 
 
@@ -38207,13 +38261,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var WeatherCard = function WeatherCard(_ref) {
   var cityWeatherTodayFetch = _ref.cityWeatherTodayFetch,
-      _ref$current = _ref.current,
-      feelsLike = _ref$current.feelsLike,
-      humidity = _ref$current.humidity,
-      temp = _ref$current.temp,
-      weather = _ref$current.weather,
-      windSpeed = _ref$current.windSpeed,
-      cityName = _ref$current.cityName;
+      cityName = _ref.cityName,
+      _ref$data = _ref.data,
+      feelsLike = _ref$data.feelsLike,
+      humidity = _ref$data.humidity,
+      temp = _ref$data.temp,
+      weather = _ref$data.weather,
+      windSpeed = _ref$data.windSpeed;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     cityWeatherTodayFetch();
   }, []);
@@ -38260,27 +38314,23 @@ var WeatherCard = function WeatherCard(_ref) {
 
 var mapStateToProps = function mapStateToProps(_ref2) {
   var cityName = _ref2.cityName,
-      current = _ref2.current;
+      data = _ref2.current.data;
   return {
     cityName: cityName,
-    current: current
+    data: data
   };
 };
-/* const mapDispatchToProps = (dispatch, { weatherApi }) => bindActionCreators({
-  cityWeatherTodayFetch: cityWeatherTodayFetch(weatherApi),
-}, dispatch); */
-
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref3) {
   var weatherApi = _ref3.weatherApi;
   return {
     cityWeatherTodayFetch: function cityWeatherTodayFetch() {
-      return dispatch(Object(_actions_actions__WEBPACK_IMPORTED_MODULE_4__["cityWeatherTodayFetch"])(weatherApi));
+      return dispatch(Object(_actions_actions__WEBPACK_IMPORTED_MODULE_3__["cityWeatherTodayFetch"])(weatherApi));
     }
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers__WEBPACK_IMPORTED_MODULE_5__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(WeatherCard)));
+/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers__WEBPACK_IMPORTED_MODULE_4__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(WeatherCard)));
 
 /***/ }),
 
@@ -38313,6 +38363,108 @@ module.exports = content.locals || {};
 
 /***/ }),
 
+/***/ "./src/components/weather-list-item/index.js":
+/*!***************************************************!*\
+  !*** ./src/components/weather-list-item/index.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _weather_list_item__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather-list-item */ "./src/components/weather-list-item/weather-list-item.jsx");
+
+/* harmony default export */ __webpack_exports__["default"] = (_weather_list_item__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/components/weather-list-item/weather-list-item.jsx":
+/*!****************************************************************!*\
+  !*** ./src/components/weather-list-item/weather-list-item.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _weather_list_item_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./weather-list-item.scss */ "./src/components/weather-list-item/weather-list-item.scss");
+/* harmony import */ var _weather_list_item_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_weather_list_item_scss__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+var WeatherListItem = function WeatherListItem(_ref) {
+  var weekDayName = _ref.weekDayName,
+      monthDay = _ref.monthDay,
+      monthDayName = _ref.monthDayName,
+      temp = _ref.temp,
+      feelsLike = _ref.feelsLike,
+      humidity = _ref.humidity,
+      weather = _ref.weather,
+      windSpeed = _ref.windSpeed;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, weekDayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, monthDay, ' ', monthDayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    className: "weather-list__weather-img",
+    src: "http://openweathermap.org/img/wn/01d@2x.png",
+    width: "100",
+    height: "100",
+    alt: "weather"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Temp day", ' ', temp.day, "\xB0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Temp night", ' ', temp.night, "\xB0C"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Feels like", ' ', feelsLike.day), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Feels like", ' ', feelsLike.night), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Humidity", ' ', humidity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "weather", ' ', weather), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    className: "weather-list__item-content"
+  }, "Wind Speed", ' ', windSpeed));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (WeatherListItem);
+
+/***/ }),
+
+/***/ "./src/components/weather-list-item/weather-list-item.scss":
+/*!*****************************************************************!*\
+  !*** ./src/components/weather-list-item/weather-list-item.scss ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./weather-list-item.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/weather-list-item/weather-list-item.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
 /***/ "./src/components/weather-list/index.js":
 /*!**********************************************!*\
   !*** ./src/components/weather-list/index.js ***!
@@ -38322,9 +38474,80 @@ module.exports = content.locals || {};
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _weather_table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather-table */ "./src/components/weather-list/weather-table.jsx");
+/* harmony import */ var _weather_list__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./weather-list */ "./src/components/weather-list/weather-list.jsx");
 
-/* harmony default export */ __webpack_exports__["default"] = (_weather_table__WEBPACK_IMPORTED_MODULE_0__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (_weather_list__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/components/weather-list/weather-list.jsx":
+/*!******************************************************!*\
+  !*** ./src/components/weather-list/weather-list.jsx ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.map */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _weather_list_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./weather-list.scss */ "./src/components/weather-list/weather-list.scss");
+/* harmony import */ var _weather_list_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_weather_list_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
+/* harmony import */ var _hoc_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../hoc-helpers */ "./src/hoc-helpers/index.js");
+/* harmony import */ var _weather_list_item__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../weather-list-item */ "./src/components/weather-list-item/index.js");
+
+
+
+
+
+
+
+
+var WeatherList = function WeatherList(_ref) {
+  var cityWeatherSevenDaysFetch = _ref.cityWeatherSevenDaysFetch,
+      daily = _ref.daily;
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    cityWeatherSevenDaysFetch();
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+    className: "weather-list"
+  }, daily.data.map(function (element) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+      key: element.id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_weather_list_item__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      weekDayName: element.weekDayName,
+      monthDay: element.monthDay,
+      monthDayName: element.monthDayName,
+      temp: element.temp,
+      feelsLike: element.feelsLike,
+      humidity: element.humidity,
+      weather: element.weather,
+      windSpeed: element.windSpeed
+    }));
+  }));
+};
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var daily = _ref2.daily;
+  return {
+    daily: daily
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref3) {
+  var weatherApi = _ref3.weatherApi;
+  return {
+    cityWeatherSevenDaysFetch: function cityWeatherSevenDaysFetch() {
+      return dispatch(Object(_actions_actions__WEBPACK_IMPORTED_MODULE_4__["cityWeatherSevenDaysFetch"])(weatherApi));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers__WEBPACK_IMPORTED_MODULE_5__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(WeatherList)));
 
 /***/ }),
 
@@ -38354,104 +38577,6 @@ var update = api(content, options);
 
 
 module.exports = content.locals || {};
-
-/***/ }),
-
-/***/ "./src/components/weather-list/weather-table.jsx":
-/*!*******************************************************!*\
-  !*** ./src/components/weather-list/weather-table.jsx ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _weather_list_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./weather-list.scss */ "./src/components/weather-list/weather-list.scss");
-/* harmony import */ var _weather_list_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_weather_list_scss__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-var WeatherList = function WeatherList() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "weather-list"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "weather-list__item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__week-day"
-  }, "\u041F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__date"
-  }, "27 \u0438\u044E\u043B\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__weather"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "weather-list__weather-img",
-    src: "http://openweathermap.org/img/wn/01d@2x.png",
-    width: "100",
-    height: "100",
-    alt: "weather"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-day"
-  }, "20\xB0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-night"
-  }, "21\xB0C")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "weather-list__item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__week-day"
-  }, "\u041F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__date"
-  }, "27 \u0438\u044E\u043B\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__weather"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "weather-list__weather-img",
-    src: "http://openweathermap.org/img/wn/01d@2x.png",
-    width: "100",
-    height: "100",
-    alt: "weather"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-day"
-  }, "20\xB0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-night"
-  }, "21\xB0C")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "weather-list__item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__week-day"
-  }, "\u041F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__date"
-  }, "27 \u0438\u044E\u043B\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__weather"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "weather-list__weather-img",
-    src: "http://openweathermap.org/img/wn/01d@2x.png",
-    width: "100",
-    height: "100",
-    alt: "weather"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-day"
-  }, "20\xB0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-night"
-  }, "21\xB0C")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "weather-list__item"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__week-day"
-  }, "\u041F\u043E\u043D\u0435\u0434\u0435\u043B\u044C\u043D\u0438\u043A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__date"
-  }, "27 \u0438\u044E\u043B\u044F"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__weather"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    className: "weather-list__weather-img",
-    src: "http://openweathermap.org/img/wn/01d@2x.png",
-    width: "100",
-    height: "100",
-    alt: "weather"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-day"
-  }, "20\xB0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: "weather-list__temp-night"
-  }, "21\xB0C")));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (WeatherList);
 
 /***/ }),
 
@@ -38629,11 +38754,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var initialState = {
-  loading: true,
-  error: null,
-  cityId: 0,
-  current: {},
-  daily: []
+  cityId: 1,
+  cityName: 'Kiev',
+  current: {
+    loading: false,
+    error: null,
+    data: {}
+  },
+  daily: {
+    loading: false,
+    error: null,
+    data: []
+  }
 };
 
 var reducer = function reducer() {
@@ -38643,21 +38775,56 @@ var reducer = function reducer() {
   switch (action.type) {
     case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_TODAY_REQUEST"]:
       return _objectSpread(_objectSpread({}, state), {}, {
-        loading: true,
-        error: null
+        current: {
+          loading: true,
+          error: null,
+          data: {}
+        }
       });
 
     case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_TODAY_FAILURE"]:
       return _objectSpread(_objectSpread({}, state), {}, {
-        loading: false,
-        error: action.payload
+        current: {
+          loading: false,
+          error: action.payload,
+          data: {}
+        }
       });
 
     case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_TODAY_SUCCESS"]:
       return _objectSpread(_objectSpread({}, state), {}, {
-        current: action.payload,
-        loading: false,
-        error: null
+        current: {
+          loading: false,
+          error: null,
+          data: action.payload
+        }
+      });
+
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_SEVEN_DAYS_REQUEST"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        daily: {
+          loading: true,
+          error: null,
+          data: []
+        }
+      });
+
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_SEVEN_DAYS_FAILURE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        daily: {
+          loading: false,
+          error: action.payload,
+          data: []
+        }
+      });
+
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_WEATHER_SEVEN_DAYS_SUCCESS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        daily: {
+          loading: false,
+          error: null,
+          data: action.payload
+        }
       });
 
     default:
@@ -38712,73 +38879,7 @@ var TimeLibrary = /*#__PURE__*/function () {
     _classCallCheck(this, TimeLibrary);
   }
 
-  _createClass(TimeLibrary, [{
-    key: "getCalendar",
-    value: function getCalendar(current) {
-      var year = current.year,
-          month = current.month;
-      var currentDaysInMonth = TimeLibrary.getDaysInMonth({
-        year: year,
-        month: month
-      });
-      var prevDaysInMonth = TimeLibrary.getDaysInMonth({
-        year: year,
-        month: month - 1
-      });
-      var currentDay = TimeLibrary.getSundayDate({
-        year: year,
-        month: month
-      }, prevDaysInMonth);
-      var flagDayInMonth = false;
-      var className = 'btn btn-warning btn-block';
-
-      if (currentDay === 1) {
-        prevDaysInMonth = currentDaysInMonth;
-        flagDayInMonth = true;
-        className = 'btn btn-success btn-block';
-      }
-
-      var calendar = [];
-
-      for (var i = 0; i < 6; i++) {
-        var newWeek = [];
-
-        for (var j = 0; j < 7; j++) {
-          newWeek.push({
-            day: currentDay,
-            classButton: className
-          });
-          currentDay += 1;
-
-          if (currentDay > prevDaysInMonth) {
-            flagDayInMonth = !flagDayInMonth;
-            className = flagDayInMonth ? 'btn btn-success btn-block' : 'btn btn-warning btn-block';
-            currentDay = 1;
-            prevDaysInMonth = currentDaysInMonth;
-          }
-        }
-
-        calendar.push(newWeek);
-      }
-
-      if (year === TimeLibrary.getYearNow() && month === TimeLibrary.getMonthNow()) {
-        var startPosJ = new Date(year, month, 1).getDay();
-
-        for (var _i = 0; _i < 5; _i++) {
-          for (var _j = startPosJ; _j < 7; _j++) {
-            if (calendar[_i][_j].day === TimeLibrary.getMonthDayNow()) {
-              calendar[_i][_j].classButton = 'btn btn-danger btn-block';
-              break;
-            }
-
-            startPosJ = 0;
-          }
-        }
-      }
-
-      return calendar;
-    }
-  }], [{
+  _createClass(TimeLibrary, null, [{
     key: "getWeekDayNow",
     value: function getWeekDayNow() {
       return new Date().getDay();
@@ -38797,6 +38898,29 @@ var TimeLibrary = /*#__PURE__*/function () {
     key: "getMonthDayNow",
     value: function getMonthDayNow() {
       return new Date().getDate();
+    }
+  }, {
+    key: "addWeekDay",
+    value: function addWeekDay(value) {
+      return (TimeLibrary.getWeekDayNow() + value) % 7;
+    }
+  }, {
+    key: "addMonthDay",
+    value: function addMonthDay(value) {
+      if (TimeLibrary.getMonthDayNow() + value > TimeLibrary.getDaysInMonth()) {
+        return (TimeLibrary.getMonthDayNow() + value) % TimeLibrary.getDaysInMonth();
+      }
+
+      return TimeLibrary.getMonthDayNow() + value;
+    }
+  }, {
+    key: "addMonth",
+    value: function addMonth(value) {
+      if (TimeLibrary.getMonthDayNow() + value > TimeLibrary.getDaysInMonth()) {
+        return (TimeLibrary.getMonthNow() + 1) % 12;
+      }
+
+      return TimeLibrary.getMonthNow();
     }
   }, {
     key: "getHoursFormat",
@@ -38818,16 +38942,18 @@ var TimeLibrary = /*#__PURE__*/function () {
     }
   }, {
     key: "getDaysInMonth",
-    value: function getDaysInMonth(current) {
-      var year = current.year,
-          month = current.month;
+    value: function getDaysInMonth() {
+      var year = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : TimeLibrary.getYearNow();
+      var month = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : TimeLibrary.getMonthNow();
       var currentDate = new Date(year, month, 1).getTime();
       var nextDate = new Date(year, month + 1, 1).getTime();
       return Math.round((nextDate - currentDate) / 1000 / 3600 / 24);
     }
   }, {
     key: "getSundayDate",
-    value: function getSundayDate(current, daysInMonth) {
+    value: function getSundayDate() {
+      var current = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Date();
+      var daysInMonth = arguments.length > 1 ? arguments[1] : undefined;
       var currentDay = new Date(current.year, current.month, 1).getDay();
 
       if (currentDay === 0) {
@@ -38882,52 +39008,25 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WeatherAPI; });
-/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.symbol */ "./node_modules/core-js/modules/es.symbol.js");
-/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
-/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.filter */ "./node_modules/core-js/modules/es.array.filter.js");
-/* harmony import */ var core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
-/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.map */ "./node_modules/core-js/modules/es.array.map.js");
-/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.object.define-properties */ "./node_modules/core-js/modules/es.object.define-properties.js");
-/* harmony import */ var core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_properties__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
-/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptor */ "./node_modules/core-js/modules/es.object.get-own-property-descriptor.js");
-/* harmony import */ var core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptor__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.object.get-own-property-descriptors */ "./node_modules/core-js/modules/es.object.get-own-property-descriptors.js");
-/* harmony import */ var core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_get_own_property_descriptors__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.object.keys */ "./node_modules/core-js/modules/es.object.keys.js");
-/* harmony import */ var core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_keys__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
-/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.map */ "./node_modules/core-js/modules/es.array.map.js");
+/* harmony import */ var core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _time_library__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../time-library */ "./src/services/time-library/index.js");
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -38940,6 +39039,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 var WeatherAPI = /*#__PURE__*/function () {
   function WeatherAPI() {
@@ -38993,8 +39094,12 @@ var WeatherAPI = /*#__PURE__*/function () {
     value: function _transformSevenDaysData(data) {
       var _this = this;
 
-      return data.daily.map(function (element) {
+      return data.daily.map(function (element, index) {
         return {
+          id: index,
+          weekDayName: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].getNameDay(_time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addWeekDay(index)),
+          monthDay: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addMonthDay(index),
+          monthDayName: _time_library__WEBPACK_IMPORTED_MODULE_6__["default"].getNameMonth(_time_library__WEBPACK_IMPORTED_MODULE_6__["default"].addMonth(index)),
           temp: {
             day: _this._transformKelvinToCelsius(element.temp.day),
             night: _this._transformKelvinToCelsius(element.temp.night)
@@ -39070,9 +39175,7 @@ var WeatherAPI = /*#__PURE__*/function () {
 
               case 3:
                 cityWeatherToday = _context2.sent;
-                return _context2.abrupt("return", _objectSpread({
-                  cityName: this.getCityData(cityId).cityName
-                }, this._transformTodayData(cityWeatherToday)));
+                return _context2.abrupt("return", this._transformTodayData(cityWeatherToday));
 
               case 5:
               case "end":
@@ -39089,9 +39192,9 @@ var WeatherAPI = /*#__PURE__*/function () {
       return getWeatherDataToday;
     }()
   }, {
-    key: "getWeatherSevenDays",
+    key: "getWeatherDataSevenDays",
     value: function () {
-      var _getWeatherSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(cityId) {
+      var _getWeatherDataSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(cityId) {
         var _this$getCityData2, latitude, altitude, cityWeatherSevenDays;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -39108,9 +39211,7 @@ var WeatherAPI = /*#__PURE__*/function () {
 
               case 3:
                 cityWeatherSevenDays = _context3.sent;
-                return _context3.abrupt("return", _objectSpread({
-                  cityName: this.getCityData(cityId).cityName
-                }, this._transformSevenDaysData(cityWeatherSevenDays)));
+                return _context3.abrupt("return", this._transformSevenDaysData(cityWeatherSevenDays));
 
               case 5:
               case "end":
@@ -39120,11 +39221,11 @@ var WeatherAPI = /*#__PURE__*/function () {
         }, _callee3, this);
       }));
 
-      function getWeatherSevenDays(_x3) {
-        return _getWeatherSevenDays.apply(this, arguments);
+      function getWeatherDataSevenDays(_x3) {
+        return _getWeatherDataSevenDays.apply(this, arguments);
       }
 
-      return getWeatherSevenDays;
+      return getWeatherDataSevenDays;
     }()
   }]);
 
