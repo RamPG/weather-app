@@ -18,13 +18,13 @@ const WeatherList = ({ cityWeatherSevenDaysFetch, location, daily: { data, loadi
     return <h1>Error!</h1>;
   }
   return (
-    <seciton className="weather-forecast">
+    <section className="weather-forecast">
       <h1 className="weather-forecast__title">
         Weather for next six days
       </h1>
       <ul className="weather-forecast__weather-list weather-list">
         {
-          data.slice(1).map((element) => (
+          data.map((element) => (
             <li key={element.id}>
               <WeatherListItem
                 {...element}
@@ -33,7 +33,7 @@ const WeatherList = ({ cityWeatherSevenDaysFetch, location, daily: { data, loadi
           ))
         }
       </ul>
-    </seciton>
+    </section>
   );
 };
 const mapStateToProps = ({ daily, location }) => ({

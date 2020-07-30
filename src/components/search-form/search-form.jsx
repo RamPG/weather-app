@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import './search-form.scss';
@@ -33,6 +33,9 @@ const SearchForm = ({
 );
 
 const SearchFormContainer = ({ cityChangeCoordsFetch, error, loading }) => {
+  useEffect(() => {
+    cityChangeCoordsFetch('Moscow');
+  }, []);
   const [term, setTerm] = useState('');
   const onFindCity = (evt) => {
     evt.preventDefault();
