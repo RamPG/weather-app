@@ -7,10 +7,10 @@ import { cityWeatherSevenDaysFetch } from '../../actions/actions';
 import withWeatherApi from '../../hoc-helpers';
 import WeatherListItem from '../weather-list-item';
 
-const WeatherList = ({ cityWeatherSevenDaysFetch, daily: { data, loading, error } }) => {
+const WeatherList = ({ cityWeatherSevenDaysFetch, location, daily: { data, loading, error } }) => {
   useEffect(() => {
     cityWeatherSevenDaysFetch();
-  }, []);
+  }, [location]);
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -39,8 +39,9 @@ const WeatherList = ({ cityWeatherSevenDaysFetch, daily: { data, loading, error 
     </ul>
   );
 };
-const mapStateToProps = ({ daily }) => ({
+const mapStateToProps = ({ daily, location }) => ({
   daily,
+  location,
 });
 const mapDispatchToProps = (dispatch, { weatherApi }) => ({
   cityWeatherSevenDaysFetch: () => dispatch(cityWeatherSevenDaysFetch(weatherApi)),

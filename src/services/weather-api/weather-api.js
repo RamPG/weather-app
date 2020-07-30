@@ -2,23 +2,7 @@ import TimeLibrary from '../time-library';
 
 export default class WeatherAPI {
   _apiKey = 'c0e4dd09360b7cc7634d299c1d2e9790';
-  cityData = [
-    {
-      cityName: 'Moscow',
-      latitude: '55.751244',
-      altitude: '37.618423',
-    },
-    {
-      cityName: 'Kiev',
-      latitude: '50.448853',
-      altitude: '30.513346',
-    },
-    {
-      cityName: 'Vienna',
-      latitude: '48.204418',
-      altitude: '16.381353',
-    },
-  ]
+
   weatherImg = {
     Thunderstorm: 'http://openweathermap.org/img/wn/11d@2x.png',
     Drizzle: 'http://openweathermap.org/img/wn/09d@2x.png',
@@ -38,10 +22,7 @@ export default class WeatherAPI {
   }
   getApiKey() {
       return this._apiKey;
-    }
-    getCityData(id) {
-     return this.cityData[id]
-    }
+  }
 
    _transformKelvinToCelsius(temperature) {
     return Math.floor(temperature - 273.15);
@@ -79,8 +60,8 @@ export default class WeatherAPI {
      })
   }
 
-  async getResource({ latitude, altitude, interval }) {
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${altitude}&exclude=${interval}&appid=${this.getApiKey()}`;
+  async getResource({ latitude, longitude, interval }) {
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=${interval}&appid=${this.getApiKey()}`;
     const res = await fetch(url);
     if (res.ok) {
       return res.json();
@@ -88,16 +69,14 @@ export default class WeatherAPI {
     throw new Error('Error');
   }
 
-   async getWeatherDataToday(cityId) {
-     const { latitude, altitude } = this.getCityData(cityId);
-     const cityWeatherToday = await this.getResource({ latitude, altitude, interval: 'hourly,daily' });
+   async getWeatherDataToday({ latitude, longitude }) {
+     const cityWeatherToday = await this.getResource({ latitude, longitude, interval: 'hourly,daily' });
      return this._transformTodayData(cityWeatherToday);
 
   }
 
-  async getWeatherDataSevenDays(cityId) {
-     const { latitude, altitude } = this.getCityData(cityId);
-     const cityWeatherSevenDays = await this.getResource({ latitude, altitude, interval: 'current,hourly'});
+  async getWeatherDataSevenDays({ latitude, longitude }) {
+     const cityWeatherSevenDays = await this.getResource({ latitude, longitude, interval: 'current,hourly'});
     return this._transformSevenDaysData(cityWeatherSevenDays);
 
   }

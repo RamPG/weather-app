@@ -4618,6 +4618,24 @@ module.exports = exports;
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/search-form/search-form.scss":
+/*!**********************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/search-form/search-form.scss ***!
+  \**********************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/today-date/today-date.scss":
 /*!********************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/today-date/today-date.scss ***!
@@ -37801,19 +37819,23 @@ module.exports = function(originalModule) {
 /*!*****************************************!*\
   !*** ./src/actions/actions-constant.js ***!
   \*****************************************/
-/*! exports provided: CITY_CHANGE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE, CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE */
+/*! exports provided: CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS, CITY_CHANGE_FAILURE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE, CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_CHANGE", function() { return CITY_CHANGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_CHANGE_REQUEST", function() { return CITY_CHANGE_REQUEST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_CHANGE_SUCCESS", function() { return CITY_CHANGE_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_CHANGE_FAILURE", function() { return CITY_CHANGE_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_REQUEST", function() { return CITY_WEATHER_TODAY_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_SUCCESS", function() { return CITY_WEATHER_TODAY_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_TODAY_FAILURE", function() { return CITY_WEATHER_TODAY_FAILURE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_REQUEST", function() { return CITY_WEATHER_SEVEN_DAYS_REQUEST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_SUCCESS", function() { return CITY_WEATHER_SEVEN_DAYS_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CITY_WEATHER_SEVEN_DAYS_FAILURE", function() { return CITY_WEATHER_SEVEN_DAYS_FAILURE; });
-var CITY_CHANGE = 'CITY_CHANGE';
+var CITY_CHANGE_REQUEST = 'CITY_CHANGE_REQUEST';
+var CITY_CHANGE_SUCCESS = 'CITY_CHANGE_SUCCESS';
+var CITY_CHANGE_FAILURE = 'CITY_FAILURE';
 var CITY_WEATHER_TODAY_REQUEST = 'FETCH_CITY_WEATHER_TODAY_REQUEST';
 var CITY_WEATHER_TODAY_SUCCESS = 'FETCH_CITY_WEATHER_TODAY_SUCCESS';
 var CITY_WEATHER_TODAY_FAILURE = 'FETCH_CITY_WEATHER_TODAY_FAILURE';
@@ -37827,13 +37849,14 @@ var CITY_WEATHER_SEVEN_DAYS_FAILURE = 'FETCH_CITY_WEATHER_SEVEN_DAYS_FAILURE';
 /*!********************************!*\
   !*** ./src/actions/actions.js ***!
   \********************************/
-/*! exports provided: cityWeatherTodayFetch, cityWeatherSevenDaysFetch */
+/*! exports provided: cityWeatherTodayFetch, cityWeatherSevenDaysFetch, cityChangeCoordsFetch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherTodayFetch", function() { return cityWeatherTodayFetch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityWeatherSevenDaysFetch", function() { return cityWeatherSevenDaysFetch; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cityChangeCoordsFetch", function() { return cityChangeCoordsFetch; });
 /* harmony import */ var _actions_constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions-constant */ "./src/actions/actions-constant.js");
 
 
@@ -37859,11 +37882,15 @@ var cityWeatherTodaySuccess = function cityWeatherTodaySuccess(cityWeatherTodayD
 
 var cityWeatherTodayFetch = function cityWeatherTodayFetch(weatherApi) {
   return function (dispatch, getState) {
+    console.log('dispatch');
     dispatch(cityWeatherTodayRequest());
-    weatherApi.getWeatherDataToday(getState().cityId).then(function (data) {
+    weatherApi.getWeatherDataToday({
+      latitude: getState().coords.latitude,
+      longitude: getState().coords.longitude
+    }).then(function (data) {
       dispatch(cityWeatherTodaySuccess(data));
     })["catch"](function (error) {
-      return dispatch(cityWeatherTodayFailure(error));
+      dispatch(cityWeatherTodayFailure(error));
     });
   };
 };
@@ -37891,10 +37918,45 @@ var cityWeatherSevenDaysSuccess = function cityWeatherSevenDaysSuccess(cityWeath
 var cityWeatherSevenDaysFetch = function cityWeatherSevenDaysFetch(weatherApi) {
   return function (dispatch, getState) {
     dispatch(cityWeatherSevenDaysRequest());
-    weatherApi.getWeatherDataSevenDays(getState().cityId).then(function (data) {
+    weatherApi.getWeatherDataSevenDays({
+      latitude: getState().coords.latitude,
+      longitude: getState().coords.longitude
+    }).then(function (data) {
       dispatch(cityWeatherSevenDaysSuccess(data));
     })["catch"](function (error) {
-      return dispatch(cityWeatherSevenDaysFailure(error));
+      dispatch(cityWeatherSevenDaysFailure(error));
+    });
+  };
+};
+
+var cityChangeRequest = function cityChangeRequest() {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_CHANGE_REQUEST"]
+  };
+};
+
+var cityChangeFailure = function cityChangeFailure(error) {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_CHANGE_FAILURE"],
+    payload: error
+  };
+};
+
+var cityChangeSuccess = function cityChangeSuccess(cityChangeCoords) {
+  return {
+    type: _actions_constant__WEBPACK_IMPORTED_MODULE_0__["CITY_CHANGE_SUCCESS"],
+    payload: cityChangeCoords
+  };
+};
+
+var cityChangeCoordsFetch = function cityChangeCoordsFetch(geoApi, location) {
+  return function (dispatch, getState) {
+    dispatch(cityChangeRequest());
+    geoApi.getGeoCity(location).then(function (data) {
+      dispatch(cityChangeSuccess(data));
+      console.log(getState());
+    })["catch"](function (error) {
+      dispatch(cityChangeFailure(error));
     });
   };
 };
@@ -37920,8 +37982,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _weather_list__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../weather-list */ "./src/components/weather-list/index.js");
 /* harmony import */ var _clock__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../clock */ "./src/components/clock/index.js");
 /* harmony import */ var _today_date__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../today-date */ "./src/components/today-date/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../store */ "./src/store.js");
-/* harmony import */ var _services_weather_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../services/weather-api */ "./src/services/weather-api/index.js");
+/* harmony import */ var _search_form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../search-form */ "./src/components/search-form/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../store */ "./src/store.js");
+/* harmony import */ var _services_weather_api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../services/weather-api */ "./src/services/weather-api/index.js");
+/* harmony import */ var _services_geo_api__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../services/geo-api */ "./src/services/geo-api/index.js");
 
 
 
@@ -37932,14 +37996,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var weatherApi = new _services_weather_api__WEBPACK_IMPORTED_MODULE_9__["default"]();
+
+
+var weatherApi = new _services_weather_api__WEBPACK_IMPORTED_MODULE_10__["default"]();
+var geoApi = new _services_geo_api__WEBPACK_IMPORTED_MODULE_11__["default"]();
 
 var App = function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_1__["Provider"], {
-    store: _store__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_3__["WeatherApiProvider"], {
+    store: _store__WEBPACK_IMPORTED_MODULE_9__["default"]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_today_date__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_clock__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_3__["GeoApiProvider"], {
+    value: geoApi
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_search_form__WEBPACK_IMPORTED_MODULE_8__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_3__["WeatherApiProvider"], {
     value: weatherApi
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_today_date__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_clock__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_card__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_list__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_card__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_weather_list__WEBPACK_IMPORTED_MODULE_5__["default"], null)));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -38149,6 +38218,167 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/components/search-form/index.js":
+/*!*********************************************!*\
+  !*** ./src/components/search-form/index.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _search_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search-form */ "./src/components/search-form/search-form.jsx");
+
+/* harmony default export */ __webpack_exports__["default"] = (_search_form__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/components/search-form/search-form.jsx":
+/*!****************************************************!*\
+  !*** ./src/components/search-form/search-form.jsx ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.symbol */ "./node_modules/core-js/modules/es.symbol.js");
+/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.symbol.description */ "./node_modules/core-js/modules/es.symbol.description.js");
+/* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.symbol.iterator */ "./node_modules/core-js/modules/es.symbol.iterator.js");
+/* harmony import */ var core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_iterator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.array.from */ "./node_modules/core-js/modules/es.array.from.js");
+/* harmony import */ var core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_from__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_es_array_is_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/es.array.is-array */ "./node_modules/core-js/modules/es.array.is-array.js");
+/* harmony import */ var core_js_modules_es_array_is_array__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_is_array__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.array.iterator */ "./node_modules/core-js/modules/es.array.iterator.js");
+/* harmony import */ var core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_iterator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/es.array.slice */ "./node_modules/core-js/modules/es.array.slice.js");
+/* harmony import */ var core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_slice__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! core-js/modules/es.date.to-string */ "./node_modules/core-js/modules/es.date.to-string.js");
+/* harmony import */ var core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_date_to_string__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! core-js/modules/es.function.name */ "./node_modules/core-js/modules/es.function.name.js");
+/* harmony import */ var core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/es.regexp.to-string */ "./node_modules/core-js/modules/es.regexp.to-string.js");
+/* harmony import */ var core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_regexp_to_string__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! core-js/modules/es.string.iterator */ "./node_modules/core-js/modules/es.string.iterator.js");
+/* harmony import */ var core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_iterator__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
+/* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _search_form_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./search-form.scss */ "./src/components/search-form/search-form.scss");
+/* harmony import */ var _search_form_scss__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_search_form_scss__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _hoc_helpers_with_geo_api__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../hoc-helpers/with-geo-api */ "./src/hoc-helpers/with-geo-api.jsx");
+/* harmony import */ var _actions_actions__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../actions/actions */ "./src/actions/actions.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+var SearchForm = function SearchForm(_ref) {
+  var cityChangeCoordsFetch = _ref.cityChangeCoordsFetch;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_13__["useState"])(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      term = _useState2[0],
+      setTerm = _useState2[1];
+
+  var onSubmit = function onSubmit(evt) {
+    evt.preventDefault();
+    cityChangeCoordsFetch(term);
+    setTerm('');
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13___default.a.createElement("form", {
+    className: "search-form",
+    onSubmit: onSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13___default.a.createElement("input", {
+    className: "search-form__input",
+    type: "text",
+    value: term,
+    onChange: function onChange(event) {
+      setTerm(event.target.value);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_13___default.a.createElement("button", {
+    className: "search-form__button",
+    type: "submit"
+  }, "Find"));
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch, _ref2) {
+  var geoApi = _ref2.geoApi;
+  return {
+    cityChangeCoordsFetch: function cityChangeCoordsFetch(cityName) {
+      return dispatch(Object(_actions_actions__WEBPACK_IMPORTED_MODULE_17__["cityChangeCoordsFetch"])(geoApi, cityName));
+    }
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_hoc_helpers_with_geo_api__WEBPACK_IMPORTED_MODULE_16__["default"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_14__["connect"])(null, mapDispatchToProps)(SearchForm)));
+
+/***/ }),
+
+/***/ "./src/components/search-form/search-form.scss":
+/*!*****************************************************!*\
+  !*** ./src/components/search-form/search-form.scss ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var api = __webpack_require__(/*! ../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+            var content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!../../../node_modules/sass-loader/dist/cjs.js!./search-form.scss */ "./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/components/search-form/search-form.scss");
+
+            content = content.__esModule ? content.default : content;
+
+            if (typeof content === 'string') {
+              content = [[module.i, content, '']];
+            }
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = api(content, options);
+
+
+
+module.exports = content.locals || {};
+
+/***/ }),
+
 /***/ "./src/components/today-date/index.js":
 /*!********************************************!*\
   !*** ./src/components/today-date/index.js ***!
@@ -38261,7 +38491,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var WeatherCard = function WeatherCard(_ref) {
   var cityWeatherTodayFetch = _ref.cityWeatherTodayFetch,
-      cityName = _ref.cityName,
+      location = _ref.location,
       loading = _ref.loading,
       error = _ref.error,
       _ref$data = _ref.data,
@@ -38273,7 +38503,7 @@ var WeatherCard = function WeatherCard(_ref) {
       imgLink = _ref$data.imgLink;
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     cityWeatherTodayFetch();
-  }, []);
+  }, [location]);
 
   if (loading) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Loading...");
@@ -38294,7 +38524,7 @@ var WeatherCard = function WeatherCard(_ref) {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
-  }, "Weather in", ' ', cityName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+  }, "Weather in", ' ', location)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     className: "main-card__table-row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
     className: "main-card__parameter"
@@ -38328,13 +38558,13 @@ var WeatherCard = function WeatherCard(_ref) {
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
-  var cityName = _ref2.cityName,
+  var location = _ref2.location,
       _ref2$current = _ref2.current,
       data = _ref2$current.data,
       loading = _ref2$current.loading,
       error = _ref2$current.error;
   return {
-    cityName: cityName,
+    location: location,
     data: data,
     loading: loading,
     error: error
@@ -38530,13 +38760,14 @@ __webpack_require__.r(__webpack_exports__);
 
 var WeatherList = function WeatherList(_ref) {
   var cityWeatherSevenDaysFetch = _ref.cityWeatherSevenDaysFetch,
+      location = _ref.location,
       _ref$daily = _ref.daily,
       data = _ref$daily.data,
       loading = _ref$daily.loading,
       error = _ref$daily.error;
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     cityWeatherSevenDaysFetch();
-  }, []);
+  }, [location]);
 
   if (loading) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Loading...");
@@ -38566,9 +38797,11 @@ var WeatherList = function WeatherList(_ref) {
 };
 
 var mapStateToProps = function mapStateToProps(_ref2) {
-  var daily = _ref2.daily;
+  var daily = _ref2.daily,
+      location = _ref2.location;
   return {
-    daily: daily
+    daily: daily,
+    location: location
   };
 };
 
@@ -38614,11 +38847,34 @@ module.exports = content.locals || {};
 
 /***/ }),
 
+/***/ "./src/contexts/geo-api-context.js":
+/*!*****************************************!*\
+  !*** ./src/contexts/geo-api-context.js ***!
+  \*****************************************/
+/*! exports provided: GeoApiProvider, GeoApiConsumer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeoApiProvider", function() { return GeoApiProvider; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GeoApiConsumer", function() { return GeoApiConsumer; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var _React$createContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext(),
+    GeoApiProvider = _React$createContext.Provider,
+    GeoApiConsumer = _React$createContext.Consumer;
+
+
+
+/***/ }),
+
 /***/ "./src/contexts/index.js":
 /*!*******************************!*\
   !*** ./src/contexts/index.js ***!
   \*******************************/
-/*! exports provided: WeatherApiConsumer, WeatherApiProvider */
+/*! exports provided: WeatherApiConsumer, WeatherApiProvider, GeoApiConsumer, GeoApiProvider */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38627,6 +38883,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WeatherApiConsumer", function() { return _weather_api_context__WEBPACK_IMPORTED_MODULE_0__["WeatherApiConsumer"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WeatherApiProvider", function() { return _weather_api_context__WEBPACK_IMPORTED_MODULE_0__["WeatherApiProvider"]; });
+
+/* harmony import */ var _geo_api_context__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./geo-api-context */ "./src/contexts/geo-api-context.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GeoApiConsumer", function() { return _geo_api_context__WEBPACK_IMPORTED_MODULE_1__["GeoApiConsumer"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "GeoApiProvider", function() { return _geo_api_context__WEBPACK_IMPORTED_MODULE_1__["GeoApiProvider"]; });
+
 
 
 
@@ -38668,6 +38930,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _with_weather_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./with-weather-api */ "./src/hoc-helpers/with-weather-api.jsx");
 
 /* harmony default export */ __webpack_exports__["default"] = (_with_weather_api__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./src/hoc-helpers/with-geo-api.jsx":
+/*!******************************************!*\
+  !*** ./src/hoc-helpers/with-geo-api.jsx ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _contexts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../contexts */ "./src/contexts/index.js");
+
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+
+
+var withGeoApi = function withGeoApi(Wrapped) {
+  return function (props) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_contexts__WEBPACK_IMPORTED_MODULE_2__["GeoApiConsumer"], null, function (geoApi) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Wrapped, _extends({}, props, {
+        geoApi: geoApi
+      }));
+    });
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (withGeoApi);
 
 /***/ }),
 
@@ -38788,8 +39085,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var initialState = {
-  cityId: 1,
-  cityName: 'Kiev',
+  location: 'Moscow, Central Administrative Okrug, Moscow, Central Federal District, Russia',
+  coords: {
+    loading: false,
+    error: null,
+    latitude: '55.751244',
+    longitude: '37.618423'
+  },
   current: {
     loading: false,
     error: null,
@@ -38861,12 +39163,190 @@ var reducer = function reducer() {
         }
       });
 
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_CHANGE_REQUEST"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        coords: _objectSpread(_objectSpread({}, state.coords), {}, {
+          loading: true,
+          error: null
+        })
+      });
+
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_CHANGE_FAILURE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        coords: _objectSpread(_objectSpread({}, state.coords), {}, {
+          loading: false,
+          error: action.payload
+        })
+      });
+
+    case _actions_actions_constant__WEBPACK_IMPORTED_MODULE_9__["CITY_CHANGE_SUCCESS"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        location: action.payload.location,
+        coords: {
+          loading: false,
+          error: null,
+          latitude: action.payload.latitude,
+          longitude: action.payload.longitude
+        }
+      });
+
     default:
       return state;
   }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (reducer);
+
+/***/ }),
+
+/***/ "./src/services/geo-api/geo-api.js":
+/*!*****************************************!*\
+  !*** ./src/services/geo-api/geo-api.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GeoAPI; });
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.define-property */ "./node_modules/core-js/modules/es.object.define-property.js");
+/* harmony import */ var core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_define_property__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var GeoAPI = /*#__PURE__*/function () {
+  function GeoAPI() {
+    _classCallCheck(this, GeoAPI);
+
+    _defineProperty(this, "_apiKey", '5ec4c010199d2c');
+  }
+
+  _createClass(GeoAPI, [{
+    key: "_transformData",
+    value: function _transformData(geoCityData) {
+      var display_name = geoCityData.display_name,
+          lat = geoCityData.lat,
+          lon = geoCityData.lon;
+      return {
+        location: display_name,
+        latitude: lat,
+        longitude: lon
+      };
+    }
+  }, {
+    key: "getResource",
+    value: function () {
+      var _getResource = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(cityName) {
+        var url, res;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                url = "https://eu1.locationiq.com/v1/search.php?key=".concat(this._apiKey, "&q=").concat(cityName, "&format=json&accept-language=en");
+                _context.next = 3;
+                return fetch(url);
+
+              case 3:
+                res = _context.sent;
+
+                if (!res.ok) {
+                  _context.next = 6;
+                  break;
+                }
+
+                return _context.abrupt("return", res.json());
+
+              case 6:
+                throw new Error('Error');
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getResource(_x) {
+        return _getResource.apply(this, arguments);
+      }
+
+      return getResource;
+    }()
+  }, {
+    key: "getGeoCity",
+    value: function () {
+      var _getGeoCity = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(cityName) {
+        var geoCityData;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.getResource(cityName);
+
+              case 2:
+                geoCityData = _context2.sent;
+                return _context2.abrupt("return", this._transformData(geoCityData[0]));
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function getGeoCity(_x2) {
+        return _getGeoCity.apply(this, arguments);
+      }
+
+      return getGeoCity;
+    }()
+  }]);
+
+  return GeoAPI;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/services/geo-api/index.js":
+/*!***************************************!*\
+  !*** ./src/services/geo-api/index.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _geo_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./geo-api */ "./src/services/geo-api/geo-api.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (_geo_api__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -39082,20 +39562,6 @@ var WeatherAPI = /*#__PURE__*/function () {
 
     _defineProperty(this, "_apiKey", 'c0e4dd09360b7cc7634d299c1d2e9790');
 
-    _defineProperty(this, "cityData", [{
-      cityName: 'Moscow',
-      latitude: '55.751244',
-      altitude: '37.618423'
-    }, {
-      cityName: 'Kiev',
-      latitude: '50.448853',
-      altitude: '30.513346'
-    }, {
-      cityName: 'Vienna',
-      latitude: '48.204418',
-      altitude: '16.381353'
-    }]);
-
     _defineProperty(this, "weatherImg", {
       Thunderstorm: 'http://openweathermap.org/img/wn/11d@2x.png',
       Drizzle: 'http://openweathermap.org/img/wn/09d@2x.png',
@@ -39119,11 +39585,6 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getApiKey",
     value: function getApiKey() {
       return this._apiKey;
-    }
-  }, {
-    key: "getCityData",
-    value: function getCityData(id) {
-      return this.cityData[id];
     }
   }, {
     key: "_transformKelvinToCelsius",
@@ -39174,13 +39635,13 @@ var WeatherAPI = /*#__PURE__*/function () {
     key: "getResource",
     value: function () {
       var _getResource = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref3) {
-        var latitude, altitude, interval, url, res;
+        var latitude, longitude, interval, url, res;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                latitude = _ref3.latitude, altitude = _ref3.altitude, interval = _ref3.interval;
-                url = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(latitude, "&lon=").concat(altitude, "&exclude=").concat(interval, "&appid=").concat(this.getApiKey());
+                latitude = _ref3.latitude, longitude = _ref3.longitude, interval = _ref3.interval;
+                url = "https://api.openweathermap.org/data/2.5/onecall?lat=".concat(latitude, "&lon=").concat(longitude, "&exclude=").concat(interval, "&appid=").concat(this.getApiKey());
                 _context.next = 4;
                 return fetch(url);
 
@@ -39214,18 +39675,17 @@ var WeatherAPI = /*#__PURE__*/function () {
   }, {
     key: "getWeatherDataToday",
     value: function () {
-      var _getWeatherDataToday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(cityId) {
-        var _this$getCityData, latitude, altitude, cityWeatherToday;
-
+      var _getWeatherDataToday = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref4) {
+        var latitude, longitude, cityWeatherToday;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this$getCityData = this.getCityData(cityId), latitude = _this$getCityData.latitude, altitude = _this$getCityData.altitude;
+                latitude = _ref4.latitude, longitude = _ref4.longitude;
                 _context2.next = 3;
                 return this.getResource({
                   latitude: latitude,
-                  altitude: altitude,
+                  longitude: longitude,
                   interval: 'hourly,daily'
                 });
 
@@ -39250,18 +39710,17 @@ var WeatherAPI = /*#__PURE__*/function () {
   }, {
     key: "getWeatherDataSevenDays",
     value: function () {
-      var _getWeatherDataSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(cityId) {
-        var _this$getCityData2, latitude, altitude, cityWeatherSevenDays;
-
+      var _getWeatherDataSevenDays = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(_ref5) {
+        var latitude, longitude, cityWeatherSevenDays;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _this$getCityData2 = this.getCityData(cityId), latitude = _this$getCityData2.latitude, altitude = _this$getCityData2.altitude;
+                latitude = _ref5.latitude, longitude = _ref5.longitude;
                 _context3.next = 3;
                 return this.getResource({
                   latitude: latitude,
-                  altitude: altitude,
+                  longitude: longitude,
                   interval: 'current,hourly'
                 });
 
