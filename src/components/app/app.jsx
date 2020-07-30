@@ -20,8 +20,6 @@ const geoApi = new GeoAPI();
 
 const App = () => (
   <Provider store={store}>
-    <TodayDate />
-    <Clock />
     <GeoApiProvider value={geoApi}>
       <SearchForm />
     </GeoApiProvider>

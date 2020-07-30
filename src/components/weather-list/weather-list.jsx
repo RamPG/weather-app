@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './weather-list.scss';
 
 import { cityWeatherSevenDaysFetch } from '../../actions/actions';
-import withWeatherApi from '../../hoc-helpers';
+import withWeatherApi from '../../hoc';
 import WeatherListItem from '../weather-list-item';
 
 const WeatherList = ({ cityWeatherSevenDaysFetch, location, daily: { data, loading, error } }) => {
@@ -18,25 +18,22 @@ const WeatherList = ({ cityWeatherSevenDaysFetch, location, daily: { data, loadi
     return <h1>Error!</h1>;
   }
   return (
-    <ul className="weather-list">
-      {
-        data.map((element) => (
-          <li key={element.id}>
-            <WeatherListItem
-              weekDayName={element.weekDayName}
-              monthDay={element.monthDay}
-              monthDayName={element.monthDayName}
-              temp={element.temp}
-              feelsLike={element.feelsLike}
-              humidity={element.humidity}
-              weather={element.weather}
-              windSpeed={element.windSpeed}
-              imgLink={element.imgLink}
-            />
-          </li>
-        ))
-      }
-    </ul>
+    <seciton className="weather-forecast">
+      <h1 className="weather-forecast__title">
+        Weather for next six days
+      </h1>
+      <ul className="weather-forecast__weather-list weather-list">
+        {
+          data.slice(1).map((element) => (
+            <li key={element.id}>
+              <WeatherListItem
+                {...element}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </seciton>
   );
 };
 const mapStateToProps = ({ daily, location }) => ({

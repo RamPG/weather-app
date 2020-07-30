@@ -3,18 +3,18 @@ import React from 'react';
 import './weather-list-item.scss';
 
 const WeatherListItem = ({
-  weekDayName, monthDay, monthDayName, temp, feelsLike, humidity, weather, windSpeed, imgLink
+  weekDayName, monthDay, monthDayName, temp, weather, imgLink,
 }) => (
   <>
-    <p className="weather-list__item-content">
+    <p className="weather-list__item-week-day">
       {weekDayName}
     </p>
-    <p className="weather-list__item-content">
+    <p className="weather-list__item-date">
       {monthDay}
       {' '}
       {monthDayName}
     </p>
-    <p className="weather-list__item-content">
+    <p className="weather-list__item-img-block">
       <img
         className="weather-list__weather-img"
         src={imgLink}
@@ -23,42 +23,16 @@ const WeatherListItem = ({
         alt="weather"
       />
     </p>
-    <p className="weather-list__item-content">
-      Temp day
-      {' '}
+    <p className="weather-list__item-temp-day">
       {temp.day}
       °
     </p>
-    <p className="weather-list__item-content">
-      Temp night
-      {' '}
+    <p className="weather-list__item-temp-night">
       {temp.night}
       °C
     </p>
-    <p className="weather-list__item-content">
-      Feels like
-      {' '}
-      {feelsLike.day}
-    </p>
-    <p className="weather-list__item-content">
-      Feels like
-      {' '}
-      {feelsLike.night}
-    </p>
-    <p className="weather-list__item-content">
-      Humidity
-      {' '}
-      {humidity}
-    </p>
-    <p className="weather-list__item-content">
-      weather
-      {' '}
+    <p className="weather-list__item-weather">
       {weather}
-    </p>
-    <p className="weather-list__item-content">
-      Wind Speed
-      {' '}
-      {windSpeed}
     </p>
   </>
 );

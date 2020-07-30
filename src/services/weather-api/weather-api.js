@@ -24,8 +24,9 @@ export default class WeatherAPI {
       return this._apiKey;
   }
 
-   _transformKelvinToCelsius(temperature) {
-    return Math.floor(temperature - 273.15);
+   _transformKelvinToCelsius(tempKelvin) {
+    const tempCelsius = Math.floor(tempKelvin - 273.15);
+    return tempCelsius > -1 ? `+${tempCelsius}` : tempCelsius.toString();
   }
   _transformTodayData({ current }) {
      return {
@@ -49,13 +50,7 @@ export default class WeatherAPI {
             day: this._transformKelvinToCelsius(element.temp.day),
             night: this._transformKelvinToCelsius(element.temp.night),
           },
-         feelsLike: {
-           day: this._transformKelvinToCelsius(element.feels_like.day),
-           night: this._transformKelvinToCelsius(element.feels_like.night)
-         },
-         humidity: element.humidity,
          weather: element.weather[0].main,
-         windSpeed: element.wind_speed
        }
      })
   }

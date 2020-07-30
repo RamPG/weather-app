@@ -3,7 +3,7 @@ export default class GeoAPI {
   _transformData(geoCityData) {
     const { display_name, lat, lon } = geoCityData;
     return {
-      location: display_name,
+      location: display_name.split(', ')[0],
       latitude: lat,
       longitude: lon,
     }

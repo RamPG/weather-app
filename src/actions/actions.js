@@ -19,7 +19,6 @@ const cityWeatherTodaySuccess = (cityWeatherTodayData) => ({
 });
 
 export const cityWeatherTodayFetch = (weatherApi) => (dispatch, getState) => {
-  console.log('dispatch');
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherDataToday({
     latitude: getState().coords.latitude,
@@ -80,7 +79,6 @@ export const cityChangeCoordsFetch = (geoApi, location) => (dispatch, getState) 
   geoApi.getGeoCity(location)
     .then((data) => {
       dispatch(cityChangeSuccess(data));
-      console.log(getState());
     })
     .catch((error) => {
       dispatch(cityChangeFailure(error));

@@ -5,7 +5,7 @@ import {
 } from '../actions/actions-constant';
 
 const initialState = {
-  location: 'Moscow, Central Administrative Okrug, Moscow, Central Federal District, Russia',
+  location: 'Moscow',
   coords: {
     loading: false,
     error: null,

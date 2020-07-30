@@ -4,12 +4,51 @@ import { connect } from 'react-redux';
 import './weather-card.scss';
 
 import { cityWeatherTodayFetch } from '../../actions/actions';
-import withWeatherApi from '../../hoc-helpers';
+import withWeatherApi from '../../hoc';
+import Clock from '../clock';
+import TodayDate from '../today-date';
 
 const WeatherCard = ({
-  cityWeatherTodayFetch, location, loading, error, data: {
-    feelsLike, humidity, temp, weather, windSpeed, imgLink,
-  },
+  location, feelsLike, humidity, temp, weather, windSpeed, imgLink,
+}) => (
+  <section className="main-card">
+    <p className="main-card__city">
+      Weather in
+      {' '}
+      {location}
+    </p>
+    <Clock className="main-card__time" />
+    <TodayDate className="main-card__date" />
+    <p className="main-card__temp">
+      {temp}
+      °С
+    </p>
+    <p className="main-card__img-paragraph">
+      <img className="main-card__img" src={imgLink} alt="weather" height="100" width="100" />
+    </p>
+    <p className="main-card__weather">
+      {weather}
+    </p>
+    <p className="main-card__feels-like">
+      Feels like
+      {' '}
+      {feelsLike}
+      °
+    </p>
+    <p className="main-card__wind-speed">
+      {windSpeed}
+      {' '}
+      m/s
+    </p>
+    <p className="main-card__humidity">
+      {humidity}
+      %
+    </p>
+  </section>
+);
+
+const WeatherCardContainer = ({
+  cityWeatherTodayFetch, location, loading, error, data,
 }) => {
   useEffect(() => {
     cityWeatherTodayFetch();
@@ -20,57 +59,9 @@ const WeatherCard = ({
   if (error) {
     return <h1>Error!</h1>;
   }
-  return (
-    <section className="main-card">
-      <img className="main-card__img" src={imgLink} />
-      <table className="main-card__table">
-        <tbody>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">
-              Weather in
-              {' '}
-              {location}
-            </th>
-          </tr>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">Temperature</th>
-            <td className="main-card__value">
-              {temp}
-              °C
-            </td>
-          </tr>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">Feels like</th>
-            <td className="main-card__value">
-              {feelsLike}
-              °C
-            </td>
-          </tr>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">Humidity</th>
-            <td className="main-card__value">
-              {humidity}
-              %
-            </td>
-          </tr>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">Weather</th>
-            <td className="main-card__value">{weather}</td>
-          </tr>
-          <tr className="main-card__table-row">
-            <th className="main-card__parameter">Wind speed</th>
-            <td className="main-card__value">
-              {windSpeed}
-              {' '}
-              m/s
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-    </section>
-  );
+  return <WeatherCard location={location} {...data} />;
 };
+
 const mapStateToProps = ({ location, current: { data, loading, error } }) => ({
   location, data, loading, error,
 });
@@ -78,4 +69,4 @@ const mapStateToProps = ({ location, current: { data, loading, error } }) => ({
 const mapDispatchToProps = (dispatch, { weatherApi }) => ({
   cityWeatherTodayFetch: () => dispatch(cityWeatherTodayFetch(weatherApi)),
 });
-export default withWeatherApi(connect(mapStateToProps, mapDispatchToProps)(WeatherCard));
+export default withWeatherApi(connect(mapStateToProps, mapDispatchToProps)(WeatherCardContainer));
