@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import './search-form.scss';
 
 import withGeoApi from '../../hoc/with-geo-api';
-
 import { cityChangeCoordsFetch } from '../../actions/actions';
 
 const SearchForm = ({

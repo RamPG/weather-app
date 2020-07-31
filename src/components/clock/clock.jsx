@@ -4,6 +4,7 @@ import './clock.scss';
 
 import TimeLibrary from '../../services/time-library';
 
+
 const useClock = () => {
   const [hours, setHours] = useState(TimeLibrary.getHoursFormat());
   const [minutes, setMinutes] = useState(TimeLibrary.getMinutesFormat());

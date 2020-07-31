@@ -1,4 +1,5 @@
 export default class TimeLibrary {
+
   static getWeekDayNow() {
     return new Date().getDay();
   }

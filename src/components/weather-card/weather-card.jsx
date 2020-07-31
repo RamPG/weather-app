@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './weather-card.scss';
 
 import { cityWeatherTodayFetch } from '../../actions/actions';
-import withWeatherApi from '../../hoc';
+import withWeatherApi from '../../hoc/with-weather-api';
 import Clock from '../clock';
 import TodayDate from '../today-date';
 

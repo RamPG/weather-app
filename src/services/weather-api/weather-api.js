@@ -1,6 +1,7 @@
 import TimeLibrary from '../time-library';
 
 export default class WeatherAPI {
+
   _apiKey = 'c0e4dd09360b7cc7634d299c1d2e9790';
 
   weatherImg = {
@@ -20,6 +21,7 @@ export default class WeatherAPI {
     Clear: 'http://openweathermap.org/img/wn/01d@2x.png',
     Clouds: 'http://openweathermap.org/img/wn/02d@2x.png',
   }
+
   getApiKey() {
       return this._apiKey;
   }
@@ -28,6 +30,7 @@ export default class WeatherAPI {
     const tempCelsius = Math.floor(tempKelvin - 273.15);
     return tempCelsius > -1 ? `+${tempCelsius}` : tempCelsius.toString();
   }
+
   _transformTodayData({ current }) {
      return {
        imgLink: this.weatherImg[current.weather[0].main],
@@ -38,6 +41,7 @@ export default class WeatherAPI {
        windSpeed: current.wind_speed
      }
   }
+
   _transformSevenDaysData({ daily }) {
      return daily.map((element, index) => {
        return {
