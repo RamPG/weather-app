@@ -7,6 +7,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -16,18 +17,16 @@ module.exports = {
   },
   plugins: [
     'react',
-    'react-hooks',
+    '@typescript-eslint',
     'import',
   ],
   rules: {
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
     'react/state-in-constructor': [2, 'never'],
     'import/no-unresolved': 'off',
     'react/prefer-stateless-function': 'off',
     'import/prefer-default-export': 'off',
     'no-plusplus': [2, { allowForLoopAfterthoughts: true }],
-    'import/extensions': [2, { extensions: ['.js', '.jsx'] }],
-    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],
+    'import/extensions': [2, { extensions: ['.ts', '.tsx', '.js', '.jsx'] }],
+    'react/jsx-filename-extension': [2, { extensions: ['.ts', '.tsx', '.js', '.jsx'] }],
   },
 };

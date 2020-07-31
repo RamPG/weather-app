@@ -4,16 +4,18 @@ import './clock.scss';
 
 import TimeLibrary from '../../services/time-library';
 
-
 const useClock = () => {
   const [hours, setHours] = useState(TimeLibrary.getHoursFormat());
   const [minutes, setMinutes] = useState(TimeLibrary.getMinutesFormat());
   useEffect(() => {
-    setInterval(() => {
+    const timerId = setInterval(() => {
       setHours(TimeLibrary.getHoursFormat());
       setMinutes(TimeLibrary.getMinutesFormat());
     }, 60000);
-  }, [hours, minutes]);
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [minutes]);
   return { hours, minutes };
 };
 

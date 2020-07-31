@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         exclude: /(node_modules)/,
         loader: 'source-map-loader',
       },
@@ -34,19 +34,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(ttf|otf|eot|woff|woff2)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'fonts',
-              name: '[name].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -71,6 +59,11 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(ts|tsx)?$/,
+        exclude: /(node_modules)/,
+        loader: 'awesome-typescript-loader',
+      },
     ],
   },
 
@@ -85,6 +78,6 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', 'ts', 'tsx'],
   },
 };

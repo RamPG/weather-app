@@ -17,7 +17,6 @@ const WeatherCard = ({
       {' '}
       {location}
     </p>
-    <Clock className="main-card__time" />
     <TodayDate className="main-card__date" />
     <p className="main-card__temp">
       {temp}

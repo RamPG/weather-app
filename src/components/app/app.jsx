@@ -13,6 +13,7 @@ import store from '../../store';
 import WeatherAPI from '../../services/weather-api';
 import GeoAPI from '../../services/geo-api';
 import ErrorBoundary from '../error-boundry';
+import Clock from '../clock';
 
 const weatherApi = new WeatherAPI();
 const geoApi = new GeoAPI();
@@ -23,6 +24,7 @@ const App = () => (
       <GeoApiProvider value={geoApi}>
         <SearchForm />
       </GeoApiProvider>
+      <Clock />
       <WeatherApiProvider value={weatherApi}>
         <WeatherCard />
         <WeatherList />
