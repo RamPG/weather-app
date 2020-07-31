@@ -25,11 +25,9 @@ const WeatherListItem = ({
     </p>
     <p className="weather-list__item-temp-day">
       {temp.day}
-      °
     </p>
     <p className="weather-list__item-temp-night">
       {temp.night}
-      °C
     </p>
     <p className="weather-list__item-weather">
       {weather}

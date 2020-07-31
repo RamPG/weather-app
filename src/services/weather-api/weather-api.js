@@ -1,7 +1,6 @@
 import TimeLibrary from '../time-library';
 
 export default class WeatherAPI {
-
   _apiKey = 'c0e4dd09360b7cc7634d299c1d2e9790';
 
   weatherImg = {
@@ -23,40 +22,38 @@ export default class WeatherAPI {
   }
 
   getApiKey() {
-      return this._apiKey;
+    return this._apiKey;
   }
 
-   _transformKelvinToCelsius(tempKelvin) {
+  _transformKelvinToCelsius(tempKelvin) {
     const tempCelsius = Math.floor(tempKelvin - 273.15);
-    return tempCelsius > -1 ? `+${tempCelsius}` : tempCelsius.toString();
+    return tempCelsius > 0 ? `+${tempCelsius}°C` : `${tempCelsius}°C`;
   }
 
   _transformTodayData({ current }) {
-     return {
-       imgLink: this.weatherImg[current.weather[0].main],
-       temp: this._transformKelvinToCelsius(current.temp),
-       feelsLike: this._transformKelvinToCelsius(current.feels_like),
-       humidity: current.humidity,
-       weather: current.weather[0].main,
-       windSpeed: current.wind_speed
-     }
+    return {
+      imgLink: this.weatherImg[current.weather[0].main],
+      temp: this._transformKelvinToCelsius(current.temp),
+      feelsLike: this._transformKelvinToCelsius(current.feels_like),
+      humidity: Number(current.humidity),
+      weather: current.weather[0].main,
+      windSpeed: Number(current.wind_speed),
+    };
   }
 
   _transformSevenDaysData({ daily }) {
-     return daily.map((element, index) => {
-       return {
-         id: index,
-         imgLink: this.weatherImg[element.weather[0].main],
-         weekDayName: TimeLibrary.getNameDay(TimeLibrary.addWeekDay(index)),
-         monthDay: TimeLibrary.addMonthDay(index),
-         monthDayName: TimeLibrary.getNameMonth(TimeLibrary.addMonth(index)),
-          temp: {
-            day: this._transformKelvinToCelsius(element.temp.day),
-            night: this._transformKelvinToCelsius(element.temp.night),
-          },
-         weather: element.weather[0].main,
-       }
-     })
+    return daily.map((element, index) => ({
+      id: index,
+      imgLink: this.weatherImg[element.weather[0].main],
+      weekDayName: TimeLibrary.getNameDay(TimeLibrary.addWeekDay(index)),
+      monthDay: TimeLibrary.addMonthDay(index),
+      monthDayName: TimeLibrary.getNameMonth(TimeLibrary.addMonth(index)),
+      temp: {
+        day: this._transformKelvinToCelsius(element.temp.day),
+        night: this._transformKelvinToCelsius(element.temp.night),
+      },
+      weather: element.weather[0].main,
+    }));
   }
 
   async getResource({ latitude, longitude, interval }) {
@@ -68,15 +65,13 @@ export default class WeatherAPI {
     throw new Error('Error');
   }
 
-   async getWeatherDataToday({ latitude, longitude }) {
-     const cityWeatherToday = await this.getResource({ latitude, longitude, interval: 'hourly,daily' });
-     return this._transformTodayData(cityWeatherToday);
-
+  async getWeatherDataToday({ latitude, longitude }) {
+    const cityWeatherToday = await this.getResource({ latitude, longitude, interval: 'hourly,daily' });
+    return this._transformTodayData(cityWeatherToday);
   }
 
   async getWeatherDataSevenDays({ latitude, longitude }) {
-     const cityWeatherSevenDays = await this.getResource({ latitude, longitude, interval: 'current,hourly'});
+    const cityWeatherSevenDays = await this.getResource({ latitude, longitude, interval: 'current,hourly' });
     return this._transformSevenDaysData(cityWeatherSevenDays);
-
   }
 }

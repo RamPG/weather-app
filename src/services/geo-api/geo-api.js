@@ -1,14 +1,12 @@
 export default class GeoAPI {
-
   _apiKey = '5ec4c010199d2c';
 
-  _transformData(geoCityData) {
-    const { display_name, lat, lon } = geoCityData;
+  _transformData({ display_name, lat, lon }) {
     return {
       location: display_name.split(', ')[0],
-      latitude: lat,
-      longitude: lon,
-    }
+      latitude: Number(lat),
+      longitude: Number(lon),
+    };
   }
 
   async getResource(cityName) {

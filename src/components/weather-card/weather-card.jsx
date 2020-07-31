@@ -5,7 +5,6 @@ import './weather-card.scss';
 
 import { cityWeatherTodayFetch } from '../../actions/actions';
 import withWeatherApi from '../../hoc/with-weather-api';
-import Clock from '../clock';
 import TodayDate from '../today-date';
 
 const WeatherCard = ({
@@ -20,7 +19,6 @@ const WeatherCard = ({
     <TodayDate className="main-card__date" />
     <p className="main-card__temp">
       {temp}
-      °С
     </p>
     <p className="main-card__img-paragraph">
       <img className="main-card__img" src={imgLink} alt="weather" height="100" width="100" />
@@ -32,7 +30,6 @@ const WeatherCard = ({
       Feels like
       {' '}
       {feelsLike}
-      °
     </p>
     <p className="main-card__wind-speed">
       {windSpeed}
