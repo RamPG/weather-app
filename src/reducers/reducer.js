@@ -7,12 +7,12 @@ import updateWeatherCoords from './weather-coords';
 import updateWeatherDaily from './weather-daily';
 
 const initialState = {
-  location: '',
+  location: 'Moscow',
   coords: {
     loading: false,
     error: null,
-    latitude: '',
-    longitude: '',
+    latitude: '55.751244',
+    longitude: '37.618423',
   },
   current: {
     loading: false,
