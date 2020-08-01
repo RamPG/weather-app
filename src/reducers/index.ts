@@ -30,7 +30,18 @@ const initialState: InitialStateType = {
   daily: {
     loading: false,
     error: false,
-    data: [],
+    data: [{
+      id: null,
+      imgLink: null,
+      weekDayName: null,
+      monthDay: null,
+      monthDayName: null,
+      temp: {
+        day: null,
+        night: null,
+      },
+      weather: null,
+    }],
   },
 };
 

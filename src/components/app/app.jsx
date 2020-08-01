@@ -8,10 +8,10 @@ import WeatherCard from '../weather-card';
 import WeatherList from '../weather-list';
 import SearchForm from '../search-form';
 
-import store from '../../store';
+import { store } from '../../store';
 
-import WeatherAPI from '../../services/weather-api';
-import GeoAPI from '../../services/geo-api';
+import { WeatherAPI } from '../../services/weather-api';
+import { GeoAPI } from '../../services/geo-api';
 import ErrorBoundary from '../error-boundry';
 import Clock from '../clock';
 

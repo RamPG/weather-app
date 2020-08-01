@@ -30,11 +30,9 @@ const cityWeatherTodaySuccess = (
 });
 
 export const cityWeatherTodayFetch = (weatherApi: any) => (dispatch: any, getState: any) => {
+  const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherTodayRequest());
-  weatherApi.getWeatherDataToday({
-    latitude: getState().coords.data.latitude,
-    longitude: getState().coords.data.longitude,
-  })
+  weatherApi.getWeatherDataToday(latitude, longitude)
     .then((data: DataCurrentStateType) => {
       dispatch(cityWeatherTodaySuccess(data));
     })
@@ -59,11 +57,9 @@ const cityWeatherSevenDaysSuccess = (
 });
 
 export const cityWeatherSevenDaysFetch = (weatherApi: any) => (dispatch: any, getState: any) => {
+  const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherSevenDaysRequest());
-  weatherApi.getWeatherDataSevenDays({
-    latitude: getState().coords.data.latitude,
-    longitude: getState().coords.data.longitude,
-  })
+  weatherApi.getWeatherDataSevenDays(latitude, longitude)
     .then((data: DataDailyStateType) => {
       dispatch(cityWeatherSevenDaysSuccess(data));
     })

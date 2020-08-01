@@ -3,10 +3,10 @@ import {
 } from '../actions/actions-constant';
 
 import {
-  CoordsStateType,
+  SubStateType, DataCoordsStateType
 } from '../types/state-types';
 
-function updateWeatherCoords(state: CoordsStateType, action: any) {
+function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: any) {
   switch (action.type) {
     case CITY_CHANGE_REQUEST:
       return {

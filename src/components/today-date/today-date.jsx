@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './today-date.scss';
-import TimeLibrary from '../../services/time-library';
+import { TimeLibrary } from '../../services/time-library';
 
 const TodayDate = () => (
   <p>

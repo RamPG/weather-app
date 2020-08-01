@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import './clock.scss';
 
-import TimeLibrary from '../../services/time-library';
+import { TimeLibrary } from '../../services/time-library';
 
 const useClock = () => {
   const [hours, setHours] = useState(TimeLibrary.getHoursFormat());

@@ -1,51 +1,39 @@
 export type DataCurrentStateType = {
     imgLink: string | null,
-    temp: number | null,
-    feelsLike: number | null,
+    temp: string | null,
+    feelsLike: string | null,
     humidity: number | null,
     weather: string | null,
     windSpeed: number | null,
 };
 
 export type DataDailyStateType = {
-    id: number,
-    imgLink: string,
-    weekDayName: string,
-    monthDay: string,
-    monthDayName: string,
+    id: number | null,
+    imgLink: string | null,
+    weekDayName: string | null,
+    monthDay: number | null,
+    monthDayName: string | null,
     temp: {
-        day: number,
-        night: number,
+        day: string | null,
+        night: string | null,
     },
-    weather: string,
+    weather: string | null,
 };
 
 export type DataCoordsStateType = {
-    latitude: number,
-    longitude: number,
+    latitude: number | null,
+    longitude: number | null,
 };
 
-export type CurrentStateType = {
+export type SubStateType<D> = {
     loading: boolean,
     error: boolean,
-    data: DataCurrentStateType,
-};
-
-export type DailyStateType = {
-    loading: boolean,
-    error: boolean,
-    data: Array<DataDailyStateType>,
-};
-
-export type CoordsStateType = {
-    loading: boolean,
-    error: boolean,
-    data: DataCoordsStateType,
-};
+    data: D
+}
 
 export type InitialStateType = {
     location: string,
-    current: CurrentStateType,
-    daily: DailyStateType,
-    coords: CoordsStateType,
+    current: SubStateType<DataCurrentStateType>,
+    daily: SubStateType<Array<DataDailyStateType>>,
+    coords: SubStateType<DataCoordsStateType>,
 };
