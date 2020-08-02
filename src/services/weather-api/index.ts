@@ -1,3 +1,3 @@
-import { WeatherAPI } from './weather-api';
+import { WeatherApi } from './weather-api';
 
-export { WeatherAPI };
+export { WeatherApi };

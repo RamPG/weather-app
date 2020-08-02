@@ -1,3 +1,3 @@
-import WeatherCard from './weather-card';
+import { WeatherCard } from './weather-card';
 
-export default WeatherCard;
+export { WeatherCard };

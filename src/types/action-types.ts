@@ -31,7 +31,7 @@ export type CityWeatherSevenDaysFailureActionType = {
 
 export type CityWeatherSevenDaysSuccessActionType = {
     type: typeof CITY_WEATHER_SEVEN_DAYS_SUCCESS,
-    payload: DataDailyStateType,
+    payload: Array<DataDailyStateType>,
 };
 
 export type CityChangeRequestActionType = {
@@ -46,3 +46,14 @@ export type CityChangeSuccessActionType = {
     type: typeof CITY_CHANGE_SUCCESS,
     payload: DataCoordsStateType,
 };
+
+export type CityChangeActionsType =
+    CityChangeRequestActionType | CityChangeFailureActionType | CityChangeSuccessActionType;
+
+export type CityWeatherSevenDaysActionsType =
+    CityWeatherSevenDaysRequestActionType | CityWeatherSevenDaysFailureActionType | CityWeatherSevenDaysSuccessActionType;
+
+export type CityWeatherTodayActionsType =
+    CityWeatherTodayRequestActionType | CityWeatherTodayFailureActionType | CityWeatherTodaySuccessActionType;
+
+export type ActionTypes = CityChangeActionsType | CityWeatherSevenDaysActionsType | CityWeatherTodayActionsType;

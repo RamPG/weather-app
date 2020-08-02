@@ -1,28 +1,29 @@
 export type DataCurrentStateType = {
-    imgLink: string | null,
-    temp: string | null,
-    feelsLike: string | null,
-    humidity: number | null,
-    weather: string | null,
-    windSpeed: number | null,
+    imgLink: string,
+    temp: string,
+    feelsLike: string,
+    humidity: number,
+    weather: string,
+    windSpeed: number,
 };
 
 export type DataDailyStateType = {
-    id: number | null,
-    imgLink: string | null,
-    weekDayName: string | null,
-    monthDay: number | null,
-    monthDayName: string | null,
+    id: number,
+    imgLink: string,
+    weekDayName: string,
+    monthDay: number,
+    monthDayName: string,
     temp: {
-        day: string | null,
-        night: string | null,
+        day: string,
+        night: string,
     },
     weather: string | null,
 };
 
 export type DataCoordsStateType = {
-    latitude: number | null,
-    longitude: number | null,
+    location: string,
+    latitude: number,
+    longitude: number,
 };
 
 export type SubStateType<D> = {
@@ -32,8 +33,9 @@ export type SubStateType<D> = {
 }
 
 export type InitialStateType = {
-    location: string,
     current: SubStateType<DataCurrentStateType>,
     daily: SubStateType<Array<DataDailyStateType>>,
     coords: SubStateType<DataCoordsStateType>,
 };
+
+export type GetStateType = () => InitialStateType;

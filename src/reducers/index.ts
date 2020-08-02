@@ -1,16 +1,16 @@
-import { CITY_CHANGE_SUCCESS } from '../actions/actions-constant';
-
 import { InitialStateType } from '../types/state-types';
 import { updateWeatherCurrent } from './weather-current';
 import { updateWeatherCoords } from './weather-coords';
 import { updateWeatherDaily } from './weather-daily';
 
+import { ActionTypes } from '../types/action-types';
+
 const initialState: InitialStateType = {
-  location: 'Moscow',
   coords: {
     loading: false,
     error: false,
     data: {
+      location: 'Moscow',
       latitude: 55.751244,
       longitude: 37.618423,
     },
@@ -19,48 +19,25 @@ const initialState: InitialStateType = {
     loading: false,
     error: false,
     data: {
-      imgLink: null,
-      temp: null,
-      feelsLike: null,
-      humidity: null,
-      weather: null,
-      windSpeed: null,
+      imgLink: '',
+      temp: '',
+      feelsLike: '',
+      humidity: 0,
+      weather: '',
+      windSpeed: 0,
     },
   },
   daily: {
     loading: false,
     error: false,
-    data: [{
-      id: null,
-      imgLink: null,
-      weekDayName: null,
-      monthDay: null,
-      monthDayName: null,
-      temp: {
-        day: null,
-        night: null,
-      },
-      weather: null,
-    }],
+    data: [],
   },
 };
 
-const reducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case CITY_CHANGE_SUCCESS:
-      return {
-        ...state,
-        location: action.payload.location,
-        coords: updateWeatherCoords(state.coords, action),
-      };
-    default:
-      return {
-        ...state,
-        daily: updateWeatherDaily(state.daily, action),
-        coords: updateWeatherCoords(state.coords, action),
-        current: updateWeatherCurrent(state.current, action),
-      };
-  }
-};
+const reducer = (state = initialState, action: ActionTypes) => ({
+  daily: updateWeatherDaily(state.daily, action),
+  coords: updateWeatherCoords(state.coords, action),
+  current: updateWeatherCurrent(state.current, action),
+});
 
 export { reducer };

@@ -1,3 +1,3 @@
-import SearchForm from './search-form';
+import { SearchForm } from './search-form';
 
-export default SearchForm;
+export { SearchForm };

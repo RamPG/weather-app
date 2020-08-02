@@ -1,16 +1,17 @@
 import React from 'react';
 
 import './today-date.scss';
-import { TimeLibrary } from '../../services/time-library';
+import {
+  getMonthDayNow, getNameMonth, getMonthNow,
+  getYearNow, getNameDay, getWeekDayNow,
+} from '../../services/time-library';
 
-const TodayDate = () => (
+export const TodayDate = () => (
   <p>
     {`Today is 
-    ${TimeLibrary.getMonthDayNow()} 
-    ${TimeLibrary.getNameMonth(TimeLibrary.getMonthNow())} 
-    ${TimeLibrary.getYearNow()} 
-    ${TimeLibrary.getNameDay(TimeLibrary.getWeekDayNow())}`}
+    ${getMonthDayNow()} 
+    ${getNameMonth(getMonthNow())} 
+    ${getYearNow()} 
+    ${getNameDay(getWeekDayNow())}`}
   </p>
-
 );
-export default TodayDate;

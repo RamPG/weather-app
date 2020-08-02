@@ -1,4 +1,7 @@
-import { TimeLibrary } from '../time-library';
+import {
+  getNameDay, getNameMonth, addMonthDay,
+  addWeekDay, addMonth,
+} from '../time-library';
 import {
   DataDailyStateType, DataCurrentStateType,
 } from '../../types/state-types';
@@ -7,7 +10,7 @@ import {
   GetWeatherDataSevenDaysResponseType, GetWeatherDataTodayResponseType,
 } from '../../types/response-types';
 
-export class WeatherAPI {
+export class WeatherApi {
   private apiKey: string = 'c0e4dd09360b7cc7634d299c1d2e9790';
 
   private weatherImg = {
@@ -36,8 +39,8 @@ export class WeatherAPI {
   private static transformTodayData({ current }: GetWeatherDataTodayResponseType): DataCurrentStateType {
     return {
       imgLink: '',
-      temp: WeatherAPI.transformKelvinToCelsius(current.temp),
-      feelsLike: WeatherAPI.transformKelvinToCelsius(current.feels_like),
+      temp: WeatherApi.transformKelvinToCelsius(current.temp),
+      feelsLike: WeatherApi.transformKelvinToCelsius(current.feels_like),
       humidity: current.humidity,
       weather: current.weather[0].main,
       windSpeed: current.wind_speed,
@@ -48,12 +51,12 @@ export class WeatherAPI {
     return daily.map((element, index) => ({
       id: index,
       imgLink: '',
-      weekDayName: TimeLibrary.getNameDay(TimeLibrary.addWeekDay(index)),
-      monthDay: TimeLibrary.addMonthDay(index),
-      monthDayName: TimeLibrary.getNameMonth(TimeLibrary.addMonth(index)),
+      weekDayName: getNameDay(addWeekDay(index)),
+      monthDay: addMonthDay(index),
+      monthDayName: getNameMonth(addMonth(index)),
       temp: {
-        day: WeatherAPI.transformKelvinToCelsius(element.temp.day),
-        night: WeatherAPI.transformKelvinToCelsius(element.temp.night),
+        day: WeatherApi.transformKelvinToCelsius(element.temp.day),
+        night: WeatherApi.transformKelvinToCelsius(element.temp.night),
       },
       weather: element.weather[0].main,
     }));
@@ -74,13 +77,13 @@ export class WeatherAPI {
     const cityWeatherToday = await this.getResource<GetWeatherDataTodayResponseType>(
       latitude, longitude, 'hourly,daily',
     );
-    return WeatherAPI.transformTodayData(cityWeatherToday);
+    return WeatherApi.transformTodayData(cityWeatherToday);
   }
 
   async getWeatherDataSevenDays(latitude: number, longitude: number): Promise<Array<DataDailyStateType>> {
     const cityWeatherSevenDays = await this.getResource<GetWeatherDataSevenDaysResponseType>(
       latitude, longitude, 'current,hourly',
     );
-    return WeatherAPI.transformSevenDaysData(cityWeatherSevenDays);
+    return WeatherApi.transformSevenDaysData(cityWeatherSevenDays);
   }
 }

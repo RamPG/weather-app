@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import './search-form.scss';
 
-import withGeoApi from '../../hoc/with-geo-api';
 import { cityChangeCoordsFetch } from '../../actions/actions';
+import { GeoApiContext } from '../../contexts';
 
-const SearchForm = ({
+const SearchFormRender = ({
   term, setTerm, onFindCity, status,
 }) => (
   <form className="search-form" onSubmit={onFindCity}>
@@ -31,32 +31,24 @@ const SearchForm = ({
   </form>
 );
 
-const SearchFormContainer = ({ cityChangeCoordsFetch, error, loading }) => {
-  useEffect(() => {
-    cityChangeCoordsFetch('Moscow');
-  }, []);
+export const SearchForm = () => {
   const [term, setTerm] = useState('');
+  const { error, loading } = useSelector(({ coords }) => (coords));
+  const dispatch = useDispatch();
+  const geoApi = useContext(GeoApiContext);
+  useEffect(() => {
+    dispatch(cityChangeCoordsFetch(geoApi, 'Moscow'));
+  }, []);
   const onFindCity = (evt) => {
     evt.preventDefault();
-    cityChangeCoordsFetch(term);
+    dispatch(cityChangeCoordsFetch(geoApi, term));
     setTerm('');
   };
   if (loading) {
-    return <SearchForm onFindCity={onFindCity} setTerm={setTerm} term={term} status="Loading..." />;
+    return <SearchFormRender onFindCity={onFindCity} setTerm={setTerm} term={term} status="Loading..." />;
   }
   if (error) {
-    return <SearchForm onFindCity={onFindCity} setTerm={setTerm} term={term} status="Error!" />;
+    return <SearchFormRender onFindCity={onFindCity} setTerm={setTerm} term={term} status="Error!" />;
   }
-  return <SearchForm onFindCity={onFindCity} setTerm={setTerm} term={term} status="Find!" />;
+  return <SearchFormRender onFindCity={onFindCity} setTerm={setTerm} term={term} status="Find!" />;
 };
-
-const mapStateToProps = ({ coords: { loading, error } }) => ({
-  loading,
-  error,
-});
-
-const mapDispatchToProps = (dispatch, { geoApi }) => ({
-  cityChangeCoordsFetch: (cityName) => dispatch(cityChangeCoordsFetch(geoApi, cityName)),
-});
-
-export default withGeoApi(connect(mapStateToProps, mapDispatchToProps)(SearchFormContainer));

@@ -2,26 +2,20 @@ import React, { useState, useEffect } from 'react';
 
 import './clock.scss';
 
-import { TimeLibrary } from '../../services/time-library';
+import { getHoursFormat, getMinutesFormat } from '../../services/time-library';
 
-const useClock = () => {
-  const [hours, setHours] = useState(TimeLibrary.getHoursFormat());
-  const [minutes, setMinutes] = useState(TimeLibrary.getMinutesFormat());
+export const Clock = () => {
+  const [hours, setHours] = useState(getHoursFormat());
+  const [minutes, setMinutes] = useState(getMinutesFormat());
   useEffect(() => {
     const timerId = setInterval(() => {
-      setHours(TimeLibrary.getHoursFormat());
-      setMinutes(TimeLibrary.getMinutesFormat());
+      setHours(getHoursFormat());
+      setMinutes(getMinutesFormat());
     }, 60000);
     return () => {
       clearInterval(timerId);
     };
   }, [minutes]);
-  return { hours, minutes };
-};
-
-const Clock = () => {
-  const time = useClock();
-  const { hours, minutes } = time;
   return (
     <p>
       Time:
@@ -32,5 +26,3 @@ const Clock = () => {
     </p>
   );
 };
-
-export default Clock;

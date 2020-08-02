@@ -1,3 +1,3 @@
-import { GeoAPI } from './geo-api';
+import { GeoApi } from './geo-api';
 
-export { GeoAPI };
+export { GeoApi };

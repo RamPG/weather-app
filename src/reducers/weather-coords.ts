@@ -25,6 +25,7 @@ function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: a
         loading: false,
         error: false,
         data: {
+          location: action.payload.location,
           latitude: action.payload.latitude,
           longitude: action.payload.longitude,
         },

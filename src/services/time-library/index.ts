@@ -1,3 +1,13 @@
-import { TimeLibrary } from './time-library';
+import {
+  getHoursFormat, getMinutesFormat, getNameDay,
+  addMonthDay, getNameMonth, addMonth,
+  addWeekDay, getMonthDayNow, getMonthNow,
+  getYearNow, getWeekDayNow,
+} from './time-library';
 
-export { TimeLibrary };
+export {
+  getHoursFormat, getMinutesFormat, getNameDay,
+  addMonthDay, getNameMonth, addMonth,
+  addWeekDay, getMonthDayNow, getMonthNow,
+  getYearNow, getWeekDayNow,
+};

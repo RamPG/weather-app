@@ -1,28 +1,15 @@
-type GetResourceResponseType = {
-  place_id: string,
-  licence: string,
-  osm_type: string,
-  osm_id: string,
-  boundingbox: Array<string>,
-  lat: string,
-  lon: string
-  display_name: string,
-  class: string,
-  type: string,
-  importance: number,
-  icon: string,
-};
+import { GetGeoCoordsResponseType } from '../../types/response-types';
 
-type TransformDataType = {
+type TransformGeoDateType = {
   location: string,
   latitude: number,
   longitude: number,
 };
 
-export class GeoAPI {
+export class GeoApi {
   protected apiKey: string = '5ec4c010199d2c';
 
-  protected transformData({ display_name, lat, lon }: GetResourceResponseType): TransformDataType {
+  protected transformData({ display_name, lat, lon }: GetGeoCoordsResponseType): TransformGeoDateType {
     return {
       location: display_name.split(', ')[0],
       latitude: Number(lat),
@@ -30,7 +17,7 @@ export class GeoAPI {
     };
   }
 
-  async getResource<T>(cityName: number): Promise<T> {
+  async getResource<T>(cityName: string): Promise<T> {
     const url = `https://eu1.locationiq.com/v1/search.php?key=${this.apiKey}&q=${cityName}&format=json&accept-language=en`;
     const res = await fetch(url);
     if (res.ok) {
@@ -39,8 +26,8 @@ export class GeoAPI {
     throw new Error('Error');
   }
 
-  async getGeoCity(cityName: number): Promise<TransformDataType> {
-    const geoCityData = await this.getResource<Array<GetResourceResponseType>>(cityName);
+  async getGeoCity(cityName: string): Promise<TransformGeoDateType> {
+    const geoCityData = await this.getResource<Array<GetGeoCoordsResponseType>>(cityName);
     return this.transformData(geoCityData[0]);
   }
 }

@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import './weather-card.scss';
 
 import { cityWeatherTodayFetch } from '../../actions/actions';
-import withWeatherApi from '../../hoc/with-weather-api';
-import TodayDate from '../today-date';
+import { WeatherApiContext } from '../../contexts';
+import { TodayDate } from '../today-date';
 
-const WeatherCard = ({
+const WeatherCardRender = ({
   location, feelsLike, humidity, temp, weather, windSpeed, imgLink,
 }) => (
   <section className="main-card">
@@ -43,11 +43,13 @@ const WeatherCard = ({
   </section>
 );
 
-const WeatherCardContainer = ({
-  cityWeatherTodayFetch, location, loading, error, data,
-}) => {
+export const WeatherCard = () => {
+  const location = useSelector((state) => state.coords.data.location);
+  const { loading, error, data } = useSelector(({ current }) => current);
+  const dispatch = useDispatch();
+  const WeatherApi = useContext(WeatherApiContext);
   useEffect(() => {
-    cityWeatherTodayFetch();
+    dispatch(cityWeatherTodayFetch(WeatherApi));
   }, [location]);
   if (loading) {
     return <h1>Loading...</h1>;
@@ -55,14 +57,5 @@ const WeatherCardContainer = ({
   if (error) {
     return <h1>Error!</h1>;
   }
-  return <WeatherCard location={location} {...data} />;
+  return <WeatherCardRender location={location} {...data} />;
 };
-
-const mapStateToProps = ({ location, current: { data, loading, error } }) => ({
-  location, data, loading, error,
-});
-
-const mapDispatchToProps = (dispatch, { weatherApi }) => ({
-  cityWeatherTodayFetch: () => dispatch(cityWeatherTodayFetch(weatherApi)),
-});
-export default withWeatherApi(connect(mapStateToProps, mapDispatchToProps)(WeatherCardContainer));

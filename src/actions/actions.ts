@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import {
   CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
   CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
@@ -7,12 +8,15 @@ import {
 import {
   CityWeatherTodayRequestActionType, CityWeatherTodayFailureActionType, CityWeatherTodaySuccessActionType,
   CityWeatherSevenDaysRequestActionType, CityWeatherSevenDaysFailureActionType, CityWeatherSevenDaysSuccessActionType,
-  CityChangeRequestActionType, CityChangeFailureActionType, CityChangeSuccessActionType,
+  CityChangeRequestActionType, CityChangeFailureActionType, CityChangeSuccessActionType, ActionTypes,
 } from '../types/action-types';
 
 import {
-  DataCoordsStateType, DataDailyStateType, DataCurrentStateType,
+  DataCoordsStateType, DataDailyStateType, DataCurrentStateType, GetStateType,
 } from '../types/state-types';
+
+import { GeoApi } from "../services/geo-api";
+import { WeatherApi } from "../services/weather-api";
 
 const cityWeatherTodayRequest = (): CityWeatherTodayRequestActionType => ({
   type: CITY_WEATHER_TODAY_REQUEST,
@@ -29,7 +33,9 @@ const cityWeatherTodaySuccess = (
   payload: cityWeatherTodayData,
 });
 
-export const cityWeatherTodayFetch = (weatherApi: any) => (dispatch: any, getState: any) => {
+export const cityWeatherTodayFetch = (weatherApi: WeatherApi) => (
+  dispatch: Dispatch<ActionTypes>, getState: GetStateType,
+) => {
   const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherDataToday(latitude, longitude)
@@ -50,17 +56,19 @@ const cityWeatherSevenDaysFailure = (): CityWeatherSevenDaysFailureActionType =>
 });
 
 const cityWeatherSevenDaysSuccess = (
-  cityWeatherTodayData: DataDailyStateType,
+  cityWeatherTodayData: Array<DataDailyStateType>,
 ): CityWeatherSevenDaysSuccessActionType => ({
   type: CITY_WEATHER_SEVEN_DAYS_SUCCESS,
   payload: cityWeatherTodayData,
 });
 
-export const cityWeatherSevenDaysFetch = (weatherApi: any) => (dispatch: any, getState: any) => {
+export const cityWeatherSevenDaysFetch = (weatherApi: WeatherApi) => (
+  dispatch: Dispatch<ActionTypes>, getState: GetStateType,
+) => {
   const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherSevenDaysRequest());
   weatherApi.getWeatherDataSevenDays(latitude, longitude)
-    .then((data: DataDailyStateType) => {
+    .then((data: Array<DataDailyStateType>) => {
       dispatch(cityWeatherSevenDaysSuccess(data));
     })
     .catch(() => {
@@ -83,7 +91,7 @@ const cityChangeSuccess = (
   payload: cityChangeCoords,
 });
 
-export const cityChangeCoordsFetch = (geoApi: any, location: any) => (dispatch: any) => {
+export const cityChangeCoordsFetch = (geoApi: GeoApi, location: string) => (dispatch: Dispatch<ActionTypes>) => {
   dispatch(cityChangeRequest());
   geoApi.getGeoCity(location)
     .then((data: DataCoordsStateType) => {

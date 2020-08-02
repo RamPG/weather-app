@@ -2,7 +2,7 @@ import React from 'react';
 
 import './weather-list-item.scss';
 
-const WeatherListItem = ({
+export const WeatherListItem = ({
   weekDayName, monthDay, monthDayName, temp, weather, imgLink,
 }) => (
   <>
@@ -34,5 +34,3 @@ const WeatherListItem = ({
     </p>
   </>
 );
-
-export default WeatherListItem;

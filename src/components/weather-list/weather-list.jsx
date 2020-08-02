@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './weather-list.scss';
 
 import { cityWeatherSevenDaysFetch } from '../../actions/actions';
-import withWeatherApi from '../../hoc/with-weather-api';
-import WeatherListItem from '../weather-list-item';
+import { WeatherListItem } from '../weather-list-item';
+import { WeatherApiContext } from '../../contexts';
 
-const WeatherList = ({ data }) => (
+const WeatherListRender = ({ data }) => (
   <section className="weather-forecast">
     <h1 className="weather-forecast__title">
       Weather for next six days
@@ -26,9 +26,13 @@ const WeatherList = ({ data }) => (
   </section>
 );
 
-const WeatherListContainer = ({ cityWeatherSevenDaysFetch, location, daily: { data, loading, error } }) => {
+export const WeatherList = () => {
+  const location = useSelector((state) => state.coords.data.location);
+  const { loading, error, data } = useSelector(({ daily }) => daily);
+  const dispatch = useDispatch();
+  const WeatherApi = useContext(WeatherApiContext);
   useEffect(() => {
-    cityWeatherSevenDaysFetch();
+    dispatch(cityWeatherSevenDaysFetch(WeatherApi));
   }, [location]);
   if (loading) {
     return <h1>Loading...</h1>;
@@ -36,16 +40,5 @@ const WeatherListContainer = ({ cityWeatherSevenDaysFetch, location, daily: { da
   if (error) {
     return <h1>Error!</h1>;
   }
-  return <WeatherList data={data} />;
+  return <WeatherListRender data={data} />;
 };
-
-const mapStateToProps = ({ daily, location }) => ({
-  daily,
-  location,
-});
-
-const mapDispatchToProps = (dispatch, { weatherApi }) => ({
-  cityWeatherSevenDaysFetch: () => dispatch(cityWeatherSevenDaysFetch(weatherApi)),
-});
-
-export default withWeatherApi(connect(mapStateToProps, mapDispatchToProps)(WeatherListContainer));
