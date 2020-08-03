@@ -17,7 +17,7 @@ export type DataDailyStateType = {
         day: string,
         night: string,
     },
-    weather: string | null,
+    weather: string,
 };
 
 export type DataCoordsStateType = {

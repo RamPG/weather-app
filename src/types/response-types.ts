@@ -63,24 +63,6 @@ export type GetWeatherDataSevenDaysResponseType = {
     }>,
 };
 
-type WeatherImgType = {
-    Thunderstorm: string,
-    Drizzle: string,
-    Rain: string,
-    Snow: string,
-    Mist: string,
-    Smoke: string,
-    Haze: string,
-    Fog: string,
-    Sand: string,
-    Dust: string,
-    Ash: string,
-    Squall: string,
-    Tornado: string,
-    Clear: string,
-    Clouds: string,
-};
-
 export type GetGeoCoordsResponseType = {
     place_id: string,
     licence: string,

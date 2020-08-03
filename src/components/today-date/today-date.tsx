@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './today-date.scss';
 import {
@@ -6,7 +6,7 @@ import {
   getYearNow, getNameDay, getWeekDayNow,
 } from '../../services/time-library';
 
-export const TodayDate = () => (
+export const TodayDate: FunctionComponent = () => (
   <p>
     {`Today is 
     ${getMonthDayNow()} 

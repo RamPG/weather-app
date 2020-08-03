@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import {
   CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
   CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
@@ -12,11 +13,10 @@ import {
 } from '../types/action-types';
 
 import {
-  DataCoordsStateType, DataDailyStateType, DataCurrentStateType, GetStateType,
+  DataCoordsStateType, DataDailyStateType, DataCurrentStateType,
 } from '../types/state-types';
 
-import { GeoApi } from "../services/geo-api";
-import { WeatherApi } from "../services/weather-api";
+import { WeatherApi } from '../services/weather-api';
 
 const cityWeatherTodayRequest = (): CityWeatherTodayRequestActionType => ({
   type: CITY_WEATHER_TODAY_REQUEST,
@@ -33,10 +33,9 @@ const cityWeatherTodaySuccess = (
   payload: cityWeatherTodayData,
 });
 
-export const cityWeatherTodayFetch = (weatherApi: WeatherApi) => (
-  dispatch: Dispatch<ActionTypes>, getState: GetStateType,
+const cityWeatherTodayFetch = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
+  dispatch: Dispatch<ActionTypes>,
 ) => {
-  const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherDataToday(latitude, longitude)
     .then((data: DataCurrentStateType) => {
@@ -62,10 +61,9 @@ const cityWeatherSevenDaysSuccess = (
   payload: cityWeatherTodayData,
 });
 
-export const cityWeatherSevenDaysFetch = (weatherApi: WeatherApi) => (
-  dispatch: Dispatch<ActionTypes>, getState: GetStateType,
+const cityWeatherSevenDaysFetch = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
+  dispatch: Dispatch<ActionTypes>,
 ) => {
-  const { latitude, longitude } = getState().coords.data;
   dispatch(cityWeatherSevenDaysRequest());
   weatherApi.getWeatherDataSevenDays(latitude, longitude)
     .then((data: Array<DataDailyStateType>) => {
@@ -91,11 +89,17 @@ const cityChangeSuccess = (
   payload: cityChangeCoords,
 });
 
-export const cityChangeCoordsFetch = (geoApi: GeoApi, location: string) => (dispatch: Dispatch<ActionTypes>) => {
+export const cityChangeCoordsFetch = (weatherApi: WeatherApi, location: string) => (
+  dispatch: Dispatch<ActionTypes>,
+) => {
   dispatch(cityChangeRequest());
-  geoApi.getGeoCity(location)
+  weatherApi.getGeoCity(location)
     .then((data: DataCoordsStateType) => {
       dispatch(cityChangeSuccess(data));
+      // @ts-ignore
+      dispatch(cityWeatherSevenDaysFetch(weatherApi, data.latitude, data.longitude));
+      // @ts-ignore
+      dispatch(cityWeatherTodayFetch(weatherApi, data.latitude, data.longitude));
     })
     .catch(() => {
       dispatch(cityChangeFailure());

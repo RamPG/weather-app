@@ -1,13 +1,16 @@
-import React, { useContext, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
 
 import './weather-list.scss';
 
-import { cityWeatherSevenDaysFetch } from '../../actions/actions';
 import { WeatherListItem } from '../weather-list-item';
-import { WeatherApiContext } from '../../contexts';
+import { DataDailyStateType, InitialStateType } from '../../types/state-types';
 
-const WeatherListRender = ({ data }) => (
+type WeatherListRenderPropsType = {
+    data: Array<DataDailyStateType>,
+};
+
+const WeatherListRender: FunctionComponent<WeatherListRenderPropsType> = ({ data }) => (
   <section className="weather-forecast">
     <h1 className="weather-forecast__title">
       Weather for next six days
@@ -26,14 +29,8 @@ const WeatherListRender = ({ data }) => (
   </section>
 );
 
-export const WeatherList = () => {
-  const location = useSelector((state) => state.coords.data.location);
-  const { loading, error, data } = useSelector(({ daily }) => daily);
-  const dispatch = useDispatch();
-  const WeatherApi = useContext(WeatherApiContext);
-  useEffect(() => {
-    dispatch(cityWeatherSevenDaysFetch(WeatherApi));
-  }, [location]);
+export const WeatherList: FunctionComponent = () => {
+  const { loading, error, data } = useSelector(({ daily }: InitialStateType) => daily);
   if (loading) {
     return <h1>Loading...</h1>;
   }

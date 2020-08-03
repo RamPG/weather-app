@@ -8,12 +8,21 @@ import {
 
 import {
   GetWeatherDataSevenDaysResponseType, GetWeatherDataTodayResponseType,
+  GetGeoCoordsResponseType,
 } from '../../types/response-types';
 
-export class WeatherApi {
-  private apiKey: string = 'c0e4dd09360b7cc7634d299c1d2e9790';
+type TransformGeoDateType = {
+  location: string,
+  latitude: number,
+  longitude: number,
+};
 
-  private weatherImg = {
+export class WeatherApi {
+  private apiKeyWeather: string = 'c0e4dd09360b7cc7634d299c1d2e9790';
+
+  private apiKeyGeo: string = '5ec4c010199d2c';
+
+  weatherImg = {
     Thunderstorm: 'http://openweathermap.org/img/wn/11d@2x.png',
     Drizzle: 'http://openweathermap.org/img/wn/09d@2x.png',
     Rain: 'http://openweathermap.org/img/wn/10d@2x.png',
@@ -29,16 +38,24 @@ export class WeatherApi {
     Tornado: 'http://openweathermap.org/img/wn/50d@2x.png',
     Clear: 'http://openweathermap.org/img/wn/01d@2x.png',
     Clouds: 'http://openweathermap.org/img/wn/02d@2x.png',
-  }
+  };
 
   private static transformKelvinToCelsius(tempKelvin: number): string {
     const tempCelsius = Math.floor(tempKelvin - 273.15);
     return tempCelsius > 0 ? `+${tempCelsius}°C` : `${tempCelsius}°C`;
   }
 
+  private transformData({ display_name, lat, lon }: GetGeoCoordsResponseType): TransformGeoDateType {
+    return {
+      location: display_name.split(', ')[0],
+      latitude: Number(lat),
+      longitude: Number(lon),
+    };
+  }
+
   private static transformTodayData({ current }: GetWeatherDataTodayResponseType): DataCurrentStateType {
     return {
-      imgLink: '',
+      imgLink: `http://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`,
       temp: WeatherApi.transformKelvinToCelsius(current.temp),
       feelsLike: WeatherApi.transformKelvinToCelsius(current.feels_like),
       humidity: current.humidity,
@@ -50,7 +67,7 @@ export class WeatherApi {
   private static transformSevenDaysData({ daily }: GetWeatherDataSevenDaysResponseType): Array<DataDailyStateType> {
     return daily.map((element, index) => ({
       id: index,
-      imgLink: '',
+      imgLink: `http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`,
       weekDayName: getNameDay(addWeekDay(index)),
       monthDay: addMonthDay(index),
       monthDayName: getNameMonth(addMonth(index)),
@@ -62,10 +79,19 @@ export class WeatherApi {
     }));
   }
 
-  async getResource<T>(
+  async getResourceWeather<T>(
     latitude: number, longitude: number, interval: string,
   ): Promise<T> {
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=${interval}&appid=${this.apiKey}`;
+    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=${interval}&appid=${this.apiKeyWeather}`;
+    const res = await fetch(url);
+    if (res.ok) {
+      return res.json();
+    }
+    throw new Error('Error');
+  }
+
+  async getResourceGeo<T>(cityName: string): Promise<T> {
+    const url = `https://eu1.locationiq.com/v1/search.php?key=${this.apiKeyGeo}&q=${cityName}&format=json&accept-language=en`;
     const res = await fetch(url);
     if (res.ok) {
       return res.json();
@@ -74,16 +100,21 @@ export class WeatherApi {
   }
 
   async getWeatherDataToday(latitude: number, longitude: number): Promise<DataCurrentStateType> {
-    const cityWeatherToday = await this.getResource<GetWeatherDataTodayResponseType>(
+    const cityWeatherToday = await this.getResourceWeather<GetWeatherDataTodayResponseType>(
       latitude, longitude, 'hourly,daily',
     );
     return WeatherApi.transformTodayData(cityWeatherToday);
   }
 
   async getWeatherDataSevenDays(latitude: number, longitude: number): Promise<Array<DataDailyStateType>> {
-    const cityWeatherSevenDays = await this.getResource<GetWeatherDataSevenDaysResponseType>(
+    const cityWeatherSevenDays = await this.getResourceWeather<GetWeatherDataSevenDaysResponseType>(
       latitude, longitude, 'current,hourly',
     );
     return WeatherApi.transformSevenDaysData(cityWeatherSevenDays);
+  }
+
+  async getGeoCity(cityName: string): Promise<TransformGeoDateType> {
+    const geoCityData = await this.getResourceGeo<Array<GetGeoCoordsResponseType>>(cityName);
+    return this.transformData(geoCityData[0]);
   }
 }

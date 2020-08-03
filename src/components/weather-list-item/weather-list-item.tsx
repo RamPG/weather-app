@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './weather-list-item.scss';
 
-export const WeatherListItem = ({
+import { DataDailyStateType } from '../../types/state-types';
+
+export const WeatherListItem: FunctionComponent<DataDailyStateType> = ({
   weekDayName, monthDay, monthDayName, temp, weather, imgLink,
 }) => (
   <>
