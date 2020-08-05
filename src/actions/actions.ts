@@ -1,5 +1,5 @@
-import { Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { Dispatch } from "redux";
+import {ThunkAction, ThunkDispatch} from 'redux-thunk';
 import {
   CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
   CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
@@ -13,7 +13,7 @@ import {
 } from '../types/action-types';
 
 import {
-  DataCoordsStateType, DataDailyStateType, DataCurrentStateType,
+  DataCoordsStateType, DataDailyStateType, DataCurrentStateType, InitialStateType,
 } from '../types/state-types';
 
 import { WeatherApi } from '../services/weather-api';
@@ -34,7 +34,7 @@ const cityWeatherTodaySuccess = (
 });
 
 const cityWeatherTodayFetch = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
-  dispatch: Dispatch<ActionTypes>,
+  dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherDataToday(latitude, longitude)
@@ -62,7 +62,7 @@ const cityWeatherSevenDaysSuccess = (
 });
 
 const cityWeatherSevenDaysFetch = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
-  dispatch: Dispatch<ActionTypes>,
+  dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityWeatherSevenDaysRequest());
   weatherApi.getWeatherDataSevenDays(latitude, longitude)
@@ -90,15 +90,13 @@ const cityChangeSuccess = (
 });
 
 export const cityChangeCoordsFetch = (weatherApi: WeatherApi, location: string) => (
-  dispatch: Dispatch<ActionTypes>,
+  dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityChangeRequest());
   weatherApi.getGeoCity(location)
     .then((data: DataCoordsStateType) => {
       dispatch(cityChangeSuccess(data));
-      // @ts-ignore
       dispatch(cityWeatherSevenDaysFetch(weatherApi, data.latitude, data.longitude));
-      // @ts-ignore
       dispatch(cityWeatherTodayFetch(weatherApi, data.latitude, data.longitude));
     })
     .catch(() => {

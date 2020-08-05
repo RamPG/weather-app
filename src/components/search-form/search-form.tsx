@@ -23,7 +23,7 @@ type SearchFormRenderPropsType = {
 };
 
 const SearchFormRender: FunctionComponent<SearchFormRenderPropsType> = ({
-  onChangeTerm, onFindCity, status, term, city
+  onChangeTerm, onFindCity, status, term, city,
 }) => (
   <form className="search-form" onSubmit={onFindCity}>
     <input
