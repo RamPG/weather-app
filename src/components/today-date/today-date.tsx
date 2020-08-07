@@ -2,16 +2,16 @@ import React, { FunctionComponent } from 'react';
 
 import './today-date.scss';
 import {
-  getMonthDayNow, getNameMonth, getMonthNow,
-  getYearNow, getNameDay, getWeekDayNow,
-} from '../../services/time-library';
+  getMonthDay, getNameMonth, getMonth,
+  getYear, getNameDay, getWeekDay,
+} from '../../services/TimeLibrary';
 
 export const TodayDate: FunctionComponent = () => (
   <p>
     {`Today is 
-    ${getMonthDayNow()} 
-    ${getNameMonth(getMonthNow())} 
-    ${getYearNow()} 
-    ${getNameDay(getWeekDayNow())}`}
+    ${getMonthDay()} 
+    ${getNameMonth(getMonth())} 
+    ${getYear()} 
+    ${getNameDay(getWeekDay())}`}
   </p>
 );

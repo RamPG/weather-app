@@ -1,7 +1,7 @@
 import {
   getNameDay, getNameMonth, addMonthDay,
   addWeekDay, addMonth,
-} from '../time-library';
+} from '../TimeLibrary';
 import {
   DataDailyStateType, DataCurrentStateType,
 } from '../../types/state-types';

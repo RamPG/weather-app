@@ -13,7 +13,7 @@ module.exports = {
     rules: [
       {
         enforce: 'pre',
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /(node_modules)/,
         loader: 'source-map-loader',
       },
@@ -34,7 +34,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -78,6 +78,6 @@ module.exports = {
     historyApiFallback: true,
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
 };

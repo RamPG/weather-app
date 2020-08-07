@@ -1,13 +1,13 @@
 import {
   getHoursFormat, getMinutesFormat, getNameDay,
   addMonthDay, getNameMonth, addMonth,
-  addWeekDay, getMonthDayNow, getMonthNow,
-  getYearNow, getWeekDayNow,
-} from './time-library';
+  addWeekDay, getMonthDay, getMonth,
+  getYear, getWeekDay,
+} from './TimeLibrary';
 
 export {
   getHoursFormat, getMinutesFormat, getNameDay,
   addMonthDay, getNameMonth, addMonth,
-  addWeekDay, getMonthDayNow, getMonthNow,
-  getYearNow, getWeekDayNow,
+  addWeekDay, getMonthDay, getMonth,
+  getYear, getWeekDay,
 };

@@ -6,6 +6,8 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'plugin:jest/recommended',
+    'plugin:jest/style',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -19,6 +21,7 @@ module.exports = {
     'react',
     '@typescript-eslint',
     'import',
+    'jest',
   ],
   rules: {
     'react/state-in-constructor': [2, 'never'],
