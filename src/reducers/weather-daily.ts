@@ -6,24 +6,26 @@ import {
   SubStateType, DataDailyStateType,
 } from '../types/state-types';
 
-function updateWeatherDaily(state: SubStateType<Array<DataDailyStateType>>, action: any) {
+import { ActionTypes } from "../types/action-types";
+
+function updateWeatherDaily(state: SubStateType<Array<DataDailyStateType>>, action: ActionTypes) {
   switch (action.type) {
     case CITY_WEATHER_SEVEN_DAYS_REQUEST:
       return {
-        loading: true,
-        error: false,
+        isLoading: true,
+        isError: false,
         data: [],
       };
     case CITY_WEATHER_SEVEN_DAYS_FAILURE:
       return {
-        loading: false,
-        error: false,
+        isLoading: false,
+        isError: false,
         data: [],
       };
     case CITY_WEATHER_SEVEN_DAYS_SUCCESS:
       return {
-        loading: false,
-        error: false,
+        isLoading: false,
+        isError: false,
         data: action.payload,
       };
     default:

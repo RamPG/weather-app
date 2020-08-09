@@ -4,24 +4,26 @@ import {
 
 import { SubStateType, DataCurrentStateType } from '../types/state-types';
 
-function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action: any) {
+import { ActionTypes } from "../types/action-types";
+
+function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action: ActionTypes) {
   switch (action.type) {
     case CITY_WEATHER_TODAY_REQUEST:
       return {
-        loading: true,
-        error: false,
+        isLoading: true,
+        isError: false,
         data: {},
       };
     case CITY_WEATHER_TODAY_FAILURE:
       return {
-        loading: false,
-        error: true,
+        isLoading: false,
+        isError: true,
         data: {},
       };
     case CITY_WEATHER_TODAY_SUCCESS:
       return {
-        loading: false,
-        error: false,
+        isLoading: false,
+        isError: false,
         data: action.payload,
       };
     default:

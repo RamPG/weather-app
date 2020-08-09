@@ -1,5 +1,4 @@
-import { Dispatch } from "redux";
-import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 import {
   CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
   CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
@@ -16,7 +15,7 @@ import {
   DataCoordsStateType, DataDailyStateType, DataCurrentStateType, InitialStateType,
 } from '../types/state-types';
 
-import { WeatherApi } from '../services/weather-api';
+import { WeatherApi } from '../services/WeatherApi';
 
 const cityWeatherTodayRequest = (): CityWeatherTodayRequestActionType => ({
   type: CITY_WEATHER_TODAY_REQUEST,
@@ -37,7 +36,7 @@ const cityWeatherTodayFetch = (weatherApi: WeatherApi, latitude: number, longitu
   dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityWeatherTodayRequest());
-  weatherApi.getWeatherDataToday(latitude, longitude)
+  weatherApi.getWeatherCurrent(latitude, longitude)
     .then((data: DataCurrentStateType) => {
       dispatch(cityWeatherTodaySuccess(data));
     })
@@ -65,7 +64,7 @@ const cityWeatherSevenDaysFetch = (weatherApi: WeatherApi, latitude: number, lon
   dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityWeatherSevenDaysRequest());
-  weatherApi.getWeatherDataSevenDays(latitude, longitude)
+  weatherApi.getWeatherDaily(latitude, longitude)
     .then((data: Array<DataDailyStateType>) => {
       dispatch(cityWeatherSevenDaysSuccess(data));
     })
@@ -93,7 +92,7 @@ export const cityChangeCoordsFetch = (weatherApi: WeatherApi, location: string) 
   dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
 ) => {
   dispatch(cityChangeRequest());
-  weatherApi.getGeoCity(location)
+  weatherApi.getWeatherCoords(location)
     .then((data: DataCoordsStateType) => {
       dispatch(cityChangeSuccess(data));
       dispatch(cityWeatherSevenDaysFetch(weatherApi, data.latitude, data.longitude));

@@ -27,8 +27,8 @@ export type DataCoordsStateType = {
 };
 
 export type SubStateType<D> = {
-    loading: boolean,
-    error: boolean,
+    isLoading: boolean,
+    isError: boolean,
     data: D
 }
 
@@ -37,5 +37,3 @@ export type InitialStateType = {
     daily: SubStateType<Array<DataDailyStateType>>,
     coords: SubStateType<DataCoordsStateType>,
 };
-
-export type GetStateType = () => InitialStateType;

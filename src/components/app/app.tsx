@@ -10,7 +10,7 @@ import { SearchForm } from '../search-form';
 
 import { store } from '../../store';
 
-import { WeatherApi } from '../../services/weather-api';
+import { WeatherApi } from '../../services/WeatherApi';
 import { ErrorBoundary } from '../error-boundry';
 import { Clock } from '../clock';
 

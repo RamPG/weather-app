@@ -30,11 +30,11 @@ const WeatherListRender: FunctionComponent<WeatherListRenderPropsType> = ({ data
 );
 
 export const WeatherList: FunctionComponent = () => {
-  const { loading, error, data } = useSelector(({ daily }: InitialStateType) => daily);
-  if (loading) {
+  const { isLoading, isError, data } = useSelector(({ daily }: InitialStateType) => daily);
+  if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  if (error) {
+  if (isError) {
     return <h1>Error!</h1>;
   }
   return <WeatherListRender data={data} />;

@@ -11,7 +11,7 @@ import { cityChangeCoordsFetch } from '../../actions/actions';
 import { WeatherApiContext } from '../../contexts';
 
 import { InitialStateType } from '../../types/state-types';
-import { WeatherApi } from '../../services/weather-api';
+import { WeatherApi } from '../../services/WeatherApi';
 import { ActionTypes } from '../../types/action-types';
 
 type SearchFormRenderPropsType = {
@@ -52,8 +52,8 @@ const SearchFormRender: FunctionComponent<SearchFormRenderPropsType> = ({
 
 export const SearchForm: FunctionComponent = () => {
   const [term, setTerm] = useState<string>('');
-  const { error, loading, data } = useSelector(({ coords }: InitialStateType) => (coords));
-  const status: string = loading ? 'Loading...' : error ? 'Error!' : 'Find!';
+  const { isError, isLoading, data } = useSelector(({ coords }: InitialStateType) => (coords));
+  const status: string = isLoading ? 'Loading...' : isError ? 'Error!' : 'Find!';
   const dispatch = useDispatch<ThunkDispatch<InitialStateType, unknown, ActionTypes>>();
   const weatherApi: WeatherApi = useContext(WeatherApiContext);
 

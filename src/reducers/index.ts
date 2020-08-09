@@ -7,8 +7,8 @@ import { ActionTypes } from '../types/action-types';
 
 const initialState: InitialStateType = {
   coords: {
-    loading: false,
-    error: false,
+    isLoading: false,
+    isError: false,
     data: {
       location: 'Moscow',
       latitude: 55.751244,
@@ -16,8 +16,8 @@ const initialState: InitialStateType = {
     },
   },
   current: {
-    loading: false,
-    error: false,
+    isLoading: false,
+    isError: false,
     data: {
       imgLink: '',
       temp: '',
@@ -28,16 +28,14 @@ const initialState: InitialStateType = {
     },
   },
   daily: {
-    loading: false,
-    error: false,
+    isLoading: false,
+    isError: false,
     data: [],
   },
 };
 
-const reducer = (state = initialState, action: ActionTypes) => ({
+export const reducer = (state: InitialStateType = initialState, action: ActionTypes) => ({
   daily: updateWeatherDaily(state.daily, action),
   coords: updateWeatherCoords(state.coords, action),
   current: updateWeatherCurrent(state.current, action),
 });
-
-export { reducer };

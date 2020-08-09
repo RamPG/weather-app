@@ -7,43 +7,43 @@ import {
 } from '../TimeLibrary';
 
 describe('time library', () => {
-  it('getHoursFormat test', () => {
+  it('getHoursFormat return right value', () => {
     expect(getHoursFormat(5)).toBe('05');
   });
-  it('getMinutesFormat test', () => {
+  it('getMinutesFormat return right value', () => {
     expect(getMinutesFormat(10)).toBe('10');
   });
-  it('getNameDay test', () => {
+  it('getNameDay return right value', () => {
     expect(getNameDay(1)).toBe('Monday');
   });
-  it('addMonthDay test', () => {
+  it('addMonthDay return right value', () => {
     expect(addMonthDay(5, 25, 29)).toBe(1);
   });
-  it('getNameMonth test', () => {
+  it('getNameMonth return right value', () => {
     expect(getNameMonth(0)).toBe('January');
   });
-  it('addMonth test', () => {
+  it('addMonth return right value', () => {
     expect(addMonth(5, 30, 31, 5)).toBe(6);
   });
-  it('addWeekDay test', () => {
+  it('addWeekDay return right value', () => {
     expect(addWeekDay(3, 6)).toBe(2);
   });
-  it('getMonthDay test', () => {
+  it('getMonthDay return right value', () => {
     expect(getMonthDay(new Date(2020, 5, 10))).toBe(10);
   });
-  it('getMonth test', () => {
+  it('getMonth return right value', () => {
     expect(getMonth(new Date(2020, 5, 10))).toBe(5);
   });
-  it('getYear test', () => {
+  it('getYear return right value', () => {
     expect(getYear(new Date(2020, 5, 10))).toBe(2020);
   });
-  it('getWeekDay test', () => {
+  it('getWeekDay return right value', () => {
     expect(getWeekDay(new Date(2020, 7, 7))).toBe(5);
   });
-  it('getSecondsFormat test', () => {
+  it('getSecondsFormat return right value', () => {
     expect(getSecondsFormat(9)).toBe('09');
   });
-  it('getFirstSundayDate test', () => {
+  it('getFirstSundayDate return right value', () => {
     expect(getLastSundayMonthDate(2020, 7, 31)).toBe(26);
   });
 });

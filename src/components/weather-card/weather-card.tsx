@@ -39,11 +39,11 @@ const WeatherCardRender: FunctionComponent<DataCurrentStateType> = ({
 );
 
 export const WeatherCard: FunctionComponent = () => {
-  const { loading, error, data } = useSelector(({ current }: InitialStateType) => current);
-  if (loading) {
+  const { isLoading, isError, data } = useSelector(({ current }: InitialStateType) => current);
+  if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  if (error) {
+  if (isError) {
     return <h1>Error!</h1>;
   }
   return <WeatherCardRender {...data} />;

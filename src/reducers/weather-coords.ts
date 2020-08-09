@@ -1,29 +1,31 @@
 import {
-  CITY_CHANGE_FAILURE, CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS
+  CITY_CHANGE_FAILURE, CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS,
 } from '../actions/actions-constant';
 
 import {
-  SubStateType, DataCoordsStateType
+  SubStateType, DataCoordsStateType,
 } from '../types/state-types';
 
-function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: any) {
+import { ActionTypes } from '../types/action-types';
+
+function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
   switch (action.type) {
     case CITY_CHANGE_REQUEST:
       return {
         ...state,
-        loading: true,
-        error: false,
+        isLoading: true,
+        isError: false,
       };
     case CITY_CHANGE_FAILURE:
       return {
         ...state,
-        loading: false,
-        error: true,
+        isLoading: false,
+        isError: true,
       };
     case CITY_CHANGE_SUCCESS:
       return {
-        loading: false,
-        error: false,
+        isLoading: false,
+        isError: false,
         data: {
           location: action.payload.location,
           latitude: action.payload.latitude,
