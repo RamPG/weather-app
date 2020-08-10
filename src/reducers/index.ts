@@ -10,7 +10,7 @@ const initialState: InitialStateType = {
     isLoading: false,
     isError: false,
     data: {
-      location: 'Moscow',
+      location: '',
       latitude: 55.751244,
       longitude: 37.618423,
     },

@@ -27,6 +27,7 @@ const changeCoordsSuccess = (
 const changeCoords = (weatherApi: WeatherApi, location: string) => (
   dispatch: DispatchType,
 ) => {
+  localStorage.setItem('city', location);
   weatherApi.getCoords(location)
     .then((data: DataCoordsStateType) => {
       dispatch(changeCoordsSuccess(data));

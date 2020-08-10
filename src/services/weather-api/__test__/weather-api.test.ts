@@ -139,4 +139,8 @@ describe('weather api', () => {
     fetchMock.doMock(JSON.stringify({ data: 'something' }));
     expect(await weatherApi.getResourceGeo('Moscow')).toStrictEqual({ data: 'something' });
   });
+  it('getCityName return success api data', async () => {
+    fetchMock.doMock(JSON.stringify({ data: 'something' }));
+    expect(await weatherApi.getCityName(5, 5)).toStrictEqual({ data: 'something' });
+  });
 });

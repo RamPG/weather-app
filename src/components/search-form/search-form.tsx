@@ -60,7 +60,13 @@ export const SearchForm: FunctionComponent = () => {
   const dispatch = useDispatch<DispatchType>();
   const weatherApi: WeatherApi = useContext(WeatherApiContext);
   useEffect(() => {
-    dispatch(changeCoordsByForm(weatherApi, data.location));
+    let location: string | null = 'Moscow';
+    if (localStorage.getItem('city')) {
+      location = localStorage.getItem('city');
+    }
+    if (typeof location === 'string') {
+      dispatch(changeCoordsByForm(weatherApi, location));
+    }
     useLocation(weatherApi, dispatch, changeCoordsByBrowserNavigator);
   }, []);
 
