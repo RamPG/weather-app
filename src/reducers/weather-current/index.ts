@@ -1,10 +1,10 @@
 import {
   CITY_WEATHER_TODAY_FAILURE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS,
-} from '../actions/actions-constant';
+} from './actions-constants';
 
-import { SubStateType, DataCurrentStateType } from '../types/state-types';
+import { SubStateType, DataCurrentStateType } from '../../types/state-types';
 
-import { ActionTypes } from "../types/action-types";
+import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action: ActionTypes) {
   switch (action.type) {

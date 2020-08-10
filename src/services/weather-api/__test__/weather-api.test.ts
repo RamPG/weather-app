@@ -1,8 +1,8 @@
 import fetchMock from 'jest-fetch-mock';
-import { WeatherApi } from '../WeatherApi';
+import { WeatherApi } from '../weather-api';
 import {
   addMonth, addMonthDay, addWeekDay, getNameDay, getNameMonth,
-} from '../../TimeLibrary';
+} from '../../time-library';
 
 fetchMock.enableMocks();
 

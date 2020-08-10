@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './error-boundry.scss';
+
 type StateType = {
   hasError: boolean,
 }

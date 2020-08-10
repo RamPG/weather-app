@@ -1,12 +1,12 @@
 import {
   CITY_WEATHER_SEVEN_DAYS_FAILURE, CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS,
-} from '../actions/actions-constant';
+} from './actions-constants';
 
 import {
   SubStateType, DataDailyStateType,
-} from '../types/state-types';
+} from '../../types/state-types';
 
-import { ActionTypes } from "../types/action-types";
+import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherDaily(state: SubStateType<Array<DataDailyStateType>>, action: ActionTypes) {
   switch (action.type) {

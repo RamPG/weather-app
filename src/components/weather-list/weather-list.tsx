@@ -13,7 +13,7 @@ type WeatherListRenderPropsType = {
 const WeatherListRender: FunctionComponent<WeatherListRenderPropsType> = ({ data }) => (
   <section className="weather-forecast">
     <h1 className="weather-forecast__title">
-      Weather for next six days
+      Weather for seven days
     </h1>
     <ul className="weather-forecast__weather-list weather-list">
       {

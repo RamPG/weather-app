@@ -1,17 +1,23 @@
 import React, { FunctionComponent } from 'react';
 
 import './today-date.scss';
-import {
-  getMonthDay, getNameMonth, getMonth,
-  getYear, getNameDay, getWeekDay,
-} from '../../services/TimeLibrary';
 
-export const TodayDate: FunctionComponent = () => (
+type TodayDatePropsType = {
+  monthDay: number,
+  nameMonth: string,
+  year: number,
+  nameDay: string
+}
+export const TodayDate: FunctionComponent<TodayDatePropsType> = (
+  {
+    monthDay, nameDay, year, nameMonth,
+  },
+) => (
   <p>
     {`Today is 
-    ${getMonthDay()} 
-    ${getNameMonth(getMonth())} 
-    ${getYear()} 
-    ${getNameDay(getWeekDay())}`}
+    ${monthDay} 
+    ${nameMonth} 
+    ${year} 
+    ${nameDay}`}
   </p>
 );

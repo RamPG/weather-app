@@ -7,11 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import './search-form.scss';
 
 import { ThunkDispatch } from 'redux-thunk';
-import { cityChangeCoordsFetch } from '../../actions/actions';
+import { cityChangeCoordsFetch } from '../../reducers/weather-coords/actions';
 import { WeatherApiContext } from '../../contexts';
 
 import { InitialStateType } from '../../types/state-types';
-import { WeatherApi } from '../../services/WeatherApi';
+import { WeatherApi } from '../../services/weather-api';
 import { ActionTypes } from '../../types/action-types';
 
 type SearchFormRenderPropsType = {

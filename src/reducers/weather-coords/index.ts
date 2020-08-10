@@ -1,12 +1,12 @@
 import {
   CITY_CHANGE_FAILURE, CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS,
-} from '../actions/actions-constant';
+} from './actions-constants';
 
 import {
   SubStateType, DataCoordsStateType,
-} from '../types/state-types';
+} from '../../types/state-types';
 
-import { ActionTypes } from '../types/action-types';
+import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
   switch (action.type) {

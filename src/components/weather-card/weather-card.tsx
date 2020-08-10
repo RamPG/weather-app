@@ -6,12 +6,20 @@ import './weather-card.scss';
 import { TodayDate } from '../today-date';
 
 import { DataCurrentStateType, InitialStateType } from '../../types/state-types';
+import {
+  getYear, getMonthDay, getNameMonth, getMonth, getNameDay, getWeekDay,
+} from '../../services/time-library';
 
 const WeatherCardRender: FunctionComponent<DataCurrentStateType> = ({
   feelsLike, humidity, temp, weather, windSpeed, imgLink,
 }) => (
   <section className="main-card">
-    <TodayDate />
+    <TodayDate
+      monthDay={getMonthDay()}
+      nameMonth={getNameMonth(getMonth())}
+      year={getYear()}
+      nameDay={getNameDay(getWeekDay())}
+    />
     <p className="main-card__temp">
       {temp}
     </p>

@@ -1,3 +1,15 @@
+export function getSeconds(current: Date = new Date()): number {
+  return current.getSeconds();
+}
+
+export function getMinutes(current: Date = new Date()): number {
+  return current.getMinutes();
+}
+
+export function getHours(current: Date = new Date()): number {
+  return current.getHours();
+}
+
 export function getWeekDay(current: Date = new Date()): number {
   return current.getDay();
 }
@@ -24,6 +36,30 @@ export function getDaysInMonth(year: number = getYear(), month: number = getMont
   return Math.round((nextDate - currentDate) / 1000 / 3600 / 24);
 }
 
+export function addSeconds(value: number = 0, seconds: number = getSeconds()) {
+  return (seconds + value) % 60;
+}
+
+export function addMinutes(
+  valueSeconds: number = 0, valueMinutes: number = 0,
+  seconds: number = getSeconds(), minutes: number = 0,
+) {
+  if (valueSeconds + seconds >= 60) {
+    return (minutes + valueMinutes + 1) % 60;
+  }
+  return (minutes + valueMinutes) % 60;
+}
+
+export function addHours(
+  valueMinutes: number = 0, valueHours: number = 0,
+  minutes: number = getMinutes(), hours: number = getHours(),
+) {
+  if (valueMinutes + minutes >= 60) {
+    return (hours + valueHours + 1) % 24;
+  }
+  return (hours + valueHours) % 60;
+}
+
 export function addMonthDay(
   value: number, monthDay: number = getMonthDay(), daysInMonth: number = getDaysInMonth(),
 ): number {
@@ -34,12 +70,13 @@ export function addMonthDay(
 }
 
 export function addMonth(
-  value: number, monthDay: number = getMonthDay(), daysInMonth: number = getDaysInMonth(), month: number = getMonth(),
+  valueMonth:number = 0, valueDays: number = 0, monthDay: number = getMonthDay(),
+  daysInMonth: number = getDaysInMonth(), month: number = getMonth(),
 ): number {
-  if (monthDay + value > daysInMonth) {
-    return (month + 1) % 12;
+  if (monthDay + valueDays > daysInMonth) {
+    return (month + valueMonth + 1) % 12;
   }
-  return month % 12;
+  return (month + valueMonth) % 12;
 }
 
 export function getHoursFormat(hours: number = new Date().getHours()): string {

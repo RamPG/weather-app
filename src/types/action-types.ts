@@ -1,8 +1,13 @@
 import {
   CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
+} from '../reducers/weather-current/actions-constants';
+
+import {
   CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
+} from '../reducers/weather-daily/actions-constants';
+import {
   CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS, CITY_CHANGE_FAILURE,
-} from '../actions/actions-constant';
+} from '../reducers/weather-coords/actions-constants';
 
 import {
   DataCurrentStateType, DataCoordsStateType, DataDailyStateType,
