@@ -1,64 +1,73 @@
+import { ThunkDispatch } from 'redux-thunk';
 import {
-  CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS, CITY_WEATHER_TODAY_FAILURE,
-} from '../reducers/weather-current/actions-constants';
-
-import {
-  CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS, CITY_WEATHER_SEVEN_DAYS_FAILURE,
-} from '../reducers/weather-daily/actions-constants';
-import {
-  CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS, CITY_CHANGE_FAILURE,
+  CHANGE_COORDS_FAILURE,
+  CHANGE_COORDS_REQUEST,
+  CHANGE_COORDS_SUCCESS,
 } from '../reducers/weather-coords/actions-constants';
 
 import {
-  DataCurrentStateType, DataCoordsStateType, DataDailyStateType,
+  FETCH_DAILY_WEATHER_FAILURE,
+  FETCH_DAILY_WEATHER_SUCCESS,
+  FETCH_DAILY_WEATHER_REQUEST,
+} from '../reducers/weather-daily/actions-constants';
+import {
+  FETCH_CURRENT_WEATHER_FAILURE,
+  FETCH_CURRENT_WEATHER_SUCCESS,
+  FETCH_CURRENT_WEATHER_REQUEST,
+} from '../reducers/weather-current/actions-constants';
+
+import {
+  DataCurrentStateType, DataCoordsStateType, DataDailyStateType, InitialStateType,
 } from './state-types';
 
-export type CityWeatherTodayRequestActionType = {
-    type: typeof CITY_WEATHER_TODAY_REQUEST,
+export type FetchCurrentWeatherRequestActionType = {
+    type: typeof FETCH_CURRENT_WEATHER_REQUEST,
 };
 
-export type CityWeatherTodayFailureActionType = {
-    type: typeof CITY_WEATHER_TODAY_FAILURE,
+export type FetchCurrentWeatherFailureActionType = {
+    type: typeof FETCH_CURRENT_WEATHER_FAILURE,
 };
 
-export type CityWeatherTodaySuccessActionType = {
-    type: typeof CITY_WEATHER_TODAY_SUCCESS,
+export type FetchCurrentWeatherSuccessActionType = {
+    type: typeof FETCH_CURRENT_WEATHER_SUCCESS,
     payload: DataCurrentStateType,
 };
 
-export type CityWeatherSevenDaysRequestActionType = {
-    type: typeof CITY_WEATHER_SEVEN_DAYS_REQUEST,
+export type FetchDailyWeatherRequestActionType = {
+    type: typeof FETCH_DAILY_WEATHER_REQUEST,
 };
 
-export type CityWeatherSevenDaysFailureActionType = {
-    type: typeof CITY_WEATHER_SEVEN_DAYS_FAILURE,
+export type FetchDailyWeatherFailureActionType = {
+    type: typeof FETCH_DAILY_WEATHER_FAILURE,
 };
 
-export type CityWeatherSevenDaysSuccessActionType = {
-    type: typeof CITY_WEATHER_SEVEN_DAYS_SUCCESS,
+export type FetchDailyWeatherSuccessActionType = {
+    type: typeof FETCH_DAILY_WEATHER_SUCCESS,
     payload: Array<DataDailyStateType>,
 };
 
-export type CityChangeRequestActionType = {
-    type: typeof CITY_CHANGE_REQUEST,
+export type ChangeCoordsRequestActionType = {
+    type: typeof CHANGE_COORDS_REQUEST,
 };
 
-export type CityChangeFailureActionType = {
-    type: typeof CITY_CHANGE_FAILURE,
+export type ChangeCoordsFailureActionType = {
+    type: typeof CHANGE_COORDS_FAILURE,
 };
 
-export type CityChangeSuccessActionType = {
-    type: typeof CITY_CHANGE_SUCCESS,
+export type ChangeCoordsSuccessActionType = {
+    type: typeof CHANGE_COORDS_SUCCESS,
     payload: DataCoordsStateType,
 };
 
-export type CityChangeActionsType =
-    CityChangeRequestActionType | CityChangeFailureActionType | CityChangeSuccessActionType;
+export type ChangeCoordsActionsType =
+    ChangeCoordsRequestActionType | ChangeCoordsFailureActionType | ChangeCoordsSuccessActionType;
 
 export type CityWeatherSevenDaysActionsType =
-    CityWeatherSevenDaysRequestActionType | CityWeatherSevenDaysFailureActionType | CityWeatherSevenDaysSuccessActionType;
+    FetchDailyWeatherSuccessActionType | FetchDailyWeatherRequestActionType | FetchDailyWeatherFailureActionType;
 
-export type CityWeatherTodayActionsType =
-    CityWeatherTodayRequestActionType | CityWeatherTodayFailureActionType | CityWeatherTodaySuccessActionType;
+export type FetchCurrentWeatherActionsType =
+    FetchCurrentWeatherRequestActionType | FetchCurrentWeatherFailureActionType | FetchCurrentWeatherSuccessActionType;
 
-export type ActionTypes = CityChangeActionsType | CityWeatherSevenDaysActionsType | CityWeatherTodayActionsType;
+export type ActionTypes = ChangeCoordsActionsType | CityWeatherSevenDaysActionsType | FetchCurrentWeatherActionsType;
+
+export type DispatchType = ThunkDispatch<InitialStateType, unknown, ActionTypes>;

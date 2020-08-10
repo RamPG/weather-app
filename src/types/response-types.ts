@@ -77,3 +77,21 @@ export type GetGeoCoordsResponseType = {
     importance: number,
     icon: string,
 };
+
+export type GetGeoCityNameResponseType = {
+    place_id: string,
+    licence: string,
+    osm_type: string,
+    osm_id: string,
+    boundingbox: Array<string>,
+    lat: string,
+    lon: string
+    display_name: string,
+    address: {
+        city: string,
+        county: string,
+        state: string,
+        country: string,
+        counry_code: string,
+    },
+}

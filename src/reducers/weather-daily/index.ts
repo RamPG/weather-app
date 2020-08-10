@@ -1,5 +1,7 @@
 import {
-  CITY_WEATHER_SEVEN_DAYS_FAILURE, CITY_WEATHER_SEVEN_DAYS_REQUEST, CITY_WEATHER_SEVEN_DAYS_SUCCESS,
+  FETCH_DAILY_WEATHER_FAILURE,
+  FETCH_DAILY_WEATHER_SUCCESS,
+  FETCH_DAILY_WEATHER_REQUEST,
 } from './actions-constants';
 
 import {
@@ -10,19 +12,19 @@ import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherDaily(state: SubStateType<Array<DataDailyStateType>>, action: ActionTypes) {
   switch (action.type) {
-    case CITY_WEATHER_SEVEN_DAYS_REQUEST:
+    case FETCH_DAILY_WEATHER_REQUEST:
       return {
         isLoading: true,
         isError: false,
         data: [],
       };
-    case CITY_WEATHER_SEVEN_DAYS_FAILURE:
+    case FETCH_DAILY_WEATHER_FAILURE:
       return {
         isLoading: false,
         isError: false,
         data: [],
       };
-    case CITY_WEATHER_SEVEN_DAYS_SUCCESS:
+    case FETCH_DAILY_WEATHER_SUCCESS:
       return {
         isLoading: false,
         isError: false,

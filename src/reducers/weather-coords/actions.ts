@@ -1,42 +1,58 @@
-import { ThunkDispatch } from 'redux-thunk';
 import {
-  ActionTypes,
-  CityChangeFailureActionType,
-  CityChangeRequestActionType,
-  CityChangeSuccessActionType,
+  ChangeCoordsFailureActionType,
+  ChangeCoordsRequestActionType,
+  ChangeCoordsSuccessActionType,
+  DispatchType,
 } from '../../types/action-types';
-import { CITY_CHANGE_FAILURE, CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS } from './actions-constants';
-import { DataCoordsStateType, InitialStateType } from '../../types/state-types';
+import { CHANGE_COORDS_FAILURE, CHANGE_COORDS_REQUEST, CHANGE_COORDS_SUCCESS } from './actions-constants';
+import { DataCoordsStateType } from '../../types/state-types';
 import { WeatherApi } from '../../services/weather-api';
 import { cityWeatherTodayFetch } from '../weather-current/actions';
 import { cityWeatherSevenDaysFetch } from '../weather-daily/actions';
 
-const cityChangeRequest = (): CityChangeRequestActionType => ({
-  type: CITY_CHANGE_REQUEST,
+const changeCoordsRequest = (): ChangeCoordsRequestActionType => ({
+  type: CHANGE_COORDS_REQUEST,
 });
 
-const cityChangeFailure = (): CityChangeFailureActionType => ({
-  type: CITY_CHANGE_FAILURE,
+const changeCoordsFailure = (): ChangeCoordsFailureActionType => ({
+  type: CHANGE_COORDS_FAILURE,
 });
 
-const cityChangeSuccess = (
+const changeCoordsSuccess = (
   cityChangeCoords: DataCoordsStateType,
-): CityChangeSuccessActionType => ({
-  type: CITY_CHANGE_SUCCESS,
+): ChangeCoordsSuccessActionType => ({
+  type: CHANGE_COORDS_SUCCESS,
   payload: cityChangeCoords,
 });
-
-export const cityChangeCoordsFetch = (weatherApi: WeatherApi, location: string) => (
-  dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
+const changeCoords = (weatherApi: WeatherApi, location: string) => (
+  dispatch: DispatchType,
 ) => {
-  dispatch(cityChangeRequest());
-  weatherApi.getWeatherCoords(location)
+  weatherApi.getCoords(location)
     .then((data: DataCoordsStateType) => {
-      dispatch(cityChangeSuccess(data));
+      dispatch(changeCoordsSuccess(data));
       dispatch(cityWeatherSevenDaysFetch(weatherApi, data.latitude, data.longitude));
       dispatch(cityWeatherTodayFetch(weatherApi, data.latitude, data.longitude));
     })
     .catch(() => {
-      dispatch(cityChangeFailure());
+      dispatch(changeCoordsFailure());
+    });
+};
+export const changeCoordsByForm = (weatherApi: WeatherApi, location: string) => (
+  dispatch: DispatchType,
+) => {
+  dispatch(changeCoordsRequest());
+  dispatch(changeCoords(weatherApi, location));
+};
+
+export const changeCoordsByBrowserNavigator = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
+  dispatch: DispatchType,
+) => {
+  dispatch(changeCoordsRequest());
+  weatherApi.getCityName(latitude, longitude)
+    .then(({ address }) => {
+      dispatch(changeCoords(weatherApi, address.city));
+    })
+    .catch(() => {
+      dispatch(changeCoordsFailure());
     });
 };

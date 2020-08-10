@@ -1,5 +1,7 @@
 import {
-  CITY_WEATHER_TODAY_FAILURE, CITY_WEATHER_TODAY_REQUEST, CITY_WEATHER_TODAY_SUCCESS,
+  FETCH_CURRENT_WEATHER_FAILURE,
+  FETCH_CURRENT_WEATHER_SUCCESS,
+  FETCH_CURRENT_WEATHER_REQUEST,
 } from './actions-constants';
 
 import { SubStateType, DataCurrentStateType } from '../../types/state-types';
@@ -8,19 +10,19 @@ import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action: ActionTypes) {
   switch (action.type) {
-    case CITY_WEATHER_TODAY_REQUEST:
+    case FETCH_CURRENT_WEATHER_REQUEST:
       return {
         isLoading: true,
         isError: false,
         data: {},
       };
-    case CITY_WEATHER_TODAY_FAILURE:
+    case FETCH_CURRENT_WEATHER_FAILURE:
       return {
         isLoading: false,
         isError: true,
         data: {},
       };
-    case CITY_WEATHER_TODAY_SUCCESS:
+    case FETCH_CURRENT_WEATHER_SUCCESS:
       return {
         isLoading: false,
         isError: false,

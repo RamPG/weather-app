@@ -6,13 +6,16 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './search-form.scss';
 
-import { ThunkDispatch } from 'redux-thunk';
-import { cityChangeCoordsFetch } from '../../reducers/weather-coords/actions';
+import {
+  changeCoordsByBrowserNavigator,
+  changeCoordsByForm,
+} from '../../reducers/weather-coords/actions';
 import { WeatherApiContext } from '../../contexts';
 
 import { InitialStateType } from '../../types/state-types';
 import { WeatherApi } from '../../services/weather-api';
-import { ActionTypes } from '../../types/action-types';
+import { DispatchType } from '../../types/action-types';
+import { useLocation } from '../../user-hooks/use-location';
 
 type SearchFormRenderPropsType = {
     onChangeTerm: (evt: ChangeEvent<HTMLInputElement>) => void,
@@ -54,16 +57,16 @@ export const SearchForm: FunctionComponent = () => {
   const [term, setTerm] = useState<string>('');
   const { isError, isLoading, data } = useSelector(({ coords }: InitialStateType) => (coords));
   const status: string = isLoading ? 'Loading...' : isError ? 'Error!' : 'Find!';
-  const dispatch = useDispatch<ThunkDispatch<InitialStateType, unknown, ActionTypes>>();
+  const dispatch = useDispatch<DispatchType>();
   const weatherApi: WeatherApi = useContext(WeatherApiContext);
-
   useEffect(() => {
-    dispatch(cityChangeCoordsFetch(weatherApi, data.location));
+    dispatch(changeCoordsByForm(weatherApi, data.location));
+    useLocation(weatherApi, dispatch, changeCoordsByBrowserNavigator);
   }, []);
 
   const onFindCity = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    dispatch(cityChangeCoordsFetch(weatherApi, term));
+    dispatch(changeCoordsByForm(weatherApi, term));
     setTerm('');
   };
 

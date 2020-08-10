@@ -1,36 +1,35 @@
-import { ThunkDispatch } from 'redux-thunk';
 import {
-  ActionTypes,
-  CityWeatherTodayFailureActionType,
-  CityWeatherTodayRequestActionType,
-  CityWeatherTodaySuccessActionType,
+  FetchCurrentWeatherSuccessActionType,
+  FetchCurrentWeatherFailureActionType,
+  FetchCurrentWeatherRequestActionType,
+  DispatchType,
 } from '../../types/action-types';
 import {
-  CITY_WEATHER_TODAY_FAILURE,
-  CITY_WEATHER_TODAY_REQUEST,
-  CITY_WEATHER_TODAY_SUCCESS,
+  FETCH_CURRENT_WEATHER_FAILURE,
+  FETCH_CURRENT_WEATHER_SUCCESS,
+  FETCH_CURRENT_WEATHER_REQUEST,
 } from './actions-constants';
 
-import { DataCurrentStateType, InitialStateType } from '../../types/state-types';
+import { DataCurrentStateType } from '../../types/state-types';
 import { WeatherApi } from '../../services/weather-api';
 
-const cityWeatherTodayRequest = (): CityWeatherTodayRequestActionType => ({
-  type: CITY_WEATHER_TODAY_REQUEST,
+const cityWeatherTodayRequest = (): FetchCurrentWeatherRequestActionType => ({
+  type: FETCH_CURRENT_WEATHER_REQUEST,
 });
 
-const cityWeatherTodayFailure = (): CityWeatherTodayFailureActionType => ({
-  type: CITY_WEATHER_TODAY_FAILURE,
+const cityWeatherTodayFailure = (): FetchCurrentWeatherFailureActionType => ({
+  type: FETCH_CURRENT_WEATHER_FAILURE,
 });
 
 const cityWeatherTodaySuccess = (
   cityWeatherTodayData: DataCurrentStateType,
-): CityWeatherTodaySuccessActionType => ({
-  type: CITY_WEATHER_TODAY_SUCCESS,
+): FetchCurrentWeatherSuccessActionType => ({
+  type: FETCH_CURRENT_WEATHER_SUCCESS,
   payload: cityWeatherTodayData,
 });
 
 export const cityWeatherTodayFetch = (weatherApi: WeatherApi, latitude: number, longitude: number) => (
-  dispatch: ThunkDispatch<InitialStateType, unknown, ActionTypes>,
+  dispatch: DispatchType,
 ) => {
   dispatch(cityWeatherTodayRequest());
   weatherApi.getWeatherCurrent(latitude, longitude)

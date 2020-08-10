@@ -8,7 +8,7 @@ import {
 
 import {
   GetWeatherDataSevenDaysResponseType, GetWeatherDataTodayResponseType,
-  GetGeoCoordsResponseType,
+  GetGeoCoordsResponseType, GetGeoCityNameResponseType,
 } from '../../types/response-types';
 
 type TransformGeoDateType = {
@@ -81,6 +81,15 @@ export class WeatherApi {
     throw new Error('Error');
   }
 
+  async getCityName(latitude: number, longitude: number): Promise<GetGeoCityNameResponseType> {
+    const url = `https://us1.locationiq.com/v1/reverse.php?key=${this._apiKeyGeo}&lat=${latitude}&lon=${longitude}&format=json&accept-language=en`;
+    const res = await fetch(url);
+    if (res.ok) {
+      return res.json();
+    }
+    throw new Error('Error');
+  }
+
   async getWeatherCurrent(latitude: number, longitude: number): Promise<DataCurrentStateType> {
     const cityWeatherToday = await this.getResourceWeather<GetWeatherDataTodayResponseType>(
       latitude, longitude, 'hourly,daily',
@@ -95,7 +104,7 @@ export class WeatherApi {
     return this.transformDailyData(cityWeatherSevenDays);
   }
 
-  async getWeatherCoords(cityName: string): Promise<TransformGeoDateType> {
+  async getCoords(cityName: string): Promise<TransformGeoDateType> {
     const geoCityData = await this.getResourceGeo<Array<GetGeoCoordsResponseType>>(cityName);
     return this.transformCoordsData(geoCityData[0]);
   }

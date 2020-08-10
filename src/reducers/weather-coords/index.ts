@@ -1,5 +1,5 @@
 import {
-  CITY_CHANGE_FAILURE, CITY_CHANGE_REQUEST, CITY_CHANGE_SUCCESS,
+  CHANGE_COORDS_REQUEST, CHANGE_COORDS_FAILURE, CHANGE_COORDS_SUCCESS,
 } from './actions-constants';
 
 import {
@@ -10,19 +10,19 @@ import { ActionTypes } from '../../types/action-types';
 
 function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
   switch (action.type) {
-    case CITY_CHANGE_REQUEST:
+    case CHANGE_COORDS_REQUEST:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case CITY_CHANGE_FAILURE:
+    case CHANGE_COORDS_FAILURE:
       return {
         ...state,
         isLoading: false,
         isError: true,
       };
-    case CITY_CHANGE_SUCCESS:
+    case CHANGE_COORDS_SUCCESS:
       return {
         isLoading: false,
         isError: false,
