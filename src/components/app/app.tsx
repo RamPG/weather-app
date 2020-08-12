@@ -11,6 +11,7 @@ import { SearchForm } from '../search-form';
 import { store } from '../../store';
 
 import { WeatherApi } from '../../services/weather-api';
+import { getHours, getMinutes, getSeconds } from '../../services/time-library';
 import { ErrorBoundary } from '../error-boundry';
 import { Clock } from '../clock';
 
@@ -22,7 +23,11 @@ export const App: FunctionComponent = () => (
       <WeatherApiContext.Provider value={weatherApi}>
         <SearchForm />
       </WeatherApiContext.Provider>
-      <Clock />
+      <Clock
+        hoursStart={getHours()}
+        minutesStart={getMinutes()}
+        secondsStart={getSeconds()}
+      />
       <WeatherCard />
       <WeatherList />
     </Provider>

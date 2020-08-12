@@ -1,14 +1,22 @@
-import React, { useState, useEffect, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import './clock.scss';
 
 import {
-  getHours, getHoursFormat, getMinutes, getMinutesFormat, getSeconds, getSecondsFormat,
+  getHours, getMinutes, getSeconds,
 } from '../../services/time-library';
 import { useClock } from '../../user-hooks/use-clock';
 
-export const Clock: FunctionComponent = () => {
-  const { hours, minutes } = useClock(getHours(), getMinutes(), getSeconds(), 60000);
+type ClockPropsType = {
+    hoursStart: number,
+    minutesStart: number,
+    secondsStart: number,
+}
+
+export const Clock: FunctionComponent<ClockPropsType> = (
+  { hoursStart, minutesStart, secondsStart },
+) => {
+  const { hours, minutes } = useClock(hoursStart, minutesStart, secondsStart, 60000);
   return (
     <p>
       Time:

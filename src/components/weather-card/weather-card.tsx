@@ -9,9 +9,12 @@ import { DataCurrentStateType, InitialStateType } from '../../types/state-types'
 import {
   getYear, getMonthDay, getNameMonth, getMonth, getNameDay, getWeekDay,
 } from '../../services/time-library';
+import { useReducerStateRender } from '../../user-hooks/use-reducer-state-render';
 
-const WeatherCardRender: FunctionComponent<DataCurrentStateType> = ({
-  feelsLike, humidity, temp, weather, windSpeed, imgLink,
+const WeatherCardRender: FunctionComponent<{ data: DataCurrentStateType }> = ({
+  data: {
+    feelsLike, humidity, temp, weather, windSpeed, imgLink,
+  },
 }) => (
   <section className="main-card">
     <TodayDate
@@ -48,11 +51,5 @@ const WeatherCardRender: FunctionComponent<DataCurrentStateType> = ({
 
 export const WeatherCard: FunctionComponent = () => {
   const { isLoading, isError, data } = useSelector(({ current }: InitialStateType) => current);
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
-  if (isError) {
-    return <h1>Error!</h1>;
-  }
-  return <WeatherCardRender {...data} />;
+  return useReducerStateRender<DataCurrentStateType>(isLoading, isError, data, WeatherCardRender);
 };

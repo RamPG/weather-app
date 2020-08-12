@@ -16,7 +16,7 @@ const initialState: InitialStateType = {
     },
   },
   current: {
-    isLoading: false,
+    isLoading: true,
     isError: false,
     data: {
       imgLink: '',
@@ -28,7 +28,7 @@ const initialState: InitialStateType = {
     },
   },
   daily: {
-    isLoading: false,
+    isLoading: true,
     isError: false,
     data: [],
   },

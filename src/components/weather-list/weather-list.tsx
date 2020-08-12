@@ -5,12 +5,9 @@ import './weather-list.scss';
 
 import { WeatherListItem } from '../weather-list-item';
 import { DataDailyStateType, InitialStateType } from '../../types/state-types';
+import { useReducerStateRender } from '../../user-hooks/use-reducer-state-render';
 
-type WeatherListRenderPropsType = {
-    data: Array<DataDailyStateType>,
-};
-
-const WeatherListRender: FunctionComponent<WeatherListRenderPropsType> = ({ data }) => (
+const WeatherListRender: FunctionComponent<{ data: Array<DataDailyStateType> }> = ({ data }) => (
   <section className="weather-forecast">
     <h1 className="weather-forecast__title">
       Weather for seven days
@@ -31,11 +28,5 @@ const WeatherListRender: FunctionComponent<WeatherListRenderPropsType> = ({ data
 
 export const WeatherList: FunctionComponent = () => {
   const { isLoading, isError, data } = useSelector(({ daily }: InitialStateType) => daily);
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
-  if (isError) {
-    return <h1>Error!</h1>;
-  }
-  return <WeatherListRender data={data} />;
+  return useReducerStateRender<Array<DataDailyStateType>>(isLoading, isError, data, WeatherListRender);
 };
