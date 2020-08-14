@@ -5,13 +5,12 @@ import './weather-card.scss';
 
 import { TodayDate } from '../today-date';
 
-import { DataCurrentStateType, InitialStateType } from '../../types/state-types';
+import { TransformedCurrentDataType } from '../../types/state-types';
 import {
   getYear, getMonthDay, getNameMonth, getMonth, getNameDay, getWeekDay,
 } from '../../services/time-library';
-import { useReducerStateRender } from '../../user-hooks/use-reducer-state-render';
 
-const WeatherCardRender: FunctionComponent<{ data: DataCurrentStateType }> = ({
+export const WeatherCard: FunctionComponent<{ data: TransformedCurrentDataType }> = ({
   data: {
     feelsLike, humidity, temp, weather, windSpeed, imgLink,
   },
@@ -48,8 +47,3 @@ const WeatherCardRender: FunctionComponent<{ data: DataCurrentStateType }> = ({
     </p>
   </section>
 );
-
-export const WeatherCard: FunctionComponent = () => {
-  const { isLoading, isError, data } = useSelector(({ current }: InitialStateType) => current);
-  return useReducerStateRender<DataCurrentStateType>(isLoading, isError, data, WeatherCardRender);
-};

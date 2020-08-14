@@ -1,7 +1,6 @@
 import { InitialStateType } from '../types/state-types';
-import { updateWeatherCurrent } from './weather-current';
-import { updateWeatherCoords } from './weather-coords';
-import { updateWeatherDaily } from './weather-daily';
+import { updateWeather } from './weather';
+import { updateCoords } from './coords';
 
 import { ActionTypes } from '../types/action-types';
 
@@ -15,27 +14,24 @@ const initialState: InitialStateType = {
       longitude: 37.618423,
     },
   },
-  current: {
+  weather: {
     isLoading: true,
     isError: false,
     data: {
-      imgLink: '',
-      temp: '',
-      feelsLike: '',
-      humidity: 0,
-      weather: '',
-      windSpeed: 0,
+      daily: [],
+      current: {
+        imgLink: '',
+        temp: '',
+        feelsLike: '',
+        humidity: 0,
+        weather: '',
+        windSpeed: 0,
+      },
     },
-  },
-  daily: {
-    isLoading: true,
-    isError: false,
-    data: [],
   },
 };
 
 export const reducer = (state: InitialStateType = initialState, action: ActionTypes) => ({
-  daily: updateWeatherDaily(state.daily, action),
-  coords: updateWeatherCoords(state.coords, action),
-  current: updateWeatherCurrent(state.current, action),
+  weather: updateWeather(state.weather, action),
+  coords: updateCoords(state.coords, action),
 });

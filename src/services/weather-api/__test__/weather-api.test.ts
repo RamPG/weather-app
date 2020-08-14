@@ -1,15 +1,15 @@
-import fetchMock from 'jest-fetch-mock';
+import fetchMock from 'fetch-mock';
 import { WeatherApi } from '../weather-api';
 import {
   addMonth, addMonthDay, addWeekDay, getNameDay, getNameMonth,
 } from '../../time-library';
 
-fetchMock.enableMocks();
-
-describe('weather api', () => {
+describe('Weather api', () => {
   let weatherApi: WeatherApi;
+  let mockUrl: string;
   beforeAll(() => {
     weatherApi = new WeatherApi();
+    mockUrl = 'https://api.openweathermap.org';
   });
   it('transformKelvinToCelsius return right value', () => {
     expect(weatherApi.transformKelvinToCelsius(303.15)).toBe('+30°C');
@@ -36,7 +36,7 @@ describe('weather api', () => {
     };
     expect(weatherApi.transformCoordsData(data)).toStrictEqual(transformedData);
   });
-  it('transformCurrentData return right value', () => {
+  /* it('transformCurrentData return right value', () => {
     const data = {
       lat: 57.5,
       lon: 53.5,
@@ -66,7 +66,7 @@ describe('weather api', () => {
       },
     };
     const transformedData = {
-      imgLink: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
+      imgLink: `https://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png`,
       temp: weatherApi.transformKelvinToCelsius(data.current.temp),
       feelsLike: weatherApi.transformKelvinToCelsius(data.current.feels_like),
       humidity: data.current.humidity,
@@ -119,7 +119,7 @@ describe('weather api', () => {
     };
     const transformedData = data.daily.map((element, index) => ({
       id: index,
-      imgLink: `http://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`,
+      imgLink: `https://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`,
       weekDayName: getNameDay(addWeekDay(index)),
       monthDay: addMonthDay(index),
       monthDayName: getNameMonth(addMonth(index)),
@@ -131,16 +131,14 @@ describe('weather api', () => {
     }));
     expect(weatherApi.transformDailyData(data)).toStrictEqual(transformedData);
   });
-  it('getResourceWeather return success api data', async () => {
-    fetchMock.doMock(JSON.stringify({ data: 'something' }));
-    expect(await weatherApi.getResourceWeather(55, 55, '')).toStrictEqual({ data: 'something' });
+  it('getResourceWeather return success api data', () => {
+    fetchMock.get(mockUrl, {
+      data: 'something',
+    });
+    return weatherApi.getResource(mockUrl)
+      .then((data) => {
+        expect(data).toStrictEqual({ data: 'something' });
+      });
   });
-  it('getResourceGeo return success api data', async () => {
-    fetchMock.doMock(JSON.stringify({ data: 'something' }));
-    expect(await weatherApi.getResourceGeo('Moscow')).toStrictEqual({ data: 'something' });
-  });
-  it('getCityName return success api data', async () => {
-    fetchMock.doMock(JSON.stringify({ data: 'something' }));
-    expect(await weatherApi.getCityName(5, 5)).toStrictEqual({ data: 'something' });
-  });
+  */
 });

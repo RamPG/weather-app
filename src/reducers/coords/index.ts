@@ -8,7 +8,7 @@ import {
 
 import { ActionTypes } from '../../types/action-types';
 
-function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
+function updateCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
   switch (action.type) {
     case CHANGE_COORDS_REQUEST:
       return {
@@ -37,4 +37,4 @@ function updateWeatherCoords(state: SubStateType<DataCoordsStateType>, action: A
   }
 }
 
-export { updateWeatherCoords };
+export { updateCoords };

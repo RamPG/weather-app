@@ -1,28 +1,28 @@
 import {
-  FETCH_CURRENT_WEATHER_FAILURE,
-  FETCH_CURRENT_WEATHER_SUCCESS,
-  FETCH_CURRENT_WEATHER_REQUEST,
+  FETCH_WEATHER_FAILURE,
+  FETCH_WEATHER_SUCCESS,
+  FETCH_WEATHER_REQUEST,
 } from './actions-constants';
 
-import { SubStateType, DataCurrentStateType } from '../../types/state-types';
+import {DataWeatherStateType, SubStateType} from '../../types/state-types';
 
 import { ActionTypes } from '../../types/action-types';
 
-function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action: ActionTypes) {
+function updateWeather(state: SubStateType<DataWeatherStateType>, action: ActionTypes) {
   switch (action.type) {
-    case FETCH_CURRENT_WEATHER_REQUEST:
+    case FETCH_WEATHER_REQUEST:
       return {
         isLoading: true,
         isError: false,
         data: {},
       };
-    case FETCH_CURRENT_WEATHER_FAILURE:
+    case FETCH_WEATHER_FAILURE:
       return {
         isLoading: false,
         isError: true,
         data: {},
       };
-    case FETCH_CURRENT_WEATHER_SUCCESS:
+    case FETCH_WEATHER_SUCCESS:
       return {
         isLoading: false,
         isError: false,
@@ -33,4 +33,4 @@ function updateWeatherCurrent(state: SubStateType<DataCurrentStateType>, action:
   }
 }
 
-export { updateWeatherCurrent };
+export { updateWeather };

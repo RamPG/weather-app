@@ -4,7 +4,7 @@ type WeatherObjectType = {
     icon: string,
 };
 
-export type GetWeatherDataTodayResponseType = {
+export type GetWeatherResponseType = {
     lat: number,
     lon: number,
     timezone: string,
@@ -25,13 +25,6 @@ export type GetWeatherDataTodayResponseType = {
         wind_deg: number,
         weather: Array<WeatherObjectType>,
     },
-};
-
-export type GetWeatherDataSevenDaysResponseType = {
-    lat: number,
-    lon: number,
-    timezone: string,
-    timezone_offset: number,
     daily: Array<{
         dt: number,
         sunrise: number,

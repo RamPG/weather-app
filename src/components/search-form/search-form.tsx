@@ -8,8 +8,8 @@ import './search-form.scss';
 
 import {
   changeCoordsByBrowserNavigator,
-  changeCoordsByForm,
-} from '../../reducers/weather-coords/actions';
+  changeCoords,
+} from '../../reducers/coords/actions';
 import { WeatherApiContext } from '../../contexts';
 
 import { InitialStateType } from '../../types/state-types';
@@ -65,14 +65,14 @@ export const SearchForm: FunctionComponent = () => {
       location = localStorage.getItem('city');
     }
     if (typeof location === 'string') {
-      dispatch(changeCoordsByForm(weatherApi, location));
+      dispatch(changeCoords(weatherApi, location));
     }
     useLocation(weatherApi, dispatch, changeCoordsByBrowserNavigator);
   }, []);
 
   const onFindCity = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
-    dispatch(changeCoordsByForm(weatherApi, term));
+    dispatch(changeCoords(weatherApi, term));
     setTerm('');
   };
 

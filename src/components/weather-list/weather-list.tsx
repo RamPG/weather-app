@@ -1,13 +1,11 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
 
 import './weather-list.scss';
 
 import { WeatherListItem } from '../weather-list-item';
-import { DataDailyStateType, InitialStateType } from '../../types/state-types';
-import { useReducerStateRender } from '../../user-hooks/use-reducer-state-render';
+import { TransformedDailyDataType } from '../../types/state-types';
 
-const WeatherListRender: FunctionComponent<{ data: Array<DataDailyStateType> }> = ({ data }) => (
+export const WeatherList: FunctionComponent<{ data: Array<TransformedDailyDataType> }> = ({ data }) => (
   <section className="weather-forecast">
     <h1 className="weather-forecast__title">
       Weather for seven days
@@ -25,8 +23,3 @@ const WeatherListRender: FunctionComponent<{ data: Array<DataDailyStateType> }> 
     </ul>
   </section>
 );
-
-export const WeatherList: FunctionComponent = () => {
-  const { isLoading, isError, data } = useSelector(({ daily }: InitialStateType) => daily);
-  return useReducerStateRender<Array<DataDailyStateType>>(isLoading, isError, data, WeatherListRender);
-};

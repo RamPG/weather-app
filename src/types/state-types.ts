@@ -1,13 +1,4 @@
-export type DataCurrentStateType = {
-    imgLink: string,
-    temp: string,
-    feelsLike: string,
-    humidity: number,
-    weather: string,
-    windSpeed: number,
-};
-
-export type DataDailyStateType = {
+export type TransformedDailyDataType = {
     id: number,
     imgLink: string,
     weekDayName: string,
@@ -18,6 +9,20 @@ export type DataDailyStateType = {
         night: string,
     },
     weather: string,
+};
+
+export type TransformedCurrentDataType = {
+    imgLink: string,
+    temp: string,
+    feelsLike: string,
+    humidity: number,
+    weather: string,
+    windSpeed: number,
+};
+
+export type DataWeatherStateType = {
+    daily: Array<TransformedDailyDataType>,
+    current: TransformedCurrentDataType
 };
 
 export type DataCoordsStateType = {
@@ -33,7 +38,6 @@ export type SubStateType<D> = {
 }
 
 export type InitialStateType = {
-    current: SubStateType<DataCurrentStateType>,
-    daily: SubStateType<Array<DataDailyStateType>>,
+    weather: SubStateType<DataWeatherStateType>,
     coords: SubStateType<DataCoordsStateType>,
 };

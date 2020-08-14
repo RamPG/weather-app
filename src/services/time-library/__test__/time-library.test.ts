@@ -8,7 +8,7 @@ import {
   addMinutes, addSeconds,
 } from '../time-library';
 
-describe('time library', () => {
+describe('Time library', () => {
   it('getHoursFormat return right value', () => {
     expect(getHoursFormat(5)).toBe('05');
   });
