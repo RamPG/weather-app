@@ -12,21 +12,24 @@ function updateWeather(state: SubStateType<DataWeatherStateType>, action: Action
   switch (action.type) {
     case FETCH_WEATHER_REQUEST:
       return {
+        ...state,
         isLoading: true,
         isError: false,
-        data: {},
       };
     case FETCH_WEATHER_FAILURE:
       return {
+        ...state,
         isLoading: false,
         isError: true,
-        data: {},
       };
     case FETCH_WEATHER_SUCCESS:
       return {
         isLoading: false,
         isError: false,
-        data: action.payload,
+        data: {
+          daily: action.payload.daily,
+          current: action.payload.current,
+        }
       };
     default:
       return state;

@@ -13,15 +13,15 @@ import {
 import { DataWeatherStateType } from '../../types/state-types';
 import { WeatherApi } from '../../services/weather-api';
 
-const cityWeatherRequest = (): FetchWeatherRequestActionType => ({
+export const cityWeatherRequest = (): FetchWeatherRequestActionType => ({
   type: FETCH_WEATHER_REQUEST,
 });
 
-const cityWeatherFailure = (): FetchWeatherFailureActionType => ({
+export const cityWeatherFailure = (): FetchWeatherFailureActionType => ({
   type: FETCH_WEATHER_FAILURE,
 });
 
-const cityWeatherSuccess = (
+export const cityWeatherSuccess = (
   cityWeatherData: DataWeatherStateType,
 ): FetchWeatherSuccessActionType => ({
   type: FETCH_WEATHER_SUCCESS,

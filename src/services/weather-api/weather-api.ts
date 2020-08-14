@@ -1,21 +1,17 @@
 import {
   getNameDay, getNameMonth, addMonthDay,
-  addWeekDay, addMonth,
+  addWeekDay, addMonth, getWeekDay, getMonthDay, getYear, getMonth,
 } from '../time-library';
 import {
-  DataWeatherStateType, TransformedCurrentDataType, TransformedDailyDataType
+  DataCoordsStateType,
+  DataWeatherStateType, TransformedCurrentDataType, TransformedDailyDataType,
 } from '../../types/state-types';
 
 import {
   GetWeatherResponseType,
   GetGeoCoordsResponseType, GetGeoCityNameResponseType,
 } from '../../types/response-types';
-
-type TransformGeoDateType = {
-  location: string,
-  latitude: number,
-  longitude: number,
-};
+import { getDaysInMonth } from '../time-library/time-library';
 
 export class WeatherApi {
   _apiKeyWeather: string = 'c0e4dd09360b7cc7634d299c1d2e9790';
@@ -31,7 +27,7 @@ export class WeatherApi {
     return tempCelsius > 0 ? `+${tempCelsius}°C` : `${tempCelsius}°C`;
   }
 
-  transformCoordsData({ display_name, lat, lon }: GetGeoCoordsResponseType): TransformGeoDateType {
+  transformCoordsData({ display_name, lat, lon }: GetGeoCoordsResponseType): DataCoordsStateType {
     return {
       location: display_name.split(', ')[0],
       latitude: Number(lat),
@@ -50,13 +46,15 @@ export class WeatherApi {
     };
   }
 
-  transformDailyData({ daily }: GetWeatherResponseType): Array<TransformedDailyDataType> {
+  transformDailyData({ daily }: GetWeatherResponseType, date: Date = new Date()): Array<TransformedDailyDataType> {
     return daily.map((element, index) => ({
       id: index,
       imgLink: `https://openweathermap.org/img/wn/${element.weather[0].icon}@2x.png`,
-      weekDayName: getNameDay(addWeekDay(index)),
-      monthDay: addMonthDay(index),
-      monthDayName: getNameMonth(addMonth(index)),
+      weekDayName: getNameDay(addWeekDay(index, getWeekDay(date))),
+      monthDay: addMonthDay(index, getMonthDay(date), getDaysInMonth(getYear(date), getMonth(date))),
+      monthDayName: getNameMonth(
+        addMonth(0, index, getMonthDay(date), getDaysInMonth(getYear(date), getMonth(date)), getMonth(date)),
+      ),
       temp: {
         day: this.transformKelvinToCelsius(element.temp.day),
         night: this.transformKelvinToCelsius(element.temp.night),
@@ -97,7 +95,7 @@ export class WeatherApi {
     };
   }
 
-  async getGeoCoords(cityName: string): Promise<TransformGeoDateType> {
+  async getGeoCoords(cityName: string): Promise<DataCoordsStateType> {
     const geoCityData = await this.getResource<Array<GetGeoCoordsResponseType>>(
       `${this._urlGeoApi}/search.php?key=${this._apiKeyGeo}&q=${cityName}&format=json&accept-language=en`,
     );

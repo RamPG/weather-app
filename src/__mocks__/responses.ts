@@ -69,7 +69,6 @@ export const weatherResponseMock: GetWeatherResponseType = {
     ],
   },
 };
-
 export const coordsResponseMock: GetGeoCoordsResponseType = {
   place_id: '1',
   licence: '1',

@@ -70,7 +70,7 @@ export function addMonthDay(
 }
 
 export function addMonth(
-  valueMonth:number = 0, valueDays: number = 0, monthDay: number = getMonthDay(),
+  valueMonth: number = 0, valueDays: number = 0, monthDay: number = getMonthDay(),
   daysInMonth: number = getDaysInMonth(), month: number = getMonth(),
 ): number {
   if (monthDay + valueDays > daysInMonth) {

@@ -6,9 +6,9 @@ import {
 } from '../reducers/coords/actions-constants';
 
 import {
-    FETCH_WEATHER_FAILURE,
-    FETCH_WEATHER_SUCCESS,
-    FETCH_WEATHER_REQUEST,
+  FETCH_WEATHER_FAILURE,
+  FETCH_WEATHER_SUCCESS,
+  FETCH_WEATHER_REQUEST,
 } from '../reducers/weather/actions-constants';
 
 import {
