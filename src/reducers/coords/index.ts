@@ -8,7 +8,16 @@ import {
 
 import { ActionTypes } from '../../types/action-types';
 
-function updateCoords(state: SubStateType<DataCoordsStateType>, action: ActionTypes) {
+const initialState: SubStateType<DataCoordsStateType> = {
+  isLoading: false,
+  isError: false,
+  data: {
+    location: '',
+    latitude: 55.751244,
+    longitude: 37.618423,
+  },
+};
+function coordsReducer(state: SubStateType<DataCoordsStateType> = initialState, action: ActionTypes) {
   switch (action.type) {
     case CHANGE_COORDS_REQUEST:
       return {
@@ -37,4 +46,4 @@ function updateCoords(state: SubStateType<DataCoordsStateType>, action: ActionTy
   }
 }
 
-export { updateCoords };
+export { coordsReducer };

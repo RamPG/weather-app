@@ -1,4 +1,4 @@
-import { updateCoords } from '../index';
+import { coordsReducer } from '../index';
 import {
   CHANGE_COORDS_FAILURE,
   CHANGE_COORDS_REQUEST,
@@ -29,7 +29,7 @@ describe('Coords reducer', () => {
     const action: ChangeCoordsRequestActionType = {
       type: CHANGE_COORDS_REQUEST,
     };
-    expect(updateCoords(initialState, action)).toStrictEqual({
+    expect(coordsReducer(initialState, action)).toStrictEqual({
       ...initialState,
       isLoading: true,
     });
@@ -38,7 +38,7 @@ describe('Coords reducer', () => {
     const action: ChangeCoordsFailureActionType = {
       type: CHANGE_COORDS_FAILURE,
     };
-    expect(updateCoords(initialState, action)).toStrictEqual({
+    expect(coordsReducer(initialState, action)).toStrictEqual({
       ...initialState,
       isError: true,
       isLoading: false,
@@ -49,7 +49,7 @@ describe('Coords reducer', () => {
       type: CHANGE_COORDS_SUCCESS,
       payload: transformedDataCoords,
     };
-    expect(updateCoords(initialState, action)).toStrictEqual({
+    expect(coordsReducer(initialState, action)).toStrictEqual({
       isError: false,
       isLoading: false,
       data: action.payload,

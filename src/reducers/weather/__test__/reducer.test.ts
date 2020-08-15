@@ -1,4 +1,4 @@
-import { updateWeather } from '../index';
+import { weatherReducer } from '../index';
 import {
   FETCH_WEATHER_FAILURE,
   FETCH_WEATHER_SUCCESS,
@@ -35,7 +35,7 @@ describe('Weather reducer', () => {
     const action: FetchWeatherRequestActionType = {
       type: FETCH_WEATHER_REQUEST,
     };
-    expect(updateWeather(initialState, action)).toStrictEqual({
+    expect(weatherReducer(initialState, action)).toStrictEqual({
       ...initialState,
       isLoading: true,
       isError: false,
@@ -45,7 +45,7 @@ describe('Weather reducer', () => {
     const action: FetchWeatherFailureActionType = {
       type: FETCH_WEATHER_FAILURE,
     };
-    expect(updateWeather(initialState, action)).toStrictEqual({
+    expect(weatherReducer(initialState, action)).toStrictEqual({
       ...initialState,
       isLoading: false,
       isError: true,
@@ -59,7 +59,7 @@ describe('Weather reducer', () => {
         current: transformedDataCurrent,
       },
     };
-    expect(updateWeather(initialState, action)).toStrictEqual({
+    expect(weatherReducer(initialState, action)).toStrictEqual({
       isLoading: false,
       isError: false,
       data: {

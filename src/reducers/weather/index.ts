@@ -4,11 +4,26 @@ import {
   FETCH_WEATHER_REQUEST,
 } from './actions-constants';
 
-import {DataWeatherStateType, SubStateType} from '../../types/state-types';
+import { DataWeatherStateType, SubStateType } from '../../types/state-types';
 
 import { ActionTypes } from '../../types/action-types';
 
-function updateWeather(state: SubStateType<DataWeatherStateType>, action: ActionTypes) {
+const initialState: SubStateType<DataWeatherStateType> = {
+  isLoading: true,
+  isError: false,
+  data: {
+    daily: [],
+    current: {
+      imgLink: '',
+      temp: '',
+      feelsLike: '',
+      humidity: 0,
+      weather: '',
+      windSpeed: 0,
+    },
+  },
+};
+function weatherReducer(state: SubStateType<DataWeatherStateType> = initialState, action: ActionTypes) {
   switch (action.type) {
     case FETCH_WEATHER_REQUEST:
       return {
@@ -29,11 +44,11 @@ function updateWeather(state: SubStateType<DataWeatherStateType>, action: Action
         data: {
           daily: action.payload.daily,
           current: action.payload.current,
-        }
+        },
       };
     default:
       return state;
   }
 }
 
-export { updateWeather };
+export { weatherReducer };

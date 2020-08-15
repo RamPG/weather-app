@@ -31,11 +31,11 @@ export const changeCoordsSuccess = (
 export const changeCoords = (weatherApi: WeatherApi, location: string) => (
   dispatch: DispatchType,
 ) => {
-  localStorage.setItem('city', location);
   dispatch(changeCoordsRequest());
   return weatherApi.getGeoCoords(location)
     .then((data: DataCoordsStateType) => {
       dispatch(changeCoordsSuccess(data));
+      localStorage.setItem('city', location);
       dispatch(cityWeatherFetch(weatherApi, data.latitude, data.longitude));
     })
     .catch(() => {
