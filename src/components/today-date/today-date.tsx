@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import './today-date.scss';
 
-type TodayDatePropsType = {
+export type TodayDatePropsType = {
   monthDay: number,
   nameMonth: string,
   year: number,

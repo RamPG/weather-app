@@ -2,12 +2,9 @@ import React, { FunctionComponent } from 'react';
 
 import './clock.scss';
 
-import {
-  getHours, getMinutes, getSeconds,
-} from '../../services/time-library';
 import { useClock } from '../../user-hooks/use-clock';
 
-type ClockPropsType = {
+export type ClockPropsType = {
     hoursStart: number,
     minutesStart: number,
     secondsStart: number,

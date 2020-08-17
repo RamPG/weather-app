@@ -1,14 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
 
 import './weather-card.scss';
 
-import { TodayDate } from '../today-date';
-
 import { TransformedCurrentDataType } from '../../types/state-types';
-import {
-  getYear, getMonthDay, getNameMonth, getMonth, getNameDay, getWeekDay,
-} from '../../services/time-library';
 
 export const WeatherCard: FunctionComponent<{ data: TransformedCurrentDataType }> = ({
   data: {
@@ -16,12 +10,6 @@ export const WeatherCard: FunctionComponent<{ data: TransformedCurrentDataType }
   },
 }) => (
   <section className="main-card">
-    <TodayDate
-      monthDay={getMonthDay()}
-      nameMonth={getNameMonth(getMonth())}
-      year={getYear()}
-      nameDay={getNameDay(getWeekDay())}
-    />
     <p className="main-card__temp">
       {temp}
     </p>
