@@ -28,24 +28,22 @@ type SearchFormRenderPropsType = {
 const SearchFormRender: FunctionComponent<SearchFormRenderPropsType> = ({
   onChangeTerm, onFindCity, status, term, city,
 }) => (
-  <form className="search-form" onSubmit={onFindCity}>
+  <form onSubmit={onFindCity}>
     <input
-      className="search-form__input"
       type="text"
       value={term}
       placeholder="City name"
       onChange={onChangeTerm}
     />
     <button
-      className="search-form__button"
       type="submit"
     >
       Find
     </button>
-    <p className="search-form__status">
+    <p>
       {status}
     </p>
-    <p className="search-form__city">
+    <p>
       Weather in
       {' '}
       {city}

@@ -1,41 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Weather list item component test Weather list item snapshot 1`] = `
+exports[`Weather list item Snapshot 1`] = `
 <DocumentFragment>
-  <p
-    class="weather-list__item-week-day"
-  >
+  <p>
     Friday
   </p>
-  <p
-    class="weather-list__item-date"
-  >
+  <p>
     14 August
   </p>
-  <p
-    class="weather-list__item-img-block"
-  >
+  <p>
     <img
       alt="weather"
-      class="weather-list__weather-img"
       height="100"
       src="https://openweathermap.org/img/wn/04n@2x.png"
       width="100"
     />
   </p>
-  <p
-    class="weather-list__item-temp-day"
-  >
+  <p>
     -249°C
   </p>
-  <p
-    class="weather-list__item-temp-night"
-  >
+  <p>
     -259°C
   </p>
-  <p
-    class="weather-list__item-weather"
-  >
+  <p>
     Clouds
   </p>
 </DocumentFragment>

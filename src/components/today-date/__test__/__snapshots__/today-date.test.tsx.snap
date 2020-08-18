@@ -1,13 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Today date component test Today date component snapshot 1`] = `
+exports[`Today date Snapshot 1`] = `
 <DocumentFragment>
   <p>
     Today is 
-    17 
-    August 
-    2020 
-    Monday
+    <span>
+      17
+    </span>
+     
+    <span>
+      August
+    </span>
+     
+    <span>
+      2020
+    </span>
+     
+    <span>
+      Monday
+    </span>
   </p>
 </DocumentFragment>
 `;

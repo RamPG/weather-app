@@ -14,10 +14,14 @@ export const TodayDate: FunctionComponent<TodayDatePropsType> = (
   },
 ) => (
   <p>
-    {`Today is 
-    ${monthDay} 
-    ${nameMonth} 
-    ${year} 
-    ${nameDay}`}
+    Today is
+    {' '}
+    <span>{monthDay}</span>
+    {' '}
+    <span>{nameMonth}</span>
+    {' '}
+    <span>{year}</span>
+    {' '}
+    <span>{nameDay}</span>
   </p>
 );

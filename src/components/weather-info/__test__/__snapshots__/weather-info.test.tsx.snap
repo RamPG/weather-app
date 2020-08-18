@@ -1,7 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Weather list Snapshot 1`] = `
+exports[`Weather info Snapshot with data  1`] = `
 <DocumentFragment>
+  <section>
+    <p>
+      -249°C
+    </p>
+    <p>
+      <img
+        alt="weather"
+        height="100"
+        src="https://openweathermap.org/img/wn/04n@2x.png"
+        width="100"
+      />
+    </p>
+    <p>
+      Clouds
+    </p>
+    <p>
+      Feels like -251°C
+    </p>
+    <p>
+      34 m/s
+    </p>
+    <p>
+      50%
+    </p>
+  </section>
   <section>
     <h1>
       Weather for seven days

@@ -1,44 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Weather card component test Weather card snapshot 1`] = `
+exports[`Weather card Snapshot 1`] = `
 <DocumentFragment>
-  <section
-    class="main-card"
-  >
-    <p
-      class="main-card__temp"
-    >
+  <section>
+    <p>
       -249°C
     </p>
-    <p
-      class="main-card__img-paragraph"
-    >
+    <p>
       <img
         alt="weather"
-        class="main-card__img"
         height="100"
         src="https://openweathermap.org/img/wn/04n@2x.png"
         width="100"
       />
     </p>
-    <p
-      class="main-card__weather"
-    >
+    <p>
       Clouds
     </p>
-    <p
-      class="main-card__feels-like"
-    >
+    <p>
       Feels like -251°C
     </p>
-    <p
-      class="main-card__wind-speed"
-    >
+    <p>
       34 m/s
     </p>
-    <p
-      class="main-card__humidity"
-    >
+    <p>
       50%
     </p>
   </section>

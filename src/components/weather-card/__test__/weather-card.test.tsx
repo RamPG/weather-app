@@ -3,9 +3,9 @@ import { render, cleanup } from '@testing-library/react';
 import { WeatherCard } from '../weather-card';
 import { transformedDataCurrent } from '../../../__mocks__/transformed-data';
 
-describe('Weather card component test', () => {
+describe('Weather card', () => {
   afterEach(cleanup);
-  it('Weather card snapshot', () => {
+  it('Snapshot', () => {
     const { asFragment } = render(<WeatherCard data={transformedDataCurrent} />);
     expect(asFragment()).toMatchSnapshot();
   });

@@ -9,27 +9,27 @@ export const WeatherCard: FunctionComponent<{ data: TransformedCurrentDataType }
     feelsLike, humidity, temp, weather, windSpeed, imgLink,
   },
 }) => (
-  <section className="main-card">
-    <p className="main-card__temp">
+  <section>
+    <p>
       {temp}
     </p>
-    <p className="main-card__img-paragraph">
-      <img className="main-card__img" src={imgLink} alt="weather" height="100" width="100" />
+    <p>
+      <img src={imgLink} alt="weather" height="100" width="100" />
     </p>
-    <p className="main-card__weather">
+    <p>
       {weather}
     </p>
-    <p className="main-card__feels-like">
+    <p>
       Feels like
       {' '}
       {feelsLike}
     </p>
-    <p className="main-card__wind-speed">
+    <p>
       {windSpeed}
       {' '}
       m/s
     </p>
-    <p className="main-card__humidity">
+    <p>
       {humidity}
       %
     </p>

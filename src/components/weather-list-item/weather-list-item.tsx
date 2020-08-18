@@ -8,30 +8,29 @@ export const WeatherListItem: FunctionComponent<TransformedDailyDataType> = ({
   weekDayName, monthDay, monthDayName, temp, weather, imgLink,
 }) => (
   <>
-    <p className="weather-list__item-week-day">
+    <p>
       {weekDayName}
     </p>
-    <p className="weather-list__item-date">
+    <p>
       {monthDay}
       {' '}
       {monthDayName}
     </p>
-    <p className="weather-list__item-img-block">
+    <p>
       <img
-        className="weather-list__weather-img"
         src={imgLink}
         width="100"
         height="100"
         alt="weather"
       />
     </p>
-    <p className="weather-list__item-temp-day">
+    <p>
       {temp.day}
     </p>
-    <p className="weather-list__item-temp-night">
+    <p>
       {temp.night}
     </p>
-    <p className="weather-list__item-weather">
+    <p>
       {weather}
     </p>
   </>

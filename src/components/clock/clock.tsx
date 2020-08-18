@@ -18,9 +18,9 @@ export const Clock: FunctionComponent<ClockPropsType> = (
     <p>
       Time:
       {' '}
-      {hours}
+      <span>{hours}</span>
       :
-      {minutes}
+      <span>{minutes}</span>
     </p>
   );
 };

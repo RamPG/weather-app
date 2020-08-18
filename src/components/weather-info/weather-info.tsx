@@ -11,10 +11,10 @@ export const WeatherInfo: FunctionComponent = () => {
     data,
   }));
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <h1 data-testid="loading">Loading...</h1>;
   }
   if (isError) {
-    return <h1>Error!</h1>;
+    return <h1 data-testid="error">Error!</h1>;
   }
   return (
     <>
